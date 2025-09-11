@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+
+body {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+  font-family: 'Clash Grotesk', sans-serif;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+  background-color: #f6f5f0;
+}
+
+.masonry-column {
+  background-clip: padding-box;
+}
+
+@font-face {
+  font-family: 'ClashGrotesk-Regular';
+  src: url('./assets/Fonts/ClashGrotesk-Regular.woff2') format('woff2'),
+       url('./assets/Fonts/ClashGrotesk-Regular.woff') format('woff'),
+       url('./assets/Fonts/ClashGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ClashGrotesk-Medium';
+  src: url('./assets/Fonts/ClashGrotesk-Medium.woff2') format('woff2'),
+       url('./assets/Fonts/ClashGrotesk-Medium.woff') format('woff'),
+       url('./assets/Fonts/ClashGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ClashGrotesk-Semibold';
+  src: url('./assets/Fonts/ClashGrotesk-Semibold.woff2') format('woff2'),
+       url('./assets/Fonts/ClashGrotesk-Semibold.woff') format('woff'),
+       url('./assets/Fonts/ClashGrotesk-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+
+
+
+.transition {
+  transition: opacity 0.5s ease-out;
+}
+
+.image-main {
+  transition: opacity 0.3s ease-in-out;
+}
