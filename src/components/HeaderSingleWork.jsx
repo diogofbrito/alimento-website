@@ -5,7 +5,7 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 	const navigate = useNavigate();
 
 	return (
-		<div className='z-90 absolute top-0 w-full left-0 right-0 px-12 pt-6 grid grid-cols-5 tracking-[0.02em] font-[500] text-[1rem] gap-12'>
+		<div className='z-90 absolute top-0 w-full left-0 right-0 px-12 pt-6 grid grid-cols-5 tracking-[0.02em] font-[500] text-[1rem] gap-12 uppercase'>
 			<div className='col-span-1 '>
 				<AnimatedH1>{title}</AnimatedH1>
 			</div>
@@ -15,13 +15,13 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				</AnimatedH1>
 			</div>
 			<div className='col-span-1'>
-				<AnimatedButton onClick={onToggleList}>{isListOpen ? ' Slider ' : ' Lista '}</AnimatedButton>
+				<AnimatedButton onClick={onToggleList}>{isListOpen ? ' SLIDER ' : ' LISTA '}</AnimatedButton>
 			</div>
 			<div className='col-span-1'>
-				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  Informação - ' : ' Informação + '}</AnimatedButton>
+				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  INFORMAÇÃO - ' : ' INFORMAÇÃO + '}</AnimatedButton>
 			</div>
 			<div className='col-span-1 text-right'>
-				<AnimatedButton onClick={() => navigate(-1)}> Fechar </AnimatedButton>
+				<AnimatedButton onClick={() => navigate(-1)}> FECHAR </AnimatedButton>
 			</div>
 		</div>
 	);

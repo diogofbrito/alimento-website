@@ -52,7 +52,7 @@ export function Works() {
 								/>
 							)}
 							<div className='flex justify-between items-start text-lg tracking-[0.02em] '>
-								<AnimatedH1 className='font-[500]'>{item.title}</AnimatedH1>
+								<AnimatedH1 className='font-[500] uppercase'>{item.title}</AnimatedH1>
 								<AnimatedPAfterH1 className='font-[400]'>{item.year}</AnimatedPAfterH1>
 							</div>
 						</Link>

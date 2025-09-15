@@ -6,12 +6,12 @@ export function Menu() {
 		<>
 			<div className='relative top-0 w-full left-0 right-0 flex px-12 py-6 justify-between z-90 tracking-[0.02em] font-[500] text-[1rem] '>
 				<div className='fixed '>
-					<AnimatedH1 >
+					<AnimatedH1>
 						<Link to='/'>ALIMENTO</Link>
 					</AnimatedH1>
 				</div>
 				<div className='w-full flex justify-end '>
-					<div className='flex gap-12'>
+					<div className='flex gap-12 uppercase '>
 						<AnimatedH1>
 							<Link to='/projetos'>Projetos</Link>
 						</AnimatedH1>
