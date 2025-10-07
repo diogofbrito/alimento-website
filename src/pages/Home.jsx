@@ -3,12 +3,11 @@ import { BackgroundGallery } from '../components/BackgroundGallery';
 
 export function Home() {
 	return (
-		<div className='relative w-screen h-screen overflow-hidden'>
+		<div className='relative w-screen h-screen overflow-hidden '>
 			<BackgroundGallery />
 
-			{/* Menu */}
-			<div className='relative w-screen h-screen flex gap-4 items-center justify-between px-12 tracking-[0.02em] font-[500] text-[1rem] '>
-				<Link to='/'>ALIMENTO</Link>
+			<div className=' fixed w-screen h-screen flex gap-4 flex-col px-12 tracking-[0.02em] font-[500] text-[1rem] md:flex-row items-center justify-center md:justify-between  z-0'>
+				<Link to='/' className=''>ALIMENTO</Link>
 				<Link to='/projetos' className='hover:opacity-60 transition-opacity duration-300 ease-in-out uppercase'>
 					Projetos
 				</Link>
@@ -25,6 +24,7 @@ export function Home() {
 					Contactos
 				</Link>
 			</div>
+			
 		</div>
 	);
 }

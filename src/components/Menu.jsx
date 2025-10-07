@@ -5,7 +5,7 @@ export function Menu() {
 	return (
 		<>
 			<div className='relative top-0 w-full left-0 right-0 flex px-12 py-6 justify-between z-90 tracking-[0.02em] font-[500] text-[1rem] '>
-				<div className='fixed '>
+				<div>
 					<AnimatedH1>
 						<Link to='/'>ALIMENTO</Link>
 					</AnimatedH1>

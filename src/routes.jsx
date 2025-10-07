@@ -7,7 +7,6 @@ import { IPlusD } from './pages/IPlusD.jsx';
 import { About } from './pages/About.jsx';
 import { Contacts } from './pages/Contacts.jsx';
 import { ErrorPage } from './pages/ErrorPage.jsx';
-import { LostFound } from './pages/LostFound';
 import { Press } from './pages/Press';
 
 export const router = createBrowserRouter([

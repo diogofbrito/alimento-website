@@ -56,8 +56,7 @@ export function Press() {
 
 			<div className='col-span-1'></div>
 
-			{/* Imagem Placeholder */}
-			<div className='col-span-2 flex items-center justify-center relative'>
+			<div className='col-span-2 flex items-center justify-end relative'>
 				{hoverIndex !== null && press[hoverIndex]?.placeholderImage && (
 					<motion.img
 						key={press[hoverIndex]._id}

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-md: 768px;
+
+}
+
 
 body {
 	text-rendering: optimizeLegibility;
@@ -52,4 +57,15 @@ body {
 
 .image-main {
   transition: opacity 0.3s ease-in-out;
+}
+
+@media  (max-width: 768px) {
+  .home {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    height: 100vh;
+    justify-content: center;
+  }
+  
 }
