@@ -12,12 +12,12 @@ export function IPlusD() {
 			try {
 				const data = await sanityClient.fetch(
 					`*[_type == "imaisd"] | order(year desc) {
-            _id,
-            title,
-            "slug": slug.current,
-            year,
-            placeholderImage
-          }`,
+						_id,
+						title,
+						"slug": slug.current,
+						year,
+						placeholderImage
+					}`,
 				);
 				setImaisd(data);
 			} catch (error) {
@@ -31,10 +31,9 @@ export function IPlusD() {
 	return (
 		<div className='w-full px-12 pb-12'>
 			<div className='grid grid-cols-3 gap-[100px]'>
-				{projetos.map(item => (
+				{imaisd.map(item => (
 					<div key={item._id} className='relative group overflow-hidden'>
-						<Link to={`/projetos/${item.slug}`} className='block relative'>
-							{/* Imagem */}
+						<Link to={`/imaisd/${item.slug}`} className='block relative'>
 							{item.placeholderImage && (
 								<img
 									src={urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url()}
