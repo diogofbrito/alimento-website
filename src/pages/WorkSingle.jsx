@@ -90,29 +90,27 @@ export function WorkSingle() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40  px-12 pt-19 '>
-					<Masonry breakpointCols={breakpointColumnsObj} className='flex gap-6' columnClassName='masonry-column'>
+				<div className='inset-0 z-40  px-5 pt-16 '>
+					<div className='grid grid-cols-5 gap-x-[10px]'>
 						{projeto.gallery.map((img, i) => (
-							<div className='group block'>
-								<AnimatedImage
-									key={i}
-									src={urlFor(img).width(500).quality(80).auto('format').url()}
-									alt=''
-									className=' cursor-pointer mb-6 transition-transform duration-500 ease-out group-hover:scale-101'
-									onClick={() => {
-										setCurrentImageIndex(i);
-										setIsListOpen(false);
-									}}
-								/>
-							</div>
+							<AnimatedImage
+								key={i}
+								src={urlFor(img).width(500).quality(80).auto('format').url()}
+								alt=''
+								className=' cursor-pointer mb-12 transition-transform duration-1000 ease-out group-hover:scale-101'
+								onClick={() => {
+									setCurrentImageIndex(i);
+									setIsListOpen(false);
+								}}
+							/>
 						))}
-					</Masonry>
+					</div>
 				</div>
 			)}
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='fixed inset-0 z-40 p-4 overflow-y-auto w-1/2 tracking-wide leading-[1.3] gambarino'>
+				<div className='fixed inset-0 z-40 px-5 mt-[150px] overflow-y-auto w-1/2 tracking-wide leading-[1.3] gambarino'>
 					<AnimatedP>
 						<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
 					</AnimatedP>
@@ -120,7 +118,7 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-12 pt-19  gap-12 '>
+				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-16 gap-x-[100px] '>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (
@@ -128,7 +126,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-500 ease-out group-hover:scale-101 '
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 '
 									onClick={() => setCurrentImageIndex(prevIndex)}
 								/>
 							</div>
@@ -141,7 +139,7 @@ export function WorkSingle() {
 							key={currentImageIndex}
 							src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
 							alt={projeto.title}
-							className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none '
+							className='max-h-[90vh] object-contain image-main opacity-0 pointer-events-none '
 							onLoad={e => e.currentTarget.classList.add('opacity-100')}
 						/>
 					</div>
@@ -153,7 +151,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-500 ease-out group-hover:scale-101'
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101'
 									onClick={() => setCurrentImageIndex(nextIndex)}
 								/>
 							</div>

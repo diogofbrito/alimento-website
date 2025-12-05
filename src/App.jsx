@@ -19,10 +19,11 @@ function App() {
 	}, [location.pathname, isFirstLoad]);
 
 	const isWorkSingle = /^\/projetos\/[^/]+$/.test(location.pathname);
+	const isIPlusDSingle = /^\/imaisd\/[^/]+$/.test(location.pathname);
 
 	return (
 		<>
-			{location.pathname !== '/' && !isWorkSingle && <Menu />}
+			{location.pathname !== '/' && !isWorkSingle && !isIPlusDSingle && <Menu />}
 
 			<motion.div key={location.pathname} variants={pageTransition} initial={isFirstLoad ? false : 'hidden'} animate={isFirstLoad ? false : 'enter'} exit='exit' className='min-h-screen relative z-0'>
 				<Outlet />

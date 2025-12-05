@@ -30,8 +30,8 @@ export function Works() {
 	}, []);
 
 	return (
-		<div className='w-full px-12 pb-12'>
-			<div className='grid grid-cols-3 gap-[100px]'>
+		<div className='w-full px-5 py-5'>
+			<div className='grid grid-cols-3 gap-x-[120px] gap-y-[60px]'>
 				{projetos.map(item => (
 					<div key={item._id} className='relative group overflow-hidden'>
 						<Link to={`/projetos/${item.slug}`} className='block relative'>
@@ -40,7 +40,7 @@ export function Works() {
 								<img
 									src={urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url()}
 									alt={item.title}
-									className='w-full h-[300px] object-cover transition-all duration-700 ease-out group-hover:opacity-20 group-hover:scale-[1.05]'
+									className='w-full h-[320px] object-cover transition-all duration-700 ease-out group-hover:opacity-20 group-hover:scale-[1.05]'
 								/>
 							)}
 
