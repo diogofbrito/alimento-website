@@ -25,7 +25,7 @@ function App() {
 
 	return (
 		<>
-			{location.pathname !== !isWorkSingle && !isIPlusDSingle && !isAbout && !isPress && <Menu />}
+			{!isWorkSingle && !isIPlusDSingle && !isAbout && !isPress && <Menu />}
 
 			<motion.div key={location.pathname} variants={pageTransition} initial={isFirstLoad ? false : 'hidden'} animate={isFirstLoad ? false : 'enter'} exit='exit' className='min-h-screen relative z-0'>
 				<Outlet />

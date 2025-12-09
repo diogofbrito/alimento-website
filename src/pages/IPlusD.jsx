@@ -47,11 +47,11 @@ export function IPlusD() {
 						<AnimatedImage
 							src={urlFor(item.image).width(1000).quality(80).auto('format').url()}
 							alt={item.title}
-							className='w-full h-[240px] object-cover transition-all duration-700 ease-out group-hover:scale-[1.05]'
+							className='w-full h-[240px] object-cover  '
 						/>
 
-						<div className='absolute inset-0 flex flex-col items-center justify-center text-center text-white mix-blend-exclusion opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out'>
-							<AnimatedH1 className='font-[500] uppercase tracking-[0.03em] text-sm'>{item.title}</AnimatedH1>
+						<div className='absolute inset-0 flex flex-col items-center justify-center text-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out pointer-events-none'>
+							<AnimatedH1 className='font-[500] uppercase tracking-[0.03em] text-base'>{item.title}</AnimatedH1>
 						</div>
 					</Link>
 				))}

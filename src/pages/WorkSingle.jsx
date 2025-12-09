@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleWork } from '../components/HeaderSingleWork';
-import { AnimatedImage, AnimatedP } from '../components/AnimatedText';
+import { AnimatedImage,AnimatedImage1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
 
@@ -92,7 +92,7 @@ export function WorkSingle() {
 				<div className='inset-0 z-40  px-5 pt-16 '>
 					<div className='grid grid-cols-6 gap-x-[50px]'>
 						{projeto.gallery.map((img, i) => (
-							<AnimatedImage
+							<AnimatedImage1
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
@@ -144,7 +144,7 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-4 justify-between px-5 pt-16 gap-x-[50px] '>
+				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-16 gap-x-[50px] '>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (
@@ -152,7 +152,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-70'
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-80'
 									onClick={() => setCurrentImageIndex(prevIndex)}
 								/>
 							</div>
@@ -160,7 +160,7 @@ export function WorkSingle() {
 					</div>
 
 					{/* foto principal */}
-					<div className='col-span-2 flex items-center justify-center'>
+					<div className='col-span-3 flex items-center justify-center'>
 						<img
 							key={currentImageIndex}
 							src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
@@ -177,7 +177,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-70'
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
 									onClick={() => setCurrentImageIndex(nextIndex)}
 								/>
 							</div>

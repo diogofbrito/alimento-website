@@ -42,14 +42,7 @@ export function IntroLoader({ onFinish }) {
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 					/>
 
-					{/* Título "Alimento Studio" */}
-					{showTitle && (
-						<motion.div className='overflow-hidden inline-block z-20' initial='hidden' animate='show' exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}>
-							<motion.h1 variants={h1SlideUp} className='inline-block will-change-transform text-white text-5xl  uppercase font-[500] tracking-[0.05em] '>
-								Alimento
-							</motion.h1>
-						</motion.div>
-					)}
+					
 				</motion.div>
 			)}
 		</AnimatePresence>
