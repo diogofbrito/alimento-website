@@ -38,5 +38,5 @@ export function AnimatedPAfterH1({ children, className = '' }) {
 }
 
 export function AnimatedImage({ src, alt, className = '', onClick }) {
-	return <motion.img src={src} alt={alt} className={className} onClick={onClick} variants={pFadeIn} initial='hidden' whileInView='show' viewport={{ once: true, amount: 0.2 }} />;
+	return <motion.img src={src} alt={alt} className={className} onClick={onClick} variants={pFadeIn}  initial='hidden' whileInView='show' viewport={{ once: true, amount: 0.2 }} />;
 }

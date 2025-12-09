@@ -1,35 +1,53 @@
+import { useState, useEffect } from 'react';
+import sanityClient from '../SanityClient.js';
+import { motion } from 'framer-motion';
 import { AnimatedH1, AnimatedPAfterH1, AnimatedImage } from '../components/AnimatedText';
-import AlimentoStudio from '../assets/Images/sobreAlimento.jpg';
+import video from '../assets/Images/contacts.mp4';
+import { HeaderAbout } from '../components/HeaderAbout.jsx';
+import { urlFor } from '../utils/imageUrlBuilder.js';
 
 export function About() {
+	const [press, setPress] = useState([]);
+	const [hoverIndex, setHoverIndex] = useState(null);
+
+	useEffect(() => {
+		const fetchPress = async () => {
+			try {
+				const data = await sanityClient.fetch(
+					`*[_type == "press"] | order(year desc) {
+            _id,
+            title,
+            link,
+            year,
+            placeholderImage
+          }`,
+				);
+				setPress(data);
+			} catch (error) {
+				console.error('Erro ao buscar Press:', error.message);
+			}
+		};
+
+		fetchPress();
+	}, []);
+
 	return (
-		<div className='px-12 '>
-			<div className='h-[70vh] w-full bg-center bg-cover' style={{ backgroundImage: `url(${AlimentoStudio})` }}></div>
-			<div className=' grid grid-cols-6 gap-12 py-12'>
-				<div className='col-span-2 flex flex-col gap-1'>
-					<AnimatedH1 className='epilogueRegular'>ALIMENTO STUDIO</AnimatedH1>
-					<AnimatedPAfterH1 className='  tracking-wide leading-[1.3] gambarino'>
-						Patricia Gabriel é uma artista multissensorial, chef e professora de Lisboa, cuja prática cruza gastronomia, arte e educação. Com uma formação que vai das Ciências Gastronómicas à
-						Matemática, desenvolve projetos que exploram a relação entre comida, cultura e território, através de performances, residências artísticas e criações culinárias inovadoras. O seu percurso
-						inclui experiências internacionais em países como Índia, Indonésia e França, bem como colaborações em festivais e publicações dedicadas ao design alimentar e à experimentação sensorial.
-						Paralelamente, dedica-se ao ensino e à investigação, com especial enfoque no uso de macroalgas e plantas halófitas na cozinha contemporânea. A sua obra procura despertar sentidos e
-						consciências, promovendo o encontro entre tradição, sustentabilidade e novas formas de criar e partilhar experiências gastronómicas.
+		<>
+			<HeaderAbout />
+			<div className='h-screen grid grid-cols-4 grid-rows-2 px-5 pt-16 gap-x-[50px] '>
+				<div className='col-span-2  flex flex-col gap-1 '>
+					<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-xl'>
+						Alimento é Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores iste fuga veniam itaque! Recusandae cum odit voluptas rerum nobis atque quibusdam expedita reiciendis quos
+						possimus dignissimos nisi dolorem, tempora placeat! Optio corrupti laboriosam dignissimos beatae deserunt ad eligendi itaque animi ipsum quis vitae esse perferendis dolorum quo provident
+						fuga, expedita id nisi, voluptatem eveniet laudantium tenetur voluptates. Laudantium, doloremque inventore.
 					</AnimatedPAfterH1>
 				</div>
-
 				<div className='col-span-2'>
-					<div>
-						<AnimatedH1 className='epilogueRegular'>PATRICIA GABRIEL</AnimatedH1>
-						<AnimatedPAfterH1 className=' tracking-wide leading-[1.3] gambarino'>
-							Patricia Gabriel é uma artista multissensorial, chef e professora de Lisboa, cuja prática cruza gastronomia, arte e educação. Com uma formação que vai das Ciências Gastronómicas à
-							Matemática, desenvolve projetos que exploram a relação entre comida, cultura e território, através de performances, residências artísticas e criações culinárias inovadoras. O seu
-							percurso inclui experiências internacionais em países como Índia, Indonésia e França, bem como colaborações em festivais e publicações dedicadas ao design alimentar e à experimentação
-							sensorial. Paralelamente, dedica-se ao ensino e à investigação, com especial enfoque no uso de macroalgas e plantas halófitas na cozinha contemporânea. A sua obra procura despertar
-							sentidos e consciências, promovendo o encontro entre tradição, sustentabilidade e novas formas de criar e partilhar experiências gastronómicas.
-						</AnimatedPAfterH1>
-					</div>
+					<video src={video} autoPlay loop muted />
 				</div>
 			</div>
-		</div>
+
+			
+		</>
 	);
 }

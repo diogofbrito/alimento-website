@@ -6,7 +6,6 @@ import { HeaderSingleWork } from '../components/HeaderSingleWork';
 import { AnimatedImage, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
-import Masonry from 'react-masonry-css';
 
 export function WorkSingle() {
 	const { slug } = useParams();
@@ -91,13 +90,13 @@ export function WorkSingle() {
 			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40  px-5 pt-16 '>
-					<div className='grid grid-cols-5 gap-x-[10px]'>
+					<div className='grid grid-cols-6 gap-x-[50px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
-								className=' cursor-pointer mb-12 transition-transform duration-1000 ease-out group-hover:scale-101'
+								className=' cursor-pointer mb-5 transition-transform duration-1000 ease-out group-hover:scale-101'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
@@ -110,7 +109,34 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='fixed inset-0 z-40 px-5 mt-[150px] overflow-y-auto w-1/2 tracking-wide leading-[1.3] gambarino'>
+				<div className='fixed inset-0 z-40 mx-5 mt-15 grid grid-cols-4 gap-x-[50px] tracking-wide leading-[1.3] '>
+					<div className='col-span-2 '>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
+						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
+						perferendis facilis sed vitae asperiores, doloremque architecto dicta alias exercitationem neque.
+					</div>
+					<div className='col-span-4 '>
+						<div className='grid grid-cols-4 gap-x-[50px] h-[300px] gap-12'>
+							<div className='col-span-1  flex flex-col '>
+								<div className='opacity-45'>Tipo</div>
+								<div>Almoço para 14 pax</div>
+							</div>
+							<div className='col-span-1 flex flex-col '>
+								<div className='opacity-45'>Cliente</div>
+								<div>Escola de Agronomia</div>
+							</div>
+							<div className='col-span-1 flex flex-col'>
+								<div className='opacity-45'>Ano</div>
+								<div>2021</div>
+							</div>
+							<div className='col-span-1 flex flex-col'>
+								<div className='opacity-45'>Créditos</div>
+								<div>lorem ipsum
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<AnimatedP>
 						<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
 					</AnimatedP>
@@ -118,7 +144,7 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-16 gap-x-[100px] '>
+				<div className='z-40 grid grid-cols-4 justify-between px-5 pt-16 gap-x-[50px] '>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (
@@ -126,7 +152,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 '
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-70'
 									onClick={() => setCurrentImageIndex(prevIndex)}
 								/>
 							</div>
@@ -134,7 +160,7 @@ export function WorkSingle() {
 					</div>
 
 					{/* foto principal */}
-					<div className='col-span-3 flex justify-center'>
+					<div className='col-span-2 flex items-center justify-center'>
 						<img
 							key={currentImageIndex}
 							src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
@@ -151,7 +177,7 @@ export function WorkSingle() {
 								<img
 									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
 									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101'
+									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-70'
 									onClick={() => setCurrentImageIndex(nextIndex)}
 								/>
 							</div>
