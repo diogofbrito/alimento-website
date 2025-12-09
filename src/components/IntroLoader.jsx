@@ -28,7 +28,7 @@ export function IntroLoader({ onFinish }) {
 		<AnimatePresence onExitComplete={onFinish}>
 			{isVisible && (
 				<motion.div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden' initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}>
-					<div className='absolute inset-0 bg-[#fefcf3] z-0' />
+					<div className='absolute inset-0  z-0' />
 
 					{/* Vídeo de fundo */}
 					<motion.video
@@ -41,8 +41,6 @@ export function IntroLoader({ onFinish }) {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 					/>
-
-					
 				</motion.div>
 			)}
 		</AnimatePresence>
