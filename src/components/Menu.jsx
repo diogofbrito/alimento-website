@@ -3,8 +3,8 @@ import { AnimatedH1 } from './AnimatedText';
 
 export function Menu() {
 	return (
-		<div className='fixed inset-0 flex items-center justify-center z-50 pointer-events-none mix-blend-difference text-white '>
-			<div className='grid grid-cols-4 gap-x-[100px] uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto w-full mx-5 '>
+		<div className='fixed  left-5 top-4 right-5 z-50 pointer-events-none mix-blend-difference text-white '>
+			<div className='grid grid-cols-4 gap-x-[100px] uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto '>
 				<AnimatedH1 className='col-span-1 '>
 					<Link to='/'>Alimento</Link>
 				</AnimatedH1>

@@ -20,12 +20,10 @@ function App() {
 
 	const isWorkSingle = /^\/projetos\/[^/]+$/.test(location.pathname);
 	const isIPlusDSingle = /^\/imaisd\/[^/]+$/.test(location.pathname);
-	const isAbout = /^\/sobre\/?$/.test(location.pathname);
-	const isPress = /^\/press\/?$/.test(location.pathname);
 
 	return (
 		<>
-			{!isWorkSingle && !isIPlusDSingle && !isAbout && !isPress && <Menu />}
+			{!isWorkSingle && !isIPlusDSingle && <Menu />}
 
 			<motion.div key={location.pathname} variants={pageTransition} initial={isFirstLoad ? false : 'hidden'} animate={isFirstLoad ? false : 'enter'} exit='exit' className='min-h-screen relative z-0'>
 				<Outlet />

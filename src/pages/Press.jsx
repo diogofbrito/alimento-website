@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { motion } from 'framer-motion';
-import { HeaderAbout } from '../components/HeaderAbout.jsx';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 
 export function Press() {
@@ -31,7 +30,7 @@ export function Press() {
 
 	return (
 		<>
-			<HeaderAbout />
+	
 			<div className='px-5 pt-16  grid grid-cols-4 gap-x-[50px]'>
 				{/* Lista de Projetos */}
 				<div className='col-span-2  flex flex-col gap-1 '>

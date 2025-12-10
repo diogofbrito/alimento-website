@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
-import { motion } from 'framer-motion';
 import { AnimatedH1, AnimatedPAfterH1, AnimatedImage } from '../components/AnimatedText';
 import video from '../assets/Images/contacts.mp4';
-import { HeaderAbout } from '../components/HeaderAbout.jsx';
-import { urlFor } from '../utils/imageUrlBuilder.js';
 
 export function About() {
 	const [press, setPress] = useState([]);
@@ -33,7 +30,6 @@ export function About() {
 
 	return (
 		<>
-			<HeaderAbout />
 			<div className='h-screen grid grid-cols-4 grid-rows-2 px-5 pt-16 gap-x-[50px] '>
 				<div className='col-span-2  flex flex-col gap-1 '>
 					<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-xl'>

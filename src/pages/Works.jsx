@@ -30,7 +30,7 @@ export function Works() {
 	}, []);
 
 	return (
-		<div className='w-full px-5 py-5'>
+		<div className='w-full px-5 py-13'>
 			<div className='grid grid-cols-2 gap-x-[100px] gap-y-[60px]'>
 				{projetos.map(item => (
 					<div key={item._id} className='relative group overflow-hidden'>

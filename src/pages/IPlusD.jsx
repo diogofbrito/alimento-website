@@ -40,15 +40,11 @@ export function IPlusD() {
 	}, []);
 
 	return (
-		<div className='w-full px-5 py-5'>
-			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[60px]'>
+		<div className='w-full px-5 py-13'>
+			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[60px] '>
 				{images.map(item => (
-					<Link key={item._id} to={`/imaisd/${item.slug}`} className='relative group overflow-hidden block'>
-						<AnimatedImage
-							src={urlFor(item.image).width(1000).quality(80).auto('format').url()}
-							alt={item.title}
-							className='w-full h-[240px] object-cover  '
-						/>
+					<Link key={item._id} to={`/imaisd/${item.slug}`} className='relative group overflow-hidden block w-1/2 '>
+						<AnimatedImage src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='w-full h-[190px] object-cover  ' />
 
 						<div className='absolute inset-0 flex flex-col items-center justify-center text-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out pointer-events-none'>
 							<AnimatedH1 className='font-[500] uppercase tracking-[0.03em] text-base'>{item.title}</AnimatedH1>
