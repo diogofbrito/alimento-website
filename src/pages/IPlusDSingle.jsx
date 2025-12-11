@@ -93,14 +93,14 @@ export function IPlusDSingle() {
 
 			{/* LISTA – grelha com todas as imagens */}
 			{isListOpen && recipe.gallery && (
-				<div className='inset-0 z-40 px-5 pb-5 pt-3'>
-					<div className='grid grid-cols-6 gap-x-[100px]'>
+				<div className='inset-0 z-40 px-5 pb-5 pt-13'>
+					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[50px]'>
 						{recipe.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
-								className='cursor-pointer pt-10 transition-transform duration-1000 ease-out group-hover:scale-101'
+								className='cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
@@ -170,7 +170,7 @@ export function IPlusDSingle() {
 					</div>
 					<div className='col-span-2 h-[calc(100vh-0px)] pt-13 overflow-y-auto '>
 						{recipe.gallery?.map((img, i) => (
-							<div key={i} className='w-full pb-5'>
+							<div key={i} className='w-full pb-[50px]'>
 								<AnimatedImage1 src={urlFor(img).width(1600).quality(80).auto('format').url()} alt={recipe.title} className='w-full  object-cover' />
 							</div>
 						))}

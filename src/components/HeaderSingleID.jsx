@@ -6,7 +6,7 @@ export function HeaderSingleID({ title,  isListOpen, onToggleList}) {
 	const navigate = useNavigate();
 
 	return (
-		<div className='z-90 absolute top-0 w-full left-0 right-0 px-5 pt-4 grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase   '>
+		<div className='z-90 absolute top-4 w-full left-0 right-0 px-5 grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase   '>
 			<div className='col-span-2 '>
 				<AnimatedH1>{title}</AnimatedH1>
 			</div>

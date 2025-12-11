@@ -51,7 +51,7 @@ export function IPlusD() {
 	const { height, width } = IMAGE_SIZES[columns];
 
 	return (
-		<div className='w-full px-5 py-13'>
+		<div className='w-full px-5 pt-13 pb-5'>
 			<div className='fixed bottom-4 left-5 right-5 z-99 mix-blend-difference text-white text-right'>
 				<div className='inline-flex gap-1 tracking-[0.02em] font-[500] text-[0.9rem]'>
 					{[2, 3, 4].map(n => (

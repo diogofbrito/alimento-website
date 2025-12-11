@@ -33,18 +33,18 @@ export function LostFound() {
 			{/* Grid responsivo */}
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 '>
 				{lostFound.map(item => (
-					<Link to={`/lostfound/${item.slug}`} key={item._id} className='group block'>
+					<Link to={`/lostfound/${item.slug}`} key={item._id} className='group block '>
 						{/* Imagem */}
 						{item.placeholderImage && (
 							<AnimatedImage src={urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url()} alt={item.title} className='w-full object-cover mb-2 pointer-events-none' />
 						)}
 
 						{/* Texto */}
-						<div className='flex justify-between items-start  uppercase'>
+						<div className='flex justify-between items-start hover:underline  uppercase'>
 							<div>
-								<AnimatedH1 className=' uppercase epilogueRegular'>{item.title}</AnimatedH1>
+								<AnimatedH1 className=' uppercase '>{item.title}</AnimatedH1>
 							</div>
-							<AnimatedPAfterH1 className='epilogueRegular opacity-80 '>{item.year}</AnimatedPAfterH1>
+							<AnimatedPAfterH1 className=' opacity-80 '>{item.year}</AnimatedPAfterH1>
 						</div>
 					</Link>
 				))}

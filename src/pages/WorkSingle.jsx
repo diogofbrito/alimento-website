@@ -89,14 +89,14 @@ export function WorkSingle() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40  px-5 pt-16 '>
-					<div className='grid grid-cols-6 gap-x-[100px]'>
+				<div className='inset-0 z-40  px-5 pt-13 '>
+					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[60px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
-								className=' cursor-pointer mb-10 transition-transform duration-1000 ease-out group-hover:scale-101'
+								className=' cursor-pointer  transition-transform duration-1000 ease-out group-hover:scale-101'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
@@ -144,7 +144,7 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-16 gap-x-[50px] '>
+				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-13 gap-x-[100px] '>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (
