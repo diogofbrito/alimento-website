@@ -93,14 +93,14 @@ export function IPlusDSingle() {
 
 			{/* LISTA – grelha com todas as imagens */}
 			{isListOpen && recipe.gallery && (
-				<div className='inset-0 z-40 px-5 pt-16'>
-					<div className='grid grid-cols-6 gap-x-[50px]'>
+				<div className='inset-0 z-40 px-5 pb-5 pt-3'>
+					<div className='grid grid-cols-6 gap-x-[100px]'>
 						{recipe.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
-								className='cursor-pointer mb-12 transition-transform duration-1000 ease-out group-hover:scale-101'
+								className='cursor-pointer pt-10 transition-transform duration-1000 ease-out group-hover:scale-101'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
@@ -150,8 +150,8 @@ export function IPlusDSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='grid grid-cols-4 gap-x-[50px]  px-5 '>
-					<div className='col-span-2 mt-16 '>
+				<div className='grid grid-cols-4 gap-x-[100px]  px-5 '>
+					<div className='col-span-2 mt-13 '>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam perspiciatis rem quidem hic. Ea aliquam eos quis fugit dignissimos ut amet accusamus odit. At incidunt ut voluptatem,
 						autem nesciunt sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat itaque autem inventore beatae impedit voluptates magnam ipsa, in excepturi magni iste esse nesciunt
 						quod tempora sunt perferendis. Voluptas, dolore eaque.
@@ -168,7 +168,7 @@ export function IPlusDSingle() {
 							</div>
 						</div>
 					</div>
-					<div className='col-span-2 h-[calc(100vh-0px)] pt-16 overflow-y-auto '>
+					<div className='col-span-2 h-[calc(100vh-0px)] pt-13 overflow-y-auto '>
 						{recipe.gallery?.map((img, i) => (
 							<div key={i} className='w-full pb-5'>
 								<AnimatedImage1 src={urlFor(img).width(1600).quality(80).auto('format').url()} alt={recipe.title} className='w-full  object-cover' />

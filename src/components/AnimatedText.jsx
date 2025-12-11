@@ -37,13 +37,14 @@ export function AnimatedPAfterH1({ children, className = '' }) {
 	);
 }
 
-export function AnimatedImage({ src, alt, className = '', onClick }) {
+export function AnimatedImage({ src, alt, className = '', style={}, onClick }) {
 	return (
 		<motion.img
 			src={src}
 			alt={alt}
 			className={className}
 			onClick={onClick}
+			style={style}
 			variants={pFadeIn}
 			initial='hidden'
 			whileInView='show'

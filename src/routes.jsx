@@ -2,11 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import { Home } from './pages/Home.jsx';
 import { Works } from './pages/Works.jsx';
+import { Works2 } from './pages/Works2.jsx';
 import { WorkSingle } from './pages/WorkSingle.jsx';
 import { IPlusD } from './pages/IPlusD.jsx';
 import { IPlusDSingle } from './pages/IPlusDSingle.jsx';
 import { About } from './pages/About.jsx';
-import { Contacts } from './pages/Contacts.jsx';
 import { ErrorPage } from './pages/ErrorPage.jsx';
 import { Press } from './pages/Press';
 
@@ -23,6 +23,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/projetos',
 				element: <Works />,
+			},
+			{
+				path: '/projetos2',
+				element: <Works2 />,
 			},
 
 			{
@@ -45,10 +49,7 @@ export const router = createBrowserRouter([
 				path: '/sobre',
 				element: <About />,
 			},
-			{
-				path: '/contactos',
-				element: <Contacts />,
-			},
+
 			{
 				path: '*',
 				element: <ErrorPage />,

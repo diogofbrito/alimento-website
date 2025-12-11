@@ -37,7 +37,7 @@ export function Home() {
 						key={index}
 						src={introImages[index]}
 						alt=''
-						className='absolute inset-0 w-full h-full object-cover'
+						className='absolute inset-0 w-full h-full object-cover pointer-events-none'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}

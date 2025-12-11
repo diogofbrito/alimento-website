@@ -90,13 +90,13 @@ export function WorkSingle() {
 			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40  px-5 pt-16 '>
-					<div className='grid grid-cols-6 gap-x-[50px]'>
+					<div className='grid grid-cols-6 gap-x-[100px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}
 								src={urlFor(img).width(500).quality(80).auto('format').url()}
 								alt=''
-								className=' cursor-pointer mb-5 transition-transform duration-1000 ease-out group-hover:scale-101'
+								className=' cursor-pointer mb-10 transition-transform duration-1000 ease-out group-hover:scale-101'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
@@ -109,14 +109,14 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='fixed inset-0 z-40 mx-5 mt-15 grid grid-cols-4 gap-x-[50px] tracking-wide leading-[1.3] '>
+				<div className='fixed z-40 mx-5 mt-15 grid grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
 						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
 						perferendis facilis sed vitae asperiores, doloremque architecto dicta alias exercitationem neque.
 					</div>
-					<div className='col-span-4 '>
-						<div className='grid grid-cols-4 gap-x-[50px] h-[300px] gap-12'>
+					<div className='col-span-4 pt-12'>
+						<div className='grid grid-cols-4 gap-x-[100px]  '>
 							<div className='col-span-1  flex flex-col '>
 								<div className='opacity-45'>Tipo</div>
 								<div>Almoço para 14 pax</div>

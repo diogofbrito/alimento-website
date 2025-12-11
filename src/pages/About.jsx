@@ -29,8 +29,8 @@ export function About() {
 	}, []);
 
 	return (
-		<>
-			<div className='h-screen grid grid-cols-4 grid-rows-2 px-5 pt-16 gap-x-[50px] '>
+		<div className='px-5 pt-16'>
+			<div className='grid grid-cols-4  gap-x-[100px] '>
 				<div className='col-span-2  flex flex-col gap-1 '>
 					<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-xl'>
 						Alimento é Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores iste fuga veniam itaque! Recusandae cum odit voluptas rerum nobis atque quibusdam expedita reiciendis quos
@@ -43,7 +43,24 @@ export function About() {
 				</div>
 			</div>
 
-			
-		</>
+			<div className='grid grid-cols-4 gap-x-[100px] h-[300px] '>
+				<div className='col-span-1  flex flex-col '>
+					<div className='opacity-45'>Tipo</div>
+					<div>Almoço para 14 pax</div>
+				</div>
+				<div className='col-span-1 flex flex-col '>
+					<div className='opacity-45'>Cliente</div>
+					<div>Escola de Agronomia</div>
+				</div>
+				<div className='col-span-1 flex flex-col'>
+					<div className='opacity-45'>Ano</div>
+					<div>2021</div>
+				</div>
+				<div className='col-span-1 flex flex-col'>
+					<div className='opacity-45'>Créditos</div>
+					<div>lorem ipsum</div>
+				</div>
+			</div>
+		</div>
 	);
 }

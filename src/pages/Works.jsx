@@ -2,7 +2,23 @@ import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/imageUrlBuilder.js';
-import { AnimatedH1, AnimatedPAfterH1, AnimatedImage } from '../components/AnimatedText';
+import { AnimatedH1, AnimatedPAfterH1 } from '../components/AnimatedText';
+import { motion } from 'framer-motion';
+
+const movingImageVariants = {
+	rest: { x: '0%' },
+	hover: { x: '100%' }, // move para a coluna vizinha à direita
+};
+
+const img1Variants = {
+	rest: { opacity: 1 },
+	hover: { opacity: 0 },
+};
+
+const img2Variants = {
+	rest: { opacity: 0 },
+	hover: { opacity: 1 },
+};
 
 export function Works() {
 	const [projetos, setProjetos] = useState([]);
@@ -16,8 +32,9 @@ export function Works() {
             title,
             "slug": slug.current,
             year,
+            subtitle,
             placeholderImage,
-            subtitle
+            "hoverImage": gallery[0]
           }`,
 				);
 				setProjetos(data);
@@ -31,20 +48,39 @@ export function Works() {
 
 	return (
 		<div className='w-full px-5 py-13'>
-			<div className='grid grid-cols-2 gap-x-[100px] gap-y-[60px]'>
-				{projetos.map(item => (
-					<div key={item._id} className='relative group overflow-hidden'>
-						<Link to={`/projetos/${item.slug}`} className='block relative'>
-							{/* Imagem */}
-							{item.placeholderImage && <AnimatedImage src={urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url()} alt={item.title} className='w-full h-[500px] object-cover  ' />}
+			{/* 6 colunas no total */}
+			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[150px]'>
+				{projetos.map(item => {
+					if (!item.placeholderImage) return null;
 
-							<div className='absolute inset-0 flex flex-col items-center justify-center text-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out pointer-events-none'>
-								<AnimatedH1 className='font-[500] uppercase tracking-[0.03em] text-base'>{item.title}</AnimatedH1>
-								
-							</div>
+					const img1 = urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url();
+
+					const img2 = item.hoverImage ? urlFor(item.hoverImage).width(1000).quality(80).auto('format').url() : img1;
+
+					return (
+						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
+							<motion.div className='col-span-2 relative h-[300px]' initial='rest' animate='rest' whileHover='hover'>
+								<div className='grid grid-cols-2 h-full w-full'>
+									<div className='relative h-full w-full'>{/* aqui podes pôr texto no futuro, se quiseres */}</div>
+
+									<div className='relative h-full w-full' />
+
+									<motion.div className='absolute top-0 left-0 h-full w-1/2 overflow-hidden' variants={movingImageVariants} transition={{ duration: 0.5, ease: 'easeOut' }}>
+										<motion.img src={img1} alt={item.title} className='w-full h-full object-cover absolute inset-0' variants={img1Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
+										<motion.img src={img2} alt={item.title} className='w-full h-full object-cover absolute inset-0' variants={img2Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
+									</motion.div>
+								</div>
+
+								<div className='mt-2 flex justify-between text-[0.8rem] font-[500] tracking-[0.03em] uppercase'>
+									<div className='max-w-[70%] '>
+										<AnimatedH1>{item.title}</AnimatedH1>
+									</div>
+									{item.year && <AnimatedH1>{item.year}</AnimatedH1>}
+								</div>
+							</motion.div>
 						</Link>
-					</div>
-				))}
+					);
+				})}
 			</div>
 		</div>
 	);
