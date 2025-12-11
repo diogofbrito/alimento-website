@@ -171,7 +171,7 @@ export function IPlusDSingle() {
 					<div className='col-span-2 h-[calc(100vh-0px)] pt-13 overflow-y-auto '>
 						{recipe.gallery?.map((img, i) => (
 							<div key={i} className='w-full pb-[50px]'>
-								<AnimatedImage1 src={urlFor(img).width(1600).quality(80).auto('format').url()} alt={recipe.title} className='w-full  object-cover' />
+								<AnimatedImage1 src={urlFor(img).width(1600).quality(80).auto('format').url()} alt={recipe.title} className='w-full  object-cover pointer-events-none' />
 							</div>
 						))}
 					</div>

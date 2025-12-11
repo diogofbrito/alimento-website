@@ -1,7 +1,9 @@
-// IntroLoader.jsx
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import videoFile from '../assets/introAlimento.mp4';
+import {  AnimatedButton } from './AnimatedText';
+
+
 
 export function IntroLoader({ onFinish }) {
 	const [isVisible, setIsVisible] = useState(true);
@@ -40,10 +42,10 @@ export function IntroLoader({ onFinish }) {
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 					/>
 
-					{/* Botão de SKIP */}
-					<button type='button' onClick={handleSkip} className='absolute bottom-4 right-5 z-20 tracking-[0.02em] font-[500] text-[0.9rem] uppercase text-white mix-blend-difference hover:underline'>
+				
+					<AnimatedButton onClick={handleSkip} className='absolute bottom-4 right-5 z-20 tracking-[0.02em] font-[500] text-[0.9rem] uppercase text-white mix-blend-difference hover:underline'>
 						saltar
-					</button>
+					</AnimatedButton>
 				</motion.div>
 			)}
 		</AnimatePresence>

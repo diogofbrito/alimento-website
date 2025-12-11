@@ -14,7 +14,7 @@ export function AnimatedH1({ children, className = '' }) {
 export function AnimatedButton({ children, onClick, className = '' }) {
 	return (
 		<motion.div className={`overflow-hidden inline-block ${className}`} initial='hidden' whileInView='show' viewport={{ once: true, amount: 0.2 }}>
-			<motion.button onClick={onClick} variants={h1SlideUp}  className='inline-block will-change-transform cursor-pointer hover:underline'>
+			<motion.button onClick={onClick} variants={h1SlideUp}  className='inline-block will-change-transform cursor-pointer uppercase hover:underline'>
 				{children}
 			</motion.button>
 		</motion.div>
@@ -55,17 +55,6 @@ export function AnimatedImage({ src, alt, className = '', style={}, onClick }) {
 	);
 }
 
-export function AnimatedImage1({ src, alt, className = '', onClick }) {
-	return (
-		<motion.img
-			src={src}
-			alt={alt}
-			className={className}
-			onClick={onClick}
-			variants={pFadeIn}
-			initial='hidden'
-			whileInView='show'
-			viewport={{ once: true, amount: 0.2 }}
-		/>
-	);
+export function AnimatedImage1({ src, alt, className = '', onClick, style = {} }) {
+	return <motion.img src={src} alt={alt} style={style} className={className} onClick={onClick} variants={pFadeIn} initial='hidden' whileInView='show' viewport={{ once: true, amount: 0.2 }} />;
 }
