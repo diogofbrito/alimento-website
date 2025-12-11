@@ -53,7 +53,7 @@ export function IPlusD() {
 	return (
 		<div className='w-full px-5 pt-13 pb-5'>
 			{/* SELECTOR */}
-			<div className='fixed bottom-4 left-5 right-5 z-99 mix-blend-difference text-white text-right'>
+			<div className='fixed bottom-4 left-5 right-5 z-9999  text-right'>
 				<div className='inline-flex gap-1 tracking-[0.02em] font-[500] text-[0.9rem]'>
 					{/* 4 colunas (grid) */}
 					<button
