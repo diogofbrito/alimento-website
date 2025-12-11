@@ -6,13 +6,14 @@ import { AnimatedH1, AnimatedImage1 } from '../components/AnimatedText';
 import { motion } from 'framer-motion';
 
 const IMAGE_SIZES = {
-	4: { height: 310, width: '100%' },
+	4: { height: 220, width: '100%' },
+	3: { height: 290, width: '100%' },
 	2: { height: 450, width: '100%' },
 };
 
 export function IPlusD() {
 	const [images, setImages] = useState([]);
-	const [columns, setColumns] = useState(4); // 4 ou 2 (grid)
+	const [columns, setColumns] = useState(4); // 4, 3 ou 2 (grid)
 	const [isList, setIsList] = useState(false); // lista on/off
 
 	useEffect(() => {
@@ -47,15 +48,16 @@ export function IPlusD() {
 		fetchImaisd();
 	}, []);
 
-	const gridColsClass = columns === 4 ? 'grid-cols-4' : 'grid-cols-2';
+	const gridColsClass = columns === 4 ? 'grid-cols-4' : columns === 3 ? 'grid-cols-3' : 'grid-cols-2';
+
 	const { height, width } = IMAGE_SIZES[columns];
 
 	return (
 		<div className='w-full px-5 pt-13 pb-5'>
 			{/* SELECTOR */}
-			<div className='fixed bottom-4 left-5 right-5 z-9999  text-right'>
+			<div className='fixed bottom-4 left-5 right-5 z-9999 text-right'>
 				<div className='inline-flex gap-1 tracking-[0.02em] font-[500] text-[0.9rem]'>
-					{/* 4 colunas (grid) */}
+					{/* 4 colunas */}
 					<button
 						onClick={() => {
 							setIsList(false);
@@ -66,7 +68,18 @@ export function IPlusD() {
 						4
 					</button>
 
-					{/* 2 colunas (grid) */}
+					{/* 3 colunas */}
+					<button
+						onClick={() => {
+							setIsList(false);
+							setColumns(3);
+						}}
+						className={`px-3 py-1 rounded-full transition ${!isList && columns === 3 ? 'underline text-black' : 'text-black/50 hover:text-black'}`}
+					>
+						3
+					</button>
+
+					{/* 2 colunas */}
 					<button
 						onClick={() => {
 							setIsList(false);
@@ -84,7 +97,7 @@ export function IPlusD() {
 				</div>
 			</div>
 
-			{/* GRID MODES (4 / 2) → EXACTAMENTE O TEU CÓDIGO ANTIGO */}
+			{/* GRID MODES (4 / 3 / 2) – mantém o mesmo efeito suave do teu código antigo */}
 			{!isList && (
 				<motion.div layout className={`grid ${gridColsClass} gap-x-[100px] gap-y-[60px]`} transition={{ duration: 0.5, ease: 'easeInOut' }}>
 					{images.map(item => (
@@ -97,13 +110,13 @@ export function IPlusD() {
 				</motion.div>
 			)}
 
-			{/* LIST MODE → layout separado, sem motion/layout */}
+			{/* LIST MODE – layout separado, sem motion/layout */}
 			{isList && (
 				<div className='grid grid-cols-4 gap-x-[100px] gap-y-[60px]'>
 					{images.map(item => (
 						<div key={item._id} className='contents'>
 							{/* imagem ocupa 2 colunas */}
-							<Link to={`/imaisd/${item.slug}`} className='col-span-2 block w-[40%]'>
+							<Link to={`/imaisd/${item.slug}`} className='col-span-2 block w-[75%]'>
 								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover w-full' style={{ height: '370px' }} />
 							</Link>
 
