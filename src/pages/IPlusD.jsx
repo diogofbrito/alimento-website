@@ -33,6 +33,8 @@ export function IPlusD() {
 						year: doc.year,
 					})),
 				);
+				flattened.sort((a, b) => b.year - a.year);
+
 
 				setImages(flattened);
 			} catch (error) {
@@ -99,8 +101,8 @@ export function IPlusD() {
 					{images.map(item => (
 						<div key={item._id} className='contents'>
 							{/* imagem ocupa 2 colunas */}
-							<Link to={`/imaisd/${item.slug}`} className='col-span-2 block w-[75%]'>
-								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover w-full' style={{ height: '420px' }} />
+							<Link to={`/imaisd/${item.slug}`} className='col-span-2 block w-[50%]'>
+								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover w-full' style={{ height: '280px' }} />
 							</Link>
 
 							{/* título */}
