@@ -34,6 +34,7 @@ export function IntroLoader({ onFinish }) {
 					<motion.video
 						src={videoFile}
 						autoPlay
+						onClick={handleSkip}
 						muted
 						playsInline
 						className='absolute inset-0 w-full h-full object-cover z-10'
@@ -42,10 +43,7 @@ export function IntroLoader({ onFinish }) {
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 					/>
 
-				
-					<AnimatedButton onClick={handleSkip} className='absolute bottom-4 right-5 z-20 tracking-[0.02em] font-[500] text-[0.9rem] uppercase text-white mix-blend-difference hover:underline'>
-						saltar
-					</AnimatedButton>
+					
 				</motion.div>
 			)}
 		</AnimatePresence>

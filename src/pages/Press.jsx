@@ -45,8 +45,8 @@ export function Press() {
 						onMouseEnter={() => setHoverIndex(index)}
 						onMouseLeave={() => setHoverIndex(null)}
 					>
-						<a href={item.link} target='_blank' className='flex justify-between items-center  text-lg tracking-[0.02em] hover:underline transition-opacity duration-300 ease-in-out '>
-							<span className='font-[500]'>{item.title}</span>
+						<a href={item.link} target='_blank' className='flex justify-between items-center   tracking-[0.02em] hover:underline transition-opacity duration-300 ease-in-out '>
+							<span className='font-[500] uppercase'>{item.title}</span>
 							<span className='font-[400]'>{item.year}</span>
 						</a>
 					</motion.div>

@@ -6,26 +6,21 @@ import { AnimatedH1, AnimatedImage1 } from '../components/AnimatedText';
 import { motion } from 'framer-motion';
 
 const IMAGE_SIZES = {
-	4: { height: 220, width: '100%' },
-	3: { height: 290, width: '100%' },
-	2: { height: 450, width: '100%' },
+	3: { height: 350, width: '100%' },
+	2: { height: 550, width: '100%' },
 };
 
 export function IPlusD() {
 	const [images, setImages] = useState([]);
-	const [columns, setColumns] = useState(4); // 4, 3 ou 2 (grid)
-	const [isList, setIsList] = useState(false); // lista on/off
+	const [columns, setColumns] = useState(3);
+	const [isList, setIsList] = useState(false);
 
 	useEffect(() => {
 		const fetchImaisd = async () => {
 			try {
 				const data = await sanityClient.fetch(`
           *[_type == "imaisd"] | order(_createdAt desc) {
-            _id,
-            title,
-            "slug": slug.current,
-            year,
-            gallery
+            _id, title, "slug": slug.current, year, gallery
           }
         `);
 
@@ -48,8 +43,7 @@ export function IPlusD() {
 		fetchImaisd();
 	}, []);
 
-	const gridColsClass = columns === 4 ? 'grid-cols-4' : columns === 3 ? 'grid-cols-3' : 'grid-cols-2';
-
+	const gridColsClass = columns === 3 ? 'grid-cols-3' : 'grid-cols-2';
 	const { height, width } = IMAGE_SIZES[columns];
 
 	return (
@@ -57,24 +51,13 @@ export function IPlusD() {
 			{/* SELECTOR */}
 			<div className='fixed bottom-4 left-5 right-5 z-9999 text-right'>
 				<div className='inline-flex gap-1 tracking-[0.02em] font-[500] text-[0.9rem]'>
-					{/* 4 colunas */}
-					<button
-						onClick={() => {
-							setIsList(false);
-							setColumns(4);
-						}}
-						className={`px-3 py-1 rounded-full transition ${!isList && columns === 4 ? 'underline text-black' : 'text-black/50 hover:text-black'}`}
-					>
-						4
-					</button>
-
 					{/* 3 colunas */}
 					<button
 						onClick={() => {
 							setIsList(false);
 							setColumns(3);
 						}}
-						className={`px-3 py-1 rounded-full transition ${!isList && columns === 3 ? 'underline text-black' : 'text-black/50 hover:text-black'}`}
+						className={`px-3 py-1 rounded-full transition  ${!isList && columns === 3 ? 'underline text-black' : 'text-black/50 hover:text-black'}`}
 					>
 						3
 					</button>
@@ -97,12 +80,12 @@ export function IPlusD() {
 				</div>
 			</div>
 
-			{/* GRID MODES (4 / 3 / 2) – mantém o mesmo efeito suave do teu código antigo */}
+			{/* GRID MODES (3 / 2) — com animações suaves */}
 			{!isList && (
-				<motion.div layout className={`grid ${gridColsClass} gap-x-[100px] gap-y-[60px]`} transition={{ duration: 0.5, ease: 'easeInOut' }}>
+				<motion.div layout className={`grid ${gridColsClass} gap-x-[100px] gap-y-[120px]`} transition={{ duration: 0.5, ease: 'easeInOut' }}>
 					{images.map(item => (
 						<motion.div key={item._id} layout>
-							<Link className='relative block group w-[85%]' to={`/imaisd/${item.slug}`}>
+							<Link className='relative block group w-full' to={`/imaisd/${item.slug}`}>
 								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover' style={{ height: `${height}px`, width }} />
 							</Link>
 						</motion.div>
@@ -110,14 +93,14 @@ export function IPlusD() {
 				</motion.div>
 			)}
 
-			{/* LIST MODE – layout separado, sem motion/layout */}
+			{/* LIST MODE */}
 			{isList && (
 				<div className='grid grid-cols-4 gap-x-[100px] gap-y-[60px]'>
 					{images.map(item => (
 						<div key={item._id} className='contents'>
 							{/* imagem ocupa 2 colunas */}
 							<Link to={`/imaisd/${item.slug}`} className='col-span-2 block w-[75%]'>
-								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover w-full' style={{ height: '370px' }} />
+								<AnimatedImage1 src={urlFor(item.image).width(1000).quality(80).auto('format').url()} alt={item.title} className='object-cover w-full' style={{ height: '420px' }} />
 							</Link>
 
 							{/* título */}
