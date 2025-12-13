@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import { Home } from './pages/Home.jsx';
 import { Works } from './pages/Works.jsx';
-import { Works2 } from './pages/Works2.jsx';
 import { WorkSingle } from './pages/WorkSingle.jsx';
 import { IPlusD } from './pages/IPlusD.jsx';
 import { IPlusDSingle } from './pages/IPlusDSingle.jsx';
@@ -24,10 +23,7 @@ export const router = createBrowserRouter([
 				path: '/projetos',
 				element: <Works />,
 			},
-			{
-				path: '/projetos2',
-				element: <Works2 />,
-			},
+			
 
 			{
 				path: '/projetos/:slug',

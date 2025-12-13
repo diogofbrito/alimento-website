@@ -33,8 +33,9 @@ export function Works() {
             "slug": slug.current,
             year,
             subtitle,
-            placeholderImage,
-            "hoverImage": gallery[0]
+			hoverPair,
+			"img1": hoverPair[0],
+			"img2": hoverPair[1]
           }`,
 				);
 				setProjetos(data);
@@ -51,11 +52,9 @@ export function Works() {
 			{/* 6 colunas no total */}
 			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[150px]'>
 				{projetos.map(item => {
-					if (!item.placeholderImage) return null;
 
-					const img1 = urlFor(item.placeholderImage).width(1000).quality(80).auto('format').url();
-
-					const img2 = item.hoverImage ? urlFor(item.hoverImage).width(1000).quality(80).auto('format').url() : img1;
+					const img1 = item.img1 ? urlFor(item.img1).width(1000).quality(80).auto('format').url() : null;
+					const img2 = item.img2 ? urlFor(item.img2).width(1000).quality(80).auto('format').url() : null;
 
 					return (
 						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
