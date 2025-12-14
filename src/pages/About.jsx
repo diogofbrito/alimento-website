@@ -39,7 +39,14 @@ export function About() {
 					</AnimatedPAfterH1>
 				</div>
 				<div className='col-span-2'>
-					<video src={video} autoPlay loop muted />
+					<div className='relative w-full h-full' style={{ paddingTop: '56.25%' }}>
+						<iframe
+							src='https://player.vimeo.com/video/1146408333?autoplay=1&loop=1&muted=1&background=1'
+							frameBorder='0'
+							allow='autoplay; fullscreen; picture-in-picture'
+							className='absolute top-0 left-0 w-full h-full'
+						/>
+					</div>
 				</div>
 			</div>
 

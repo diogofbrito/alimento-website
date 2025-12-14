@@ -1,32 +1,43 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import videoFile from '../assets/introAlimento.mp4';
-import {  AnimatedButton } from './AnimatedText';
-
-
+import { h1SlideUp } from './animations/variants.js';
+import videoFile from '../assets/videoIntro.mp4';
 
 export function IntroLoader({ onFinish }) {
+	const [showTitle, setShowTitle] = useState(false);
 	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
-		// Iniciar fade-out aos 5s (caso o user não clique em skip)
+		const titleFramer = setTimeout(() => {
+			setShowTitle(true);
+		}, 2000);
+
 		const fadeOutTimer = setTimeout(() => {
 			setIsVisible(false);
-		}, 5000);
+		}, 7000);
 
 		return () => {
+			clearTimeout(titleFramer);
 			clearTimeout(fadeOutTimer);
 		};
 	}, []);
 
 	const handleSkip = () => {
-		setIsVisible(false); // dispara o exit → fade-out → onFinish no App
+		setIsVisible(false);
 	};
 
 	return (
 		<AnimatePresence onExitComplete={onFinish}>
 			{isVisible && (
 				<motion.div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden' initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}>
+					{showTitle && (
+						<motion.div className='overflow-hidden inline-block z-20' initial='hidden' animate='show' exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}>
+							<motion.h1 variants={h1SlideUp} className='inline-block will-change-transform text-white uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto '>
+								Alimento
+							</motion.h1>
+						</motion.div>
+					)}
+
 					{/* Fundo */}
 					<div className='absolute inset-0 z-0 bg-black' />
 
@@ -42,8 +53,6 @@ export function IntroLoader({ onFinish }) {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 					/>
-
-					
 				</motion.div>
 			)}
 		</AnimatePresence>

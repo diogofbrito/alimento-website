@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 const movingImageVariants = {
 	rest: { x: '0%' },
-	hover: { x: '100%' }, // move para a coluna vizinha à direita
+	hover: { x: '100%' }, 
 };
 
 const img1Variants = {
