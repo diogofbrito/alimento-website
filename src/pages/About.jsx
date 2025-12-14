@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { AnimatedH1, AnimatedPAfterH1, AnimatedImage } from '../components/AnimatedText';
-import video from '../assets/Images/contacts.mp4';
+import video from '../assets/abouvid.mp4';
 
 export function About() {
 	const [press, setPress] = useState([]);
@@ -39,14 +39,7 @@ export function About() {
 					</AnimatedPAfterH1>
 				</div>
 				<div className='col-span-2'>
-					<div className='relative w-full h-full' style={{ paddingTop: '56.25%' }}>
-						<iframe
-							src='https://player.vimeo.com/video/1146408333?autoplay=1&loop=1&muted=1&background=1'
-							frameBorder='0'
-							allow='autoplay; fullscreen; picture-in-picture'
-							className='absolute top-0 left-0 w-full h-full'
-						/>
-					</div>
+					<video src={video} autoPlay loop muted />
 				</div>
 			</div>
 
