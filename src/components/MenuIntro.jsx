@@ -6,9 +6,9 @@ export function MenuIntro() {
 		<div className='fixed flex  items-center left-5 right-5 bottom-0 top-0 z-50 pointer-events-none mix-blend-difference text-white '>
 			<div className='grid grid-cols-4 gap-x-[100px] uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto w-full'>
 				<AnimatedH1 className='col-span-1 '>
-					<Link to='/' className='hover:underline'>
+					
 						Alimento
-					</Link>
+					
 				</AnimatedH1>
 				<div className='hidden'></div>
 				<menu className='col-span-3 grid grid-cols-3 gap-x-[100px]'>
