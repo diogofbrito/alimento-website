@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleWork } from '../components/HeaderSingleWork';
-import { AnimatedImage,AnimatedImage1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedImage1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
 
@@ -14,12 +14,7 @@ export function WorkSingle() {
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 
-	const breakpointColumnsObj = {
-		default: 5,
-		1100: 4,
-		700: 3,
-		500: 2,
-	};
+
 
 	useEffect(() => {
 		sanityClient
@@ -35,6 +30,28 @@ export function WorkSingle() {
 			)
 			.then(data => setProjeto(data));
 	}, [slug]);
+
+	useEffect(() => {
+		const handleKeyDown = e => {
+			// não navegar se overlays estiverem abertos
+			if (isListOpen || isInfoOpen) return;
+			if (!projeto?.gallery?.length) return;
+
+			if (e.key === 'ArrowRight') {
+				setCurrentImageIndex(prev => (prev < projeto.gallery.length - 1 ? prev + 1 : 0));
+			}
+
+			if (e.key === 'ArrowLeft') {
+				setCurrentImageIndex(prev => (prev > 0 ? prev - 1 : projeto.gallery.length - 1));
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [projeto, isListOpen, isInfoOpen]);
 
 	useEffect(() => {
 		if (projeto?.gallery) {
@@ -89,7 +106,7 @@ export function WorkSingle() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40  px-5 pt-13 '>
+				<div className='inset-0 z-40  px-5 pt-[100px] pb-13 '>
 					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[60px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
@@ -109,7 +126,7 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='fixed z-40 mx-5 mt-15 grid grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
+				<div className='fixed z-40 mx-5 pt-[100px] pb-13 grid grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
 						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
@@ -131,8 +148,7 @@ export function WorkSingle() {
 							</div>
 							<div className='col-span-1 flex flex-col'>
 								<div className='opacity-45'>Créditos</div>
-								<div>lorem ipsum
-								</div>
+								<div>lorem ipsum</div>
 							</div>
 						</div>
 					</div>
@@ -144,7 +160,7 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-13 gap-x-[100px] '>
+				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-[100px] pb-13  gap-x-[100px] '>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (

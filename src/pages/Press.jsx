@@ -30,7 +30,7 @@ export function Press() {
 
 	return (
 		<>
-			<div className='px-5 pt-16  grid grid-cols-2  gap-x-[100px]'>
+			<div className='px-5 pt-[100px] pb-13  grid grid-cols-2  gap-x-[100px]'>
 				{/* Lista de Projetos */}
 				{press.map((item, index) => (
 					<motion.div

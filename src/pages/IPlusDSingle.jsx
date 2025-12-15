@@ -31,7 +31,7 @@ export function IPlusDSingle() {
 					{ slug },
 				);
 				setRecipe(data);
-				setCurrentImageIndex(0); // reset quando muda de receita
+				setCurrentImageIndex(0); 
 			} catch (error) {
 				console.error('Erro ao buscar receita:', error.message);
 			}
@@ -40,7 +40,6 @@ export function IPlusDSingle() {
 		fetchRecipe();
 	}, [slug]);
 
-	// preload de imagens (opcional, copia do WorkSingle)
 	useEffect(() => {
 		if (recipe?.gallery) {
 			const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
@@ -55,7 +54,6 @@ export function IPlusDSingle() {
 
 	if (!recipe) return null;
 
-	// cálculo prev/next igual ao WorkSingle, mas com recipe.gallery
 	let prevIndex = null;
 	let nextIndex = null;
 
@@ -91,9 +89,8 @@ export function IPlusDSingle() {
 				}}
 			/>
 
-			{/* LISTA – grelha com todas as imagens */}
 			{isListOpen && recipe.gallery && (
-				<div className='inset-0 z-40 px-5 pb-5 pt-13'>
+				<div className='inset-0 z-40 px-5 pb-5 pt-[100px]'>
 					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[50px]'>
 						{recipe.gallery.map((img, i) => (
 							<AnimatedImage1
@@ -111,47 +108,9 @@ export function IPlusDSingle() {
 				</div>
 			)}
 
-			{/* INFORMAÇÃO – descrição + ingredientes + preparação */}
-			{isInfoOpen && (
-				<div className='fixed inset-0 z-40 px-5 mt-[150px] overflow-y-auto w-1/2 tracking-wide leading-[1.3] gambarino'>
-					{recipe.description && (
-						<AnimatedP className='mb-6'>
-							<PortableText value={recipe.description} components={{ block: { normal: Paragraph } }} />
-						</AnimatedP>
-					)}
-
-					{recipe.ingredients?.length > 0 && (
-						<div className='mb-6'>
-							<h3 className='uppercase text-xs mb-2'>Ingredientes</h3>
-							<ul className='text-sm leading-relaxed'>
-								{recipe.ingredients.map((ing, i) => (
-									<li key={i}>
-										<strong>{ing.quantity}</strong> {ing.item}
-										{ing.note && <span> — {ing.note}</span>}
-									</li>
-								))}
-							</ul>
-						</div>
-					)}
-
-					{recipe.preparation?.length > 0 && (
-						<div className='mb-6'>
-							<h3 className='uppercase text-xs mb-2'>Preparação</h3>
-							<ol className='text-sm leading-relaxed list-decimal list-inside'>
-								{recipe.preparation
-									.sort((a, b) => (a.stepNumber || 0) - (b.stepNumber || 0))
-									.map((step, i) => (
-										<li key={i}>{step.instruction}</li>
-									))}
-							</ol>
-						</div>
-					)}
-				</div>
-			)}
-
 			{!isListOpen && !isInfoOpen && (
 				<div className='grid grid-cols-4 gap-x-[100px]  px-5 '>
-					<div className='col-span-2 mt-13 '>
+					<div className='col-span-2 pt-[100px]'>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam perspiciatis rem quidem hic. Ea aliquam eos quis fugit dignissimos ut amet accusamus odit. At incidunt ut voluptatem,
 						autem nesciunt sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat itaque autem inventore beatae impedit voluptates magnam ipsa, in excepturi magni iste esse nesciunt
 						quod tempora sunt perferendis. Voluptas, dolore eaque.
@@ -168,7 +127,7 @@ export function IPlusDSingle() {
 							</div>
 						</div>
 					</div>
-					<div className='col-span-2 h-[calc(100vh-0px)] pt-13 overflow-y-auto '>
+					<div className='col-span-2 h-[calc(100vh-0px)] pt-[100px] overflow-y-auto '>
 						{recipe.gallery?.map((img, i) => (
 							<div key={i} className='w-full pb-[50px]'>
 								<AnimatedImage1 src={urlFor(img).width(1600).quality(80).auto('format').url()} alt={recipe.title} className='w-full  object-cover pointer-events-none' />

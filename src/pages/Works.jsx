@@ -48,7 +48,7 @@ export function Works() {
 	}, []);
 
 	return (
-		<div className='w-full px-5 py-13'>
+		<div className='w-full px-5 pt-[100px] pb-13'>
 			{/* 6 colunas no total */}
 			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[150px]'>
 				{projetos.map(item => {
@@ -60,7 +60,7 @@ export function Works() {
 						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
 							<motion.div className='col-span-2 relative h-[300px]' initial='rest' animate='rest' whileHover='hover'>
 								<div className='grid grid-cols-2 h-full w-full'>
-									<div className='relative h-full w-full'>{/* aqui podes pôr texto no futuro, se quiseres */}</div>
+									<div className='relative h-full w-full uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em] '>[PUBLICAÇÃO]</div>
 
 									<div className='relative h-full w-full' />
 

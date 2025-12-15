@@ -29,7 +29,7 @@ export function About() {
 	}, []);
 
 	return (
-		<div className='px-5 pt-16'>
+		<div className='px-5 pt-[100px] pb-13 '>
 			<div className='grid grid-cols-4  gap-x-[100px] '>
 				<div className='col-span-2  flex flex-col gap-1 '>
 					<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-xl'>
