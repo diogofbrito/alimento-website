@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
-import { AnimatedImage1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedImage1, AnimatedH1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
 
 export function IPlusD() {
-	const [items, setItems] = useState([]); 
+	const [projects, setProjects] = useState([]);
+	const [items, setItems] = useState([]);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 	const [isMainLoaded, setIsMainLoaded] = useState(false);
-
 
 	useEffect(() => {
 		sanityClient
@@ -22,7 +22,9 @@ export function IPlusD() {
           _id,
           title,
           year,
+		  coverImage,
           description,
+		"pdfUrl": pdf.asset->url,
           "slug": slug.current,
           gallery[]{
             _key,
@@ -33,6 +35,7 @@ export function IPlusD() {
       `,
 			)
 			.then(data => {
+				setProjects(data || []);
 				const flattened = (data || []).flatMap(
 					doc =>
 						(doc.gallery || [])
@@ -45,6 +48,8 @@ export function IPlusD() {
 								projectDescription: doc.description,
 								projectSlug: doc.slug,
 								projectId: doc._id,
+								coverImage: doc.coverImage,
+								pdfUrl: doc.pdfUrl,
 							}))
 							.filter(it => it.image?.asset?._ref), // evita urlFor(null)
 				);
@@ -57,10 +62,9 @@ export function IPlusD() {
 			});
 	}, []);
 
-
-useEffect(() => {
-	setIsMainLoaded(false); 
-}, [currentImageIndex]);
+	useEffect(() => {
+		setIsMainLoaded(false);
+	}, [currentImageIndex]);
 
 	useEffect(() => {
 		const handleKeyDown = e => {
@@ -108,7 +112,7 @@ useEffect(() => {
 	}
 
 	return (
-		<div>
+		<>
 			<HeaderSingleIPlusD
 				title={current?.projectTitle || 'I + D'}
 				currentIndex={currentImageIndex}
@@ -127,7 +131,7 @@ useEffect(() => {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40 px-5 pt-[100px] pb-13'>
+				<div className='inset-0 z-40 px-5 pt-[100px] pb-5'>
 					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[60px]'>
 						{items.map((it, i) => (
 							<AnimatedImage1
@@ -145,38 +149,62 @@ useEffect(() => {
 				</div>
 			)}
 
-			{/* Informações */}
+			{/* INFORMAÇÕES (todas as publicações) */}
 			{isInfoOpen && (
-				<div className='fixed z-40 mx-5 pt-[100px] pb-13 grid grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
-					<div className='col-span-2 opacity-90'>I + D é um arquivo de investigação, referências e processos — imagens, materiais e exercícios que alimentam a prática do Alimento.</div>
-
-					<div className='col-span-4 pt-12'>
-						<div className='grid grid-cols-4 gap-x-[100px]'>
-							<div className='col-span-1 flex flex-col'>
-								<div className='opacity-45'>Projeto</div>
-								<div>{current?.projectTitle}</div>
-							</div>
-							<div className='col-span-1 flex flex-col'>
-								<div className='opacity-45'>Ano</div>
-								<div>{current?.projectYear || '—'}</div>
-							</div>
-							<div className='col-span-2 flex flex-col'>
-								<div className='opacity-45'>Tipo</div>
-								<div>[Publicação de receitas]</div>
-							</div>
+				<div className=' z-40 mx-5 pt-[100px] pb-5 tracking-wide leading-[1.3]'>
+					<div className='grid grid-cols-4 gap-x-[100px]'>
+						<div className='col-span-2 '>
+							<AnimatedP className=' tracking-[0.02em] text-[1.1rem]'>
+								I + D é um arquivo de investigação, referências e processos — imagens, materiais e exercícios que alimentam a prática do Alimento.
+							</AnimatedP>
 						</div>
 					</div>
 
-					{current?.projectDescription && (
-						<AnimatedP className='col-span-4 pt-12'>
-							<PortableText value={current.projectDescription} components={{ block: { normal: Paragraph } }} />
-						</AnimatedP>
-					)}
+					<div className='pt-12'>
+						<div className='grid grid-cols-4 gap-x-[100px] opacity-45 pb-4'>
+							<AnimatedH1>Publicações de receitas</AnimatedH1>
+							<AnimatedH1>Nome</AnimatedH1>
+							<AnimatedH1>Ano</AnimatedH1>
+							<AnimatedH1>Ver</AnimatedH1>
+						</div>
+
+						<div className='grid gap-y-6'>
+							{projects.map(p => (
+								<div key={p._id} className='grid grid-cols-4 gap-x-[100px] items-start'>
+									{/* capa */}
+									<div>
+										{p.coverImage?.asset ? (
+											<AnimatedImage1 src={urlFor(p.coverImage).width(300).quality(90).auto('format').url()} alt={p.title} className='object-contain' />
+										) : (
+											<div className='opacity-40'>—</div>
+										)}
+									</div>
+
+									{/* nome */}
+									<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
+
+									{/* ano */}
+									<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem] opacity-50'>{p.year || '—'}</AnimatedH1>
+
+									{/* pdf */}
+									<AnimatedH1>
+										{p.pdfUrl ? (
+											<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
+												PDF
+											</a>
+										) : (
+											<div className='opacity-40'>—</div>
+										)}
+									</AnimatedH1>
+								</div>
+							))}
+						</div>
+					</div>
 				</div>
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-[100px] pb-13 gap-x-[100px]'>
+				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
 					{/* foto anterior */}
 					<div className='col-span-1'>
 						{prevIndex !== null && (
@@ -228,6 +256,6 @@ useEffect(() => {
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	);
 }

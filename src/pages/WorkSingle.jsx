@@ -181,7 +181,7 @@ export function WorkSingle() {
 							key={currentImageIndex}
 							src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
 							alt={projeto.title}
-							className='max-h-[90vh] object-contain image-main opacity-0 pointer-events-none '
+							className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none '
 							onLoad={e => e.currentTarget.classList.add('opacity-100')}
 						/>
 					</div>

@@ -5,8 +5,8 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 	const navigate = useNavigate();
 
 	return (
-		<div className='z-90 absolute w-full left-0 right-0 top-4 px-5 grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase'>
-			<div className='col-span-1'>
+		<div className='z-90 fixed w-full left-0 right-0 top-4 px-5 grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase '>
+			<div className='col-span-1 '>
 				<AnimatedH1>i + d</AnimatedH1>
 			</div>
 

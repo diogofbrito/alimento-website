@@ -70,11 +70,11 @@ export function Works() {
 									</motion.div>
 								</div>
 
-								<div className='mt-2 flex justify-between text-[1rem] font-[500] tracking-[0.03em] '>
+								<div className='mt-2 flex justify-between text-[0.9rem] font-[500] tracking-[0.03em] uppercase'>
 									<div className='max-w-[70%] '>
 										<AnimatedH1>{item.title}</AnimatedH1>
 									</div>
-									{item.year && <AnimatedH1>{item.year}</AnimatedH1>}
+									{item.year && <AnimatedH1 className='opacity-50'>{item.year}</AnimatedH1>}
 								</div>
 							</motion.div>
 						</Link>
