@@ -37,7 +37,7 @@ export function IntroLoader({ onFinish }) {
 							animate='show'
 							exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 						>
-							<motion.h1 variants={h1SlideUp} className='inline-block will-change-transform  uppercase tracking-[0.02em] font-[500] text-[0.9rem]  '>
+							<motion.h1 variants={h1SlideUp} className='inline-block will-change-transform  uppercase tracking-[0.62em] font-[500] text-[1.1rem]  '>
 								Alimento
 							</motion.h1>
 						</motion.div>

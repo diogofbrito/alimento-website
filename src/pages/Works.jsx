@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/imageUrlBuilder.js';
-import { AnimatedH1, AnimatedPAfterH1 } from '../components/AnimatedText';
+import { AnimatedH1} from '../components/AnimatedText';
 import { motion } from 'framer-motion';
 
 const movingImageVariants = {
@@ -70,11 +70,11 @@ export function Works() {
 									</motion.div>
 								</div>
 
-								<div className='mt-2 flex justify-between text-[0.9rem] font-[500] tracking-[0.03em] uppercase'>
-									<div className='max-w-[70%] '>
+								<div className='mt-2 flex justify-between text-[0.9rem]  tracking-[0.03em] uppercase'>
+									<div className='max-w-[70%] font-[500] '>
 										<AnimatedH1>{item.title}</AnimatedH1>
 									</div>
-									{item.year && <AnimatedH1 className='opacity-50'>{item.year}</AnimatedH1>}
+									{item.year && <AnimatedH1>{item.year}</AnimatedH1>}
 								</div>
 							</motion.div>
 						</Link>

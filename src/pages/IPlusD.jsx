@@ -174,7 +174,7 @@ export function IPlusD() {
 									{/* capa */}
 									<div>
 										{p.coverImage?.asset ? (
-											<AnimatedImage1 src={urlFor(p.coverImage).width(300).quality(90).auto('format').url()} alt={p.title} className='object-contain' />
+											<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
 										) : (
 											<div className='opacity-40'>—</div>
 										)}
@@ -184,7 +184,7 @@ export function IPlusD() {
 									<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
 
 									{/* ano */}
-									<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem] opacity-50'>{p.year || '—'}</AnimatedH1>
+									<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
 
 									{/* pdf */}
 									<AnimatedH1>
@@ -233,11 +233,11 @@ export function IPlusD() {
 						/>
 
 						{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
-							<AnimatedP className='text-center opacity-90'>
+							<AnimatedP className='text-center'>
 								<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
 							</AnimatedP>
 						) : (
-							<div className='h-[24px]' /> // mantém o layout sem “salto” (ajusta a altura)
+							<div className='h-[24px]' />
 						)}
 					</div>
 
