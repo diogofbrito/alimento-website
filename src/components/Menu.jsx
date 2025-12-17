@@ -4,14 +4,15 @@ import { AnimatedH1 } from './AnimatedText';
 export function Menu() {
 	return (
 		<div className='fixed left-5 top-4 right-5 z-50 pointer-events-none mix-blend-difference text-white '>
-			<div className='grid grid-cols-4 gap-x-[100px] uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto '>
+			<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto '>
 				<AnimatedH1 className='col-span-1 '>
 					<Link to='/' className='hover:underline'>
 						Alimento
 					</Link>
 				</AnimatedH1>
-				<div className='hidden'></div>
-				<menu className='col-span-3 grid grid-cols-3 gap-x-[100px]'>
+				<div className='col-span-1 lg:hidden block text-right'>menu mobile here</div>
+
+				<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
 					<li className='col-span-1 '>
 						<AnimatedH1>
 							<Link to='/projetos' className='hover:underline'>

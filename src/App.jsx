@@ -21,10 +21,10 @@ function App() {
 	const isHome = location.pathname === '/';
 	const isWorkSingle = /^\/projetos\/[^/]+$/.test(location.pathname);
 	const isIPlusDSingle = /^\/imaisd\/[^/]+$/.test(location.pathname);
-
+	const isIPlusD = location.pathname === '/imaisd';
 	return (
 		<>
-			{!isHome && !isWorkSingle && !isIPlusDSingle && <Menu />}
+			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
 			<motion.div key={location.pathname} variants={pageTransition} initial={isFirstLoad ? false : 'hidden'} animate={isFirstLoad ? false : 'enter'} exit='exit' className='min-h-screen relative z-0'>
 				<Outlet />

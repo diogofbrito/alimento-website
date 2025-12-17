@@ -60,7 +60,7 @@ export function Works() {
 						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
 							<motion.div className='col-span-2 relative h-[300px]' initial='rest' animate='rest' whileHover='hover'>
 								<div className='grid grid-cols-2 h-full w-full'>
-									<div className='relative h-full w-full uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em] '>[PUBLICAÇÃO]</div>
+									<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em] '></div>
 
 									<div className='relative h-full w-full' />
 
@@ -70,7 +70,7 @@ export function Works() {
 									</motion.div>
 								</div>
 
-								<div className='mt-2 flex justify-between text-[0.8rem] font-[500] tracking-[0.03em] uppercase'>
+								<div className='mt-2 flex justify-between text-[1rem] font-[500] tracking-[0.03em] '>
 									<div className='max-w-[70%] '>
 										<AnimatedH1>{item.title}</AnimatedH1>
 									</div>
