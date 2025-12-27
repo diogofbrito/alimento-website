@@ -67,7 +67,7 @@ export function Works() {
 	}, []);
 
 	return (
-		<div className='w-full px-5 pt-[100px] pb-13'>
+		<div className='w-full px-5 pt-[80px] lg:pt-[100px] pb-13'>
 			{/* 6 colunas no total */}
 			<div className='grid lg:grid-cols-4 gap-x-[100px] gap-y-[80px]'>
 				{projetos.map(item => {

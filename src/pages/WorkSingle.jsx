@@ -107,7 +107,7 @@ export function WorkSingle() {
 			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40  px-5 pt-[100px] pb-5'>
-					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[50px]'>
+					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[100px] lg:gap-y-[50px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}
@@ -126,7 +126,7 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='fixed z-40 mx-5 pt-[100px] pb-13 grid grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
+				<div className='z-40 mx-5 pt-[100px] pb-13 lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
 						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
@@ -160,46 +160,75 @@ export function WorkSingle() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-[100px] pb-13  gap-x-[100px] '>
-					{/* foto anterior */}
-					<div className='col-span-1'>
-						{prevIndex !== null && (
-							<div className='group block'>
-								<img
-									src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-80'
-									onClick={() => setCurrentImageIndex(prevIndex)}
-								/>
-							</div>
-						)}
+				<>
+					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-13  gap-x-[100px] '>
+						{/* foto anterior */}
+						<div className='col-span-1'>
+							{prevIndex !== null && (
+								<div className='group block'>
+									<img
+										src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-80'
+										onClick={() => setCurrentImageIndex(prevIndex)}
+									/>
+								</div>
+							)}
+						</div>
+
+						{/* foto principal */}
+						<div className='col-span-3 flex items-center justify-center'>
+							<img
+								key={currentImageIndex}
+								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
+								alt={projeto.title}
+								className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none '
+								onLoad={e => e.currentTarget.classList.add('opacity-100')}
+							/>
+						</div>
+
+						{/* foto posterior */}
+						<div className='col-span-1 '>
+							{nextIndex !== null && (
+								<div className='group block'>
+									<img
+										src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+										onClick={() => setCurrentImageIndex(nextIndex)}
+									/>
+								</div>
+							)}
+						</div>
 					</div>
 
-					{/* foto principal */}
-					<div className='col-span-3 flex items-center justify-center'>
-						<img
-							key={currentImageIndex}
-							src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
-							alt={projeto.title}
-							className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none '
-							onLoad={e => e.currentTarget.classList.add('opacity-100')}
-						/>
+					{/* mobile */}
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-5 pt-[100px] pb-13 '>
+						{/* foto principal */}
+						<div>
+							<img
+								key={currentImageIndex}
+								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
+								alt={projeto.title}
+								className='max-h-[90vh] object-contain image-main opacity-0 pointer-events-none '
+								onLoad={e => e.currentTarget.classList.add('opacity-100')}
+							/>
+						</div>
+						{/* foto posterior */}
+						<div className=' flex justify-center items-center'>
+							{nextIndex !== null && (
+								<div className='group block w-1/2 '>
+									<img
+										src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+										onClick={() => setCurrentImageIndex(nextIndex)}
+									/>
+								</div>
+							)}
+						</div>
 					</div>
-
-					{/* foto posterior */}
-					<div className='col-span-1 '>
-						{nextIndex !== null && (
-							<div className='group block'>
-								<img
-									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-									onClick={() => setCurrentImageIndex(nextIndex)}
-								/>
-							</div>
-						)}
-					</div>
-				</div>
+				</>
 			)}
 		</div>
 	);

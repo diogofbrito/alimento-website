@@ -132,7 +132,7 @@ export function IPlusD() {
 			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40 px-5 pt-[100px] pb-5'>
-					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[60px]'>
+					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[100px] lg:gap-y-[50px]'>
 						{items.map((it, i) => (
 							<AnimatedImage1
 								key={it._key}
@@ -152,7 +152,7 @@ export function IPlusD() {
 			{/* INFORMAÇÕES (todas as publicações) */}
 			{isInfoOpen && (
 				<div className=' z-40 mx-5 pt-[100px] pb-5 tracking-wide leading-[1.3]'>
-					<div className='grid grid-cols-4 gap-x-[100px]'>
+					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2 '>
 							<AnimatedP className=' tracking-[0.02em] text-[1.1rem]'>
 								I + D é um arquivo de investigação, referências e processos — imagens, materiais e exercícios que alimentam a prática do Alimento.
@@ -160,8 +160,8 @@ export function IPlusD() {
 						</div>
 					</div>
 
-					<div className='pt-12'>
-						<div className='grid grid-cols-4 gap-x-[100px] opacity-45 pb-4'>
+					<div className='lg:pt-12 pt-6'>
+						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] opacity-45 pb-4'>
 							<AnimatedH1>Publicações de receitas</AnimatedH1>
 							<AnimatedH1>Nome</AnimatedH1>
 							<AnimatedH1>Ano</AnimatedH1>
@@ -170,33 +170,64 @@ export function IPlusD() {
 
 						<div className='grid gap-y-6'>
 							{projects.map(p => (
-								<div key={p._id} className='grid grid-cols-4 gap-x-[100px] items-start'>
-									{/* capa */}
-									<div>
-										{p.coverImage?.asset ? (
-											<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
-										) : (
-											<div className='opacity-40'>—</div>
-										)}
+								<>
+									<div key={p._id} className='hidden lg:grid grid-cols-4 gap-x-[100px] items-start'>
+										{/* capa */}
+										<div>
+											{p.coverImage?.asset ? (
+												<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
+											) : (
+												<div className='opacity-40'>—</div>
+											)}
+										</div>
+
+										{/* nome */}
+										<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
+
+										{/* ano */}
+										<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
+
+										{/* pdf */}
+										<AnimatedH1>
+											{p.pdfUrl ? (
+												<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
+													PDF
+												</a>
+											) : (
+												<div className='opacity-40'>—</div>
+											)}
+										</AnimatedH1>
 									</div>
 
-									{/* nome */}
-									<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
+									<div key={p._id} className='lg:hidden grid grid-cols-2 gap-6'>
+										<div>
+											{p.coverImage?.asset ? (
+												<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
+											) : (
+												<div className='opacity-40'>—</div>
+											)}
+										</div>
 
-									{/* ano */}
-									<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
+										<div className='flex flex-col gap-2'>
+											{/* nome */}
+											<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
 
-									{/* pdf */}
-									<AnimatedH1>
-										{p.pdfUrl ? (
-											<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
-												PDF
-											</a>
-										) : (
-											<div className='opacity-40'>—</div>
-										)}
-									</AnimatedH1>
-								</div>
+											{/* ano */}
+											<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
+
+											{/* pdf */}
+											<AnimatedH1>
+												{p.pdfUrl ? (
+													<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
+														PDF
+													</a>
+												) : (
+													<div className='opacity-40'>—</div>
+												)}
+											</AnimatedH1>
+										</div>
+									</div>
+								</>
 							))}
 						</div>
 					</div>
@@ -204,57 +235,97 @@ export function IPlusD() {
 			)}
 
 			{!isListOpen && !isInfoOpen && (
-				<div className='z-40 grid grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
-					{/* foto anterior */}
-					<div className='col-span-1'>
-						{prevIndex !== null && (
-							<div className='group block'>
-								<img
-									src={urlFor(items[prevIndex].image).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-									onClick={() => setCurrentImageIndex(prevIndex)}
-								/>
-							</div>
-						)}
+				<>
+					<div className='z-40 hidden lg:grid lg:grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
+						{/* foto anterior */}
+						<div className='col-span-1'>
+							{prevIndex !== null && (
+								<div className='group block'>
+									<img
+										src={urlFor(items[prevIndex].image).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+										onClick={() => setCurrentImageIndex(prevIndex)}
+									/>
+								</div>
+							)}
+						</div>
+
+						{/* foto principal + titulo da imagem */}
+						<div className='col-span-3 flex flex-col gap-5 items-center justify-center'>
+							<img
+								key={currentImageIndex}
+								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
+								alt={current?.projectTitle || ''}
+								className='max-h-[60vh] object-contain image-main opacity-0 pointer-events-none'
+								onLoad={e => {
+									e.currentTarget.classList.add('opacity-100');
+									setIsMainLoaded(true);
+								}}
+							/>
+
+							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
+								<AnimatedP className='text-center'>
+									<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
+								</AnimatedP>
+							) : (
+								<div className='h-[24px]' />
+							)}
+						</div>
+
+						{/* foto posterior */}
+						<div className='col-span-1'>
+							{nextIndex !== null && (
+								<div className='group block'>
+									<img
+										src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+										onClick={() => setCurrentImageIndex(nextIndex)}
+									/>
+								</div>
+							)}
+						</div>
 					</div>
 
-					{/* foto principal + titulo da imagem */}
-					<div className='col-span-3 flex flex-col gap-5 items-center justify-center'>
-						<img
-							key={currentImageIndex}
-							src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
-							alt={current?.projectTitle || ''}
-							className='max-h-[60vh] object-contain image-main opacity-0 pointer-events-none'
-							onLoad={e => {
-								e.currentTarget.classList.add('opacity-100');
-								setIsMainLoaded(true);
-							}}
-						/>
+					{/* mobile */}
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-5 pt-[100px] pb-5 '>
+						{/* foto principal */}
+						<div className='w-full flex flex-col gap-3 items-center justify-center'>
+							<img
+								key={currentImageIndex}
+								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
+								alt={current?.projectTitle || ''}
+								className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none'
+								onLoad={e => {
+									e.currentTarget.classList.add('opacity-100');
+									setIsMainLoaded(true);
+								}}
+							/>
 
-						{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
-							<AnimatedP className='text-center'>
-								<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
-							</AnimatedP>
-						) : (
-							<div className='h-[24px]' />
-						)}
+							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
+								<AnimatedP className='text-center'>
+									<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
+								</AnimatedP>
+							) : (
+								<div className='h-[24px]' />
+							)}
+						</div>
+						{/* foto posterior */}
+						<div className='flex justify-center items-center'>
+							{nextIndex !== null && (
+								<div className='group block w-1/2'>
+									<img
+										src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
+										alt=''
+										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+										onClick={() => setCurrentImageIndex(nextIndex)}
+									/>
+								</div>
+							)}
+						</div>
 					</div>
-
-					{/* foto posterior */}
-					<div className='col-span-1'>
-						{nextIndex !== null && (
-							<div className='group block'>
-								<img
-									src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-									onClick={() => setCurrentImageIndex(nextIndex)}
-								/>
-							</div>
-						)}
-					</div>
-				</div>
+				</>
 			)}
 		</>
 	);
