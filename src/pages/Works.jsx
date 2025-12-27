@@ -1,13 +1,31 @@
+function useIsDesktop() {
+	const [isDesktop, setIsDesktop] = useState(false);
+
+	useEffect(() => {
+		const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+		setIsDesktop(mq.matches);
+
+		const handler = e => setIsDesktop(e.matches);
+		mq.addEventListener('change', handler);
+
+		return () => mq.removeEventListener('change', handler);
+	}, []);
+
+	return isDesktop;
+}
+
+
+
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/imageUrlBuilder.js';
-import { AnimatedH1} from '../components/AnimatedText';
+import { AnimatedH1 } from '../components/AnimatedText';
 import { motion } from 'framer-motion';
 
 const movingImageVariants = {
 	rest: { x: '0%' },
-	hover: { x: '100%' }, 
+	hover: { x: '100%' },
 };
 
 const img1Variants = {
@@ -22,6 +40,7 @@ const img2Variants = {
 
 export function Works() {
 	const [projetos, setProjetos] = useState([]);
+	 const isDesktop = useIsDesktop();
 
 	useEffect(() => {
 		const fetchProjetos = async () => {
@@ -50,15 +69,15 @@ export function Works() {
 	return (
 		<div className='w-full px-5 pt-[100px] pb-13'>
 			{/* 6 colunas no total */}
-			<div className='grid grid-cols-4 gap-x-[100px] gap-y-[150px]'>
+			<div className='grid lg:grid-cols-4 gap-x-[100px] gap-y-[80px]'>
 				{projetos.map(item => {
-
 					const img1 = item.img1 ? urlFor(item.img1).width(1000).quality(80).auto('format').url() : null;
-					const img2 = item.img2 ? urlFor(item.img2).width(1000).quality(80).auto('format').url() : null;
+
+					const img2 = isDesktop && item.img2 ? urlFor(item.img2).width(1000).quality(80).auto('format').url() : null;
 
 					return (
 						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
-							<motion.div className='col-span-2 relative h-[300px]' initial='rest' animate='rest' whileHover='hover'>
+							<motion.div className='col-span-2 relative h-[200px] lg:h-[300px]' initial='rest' animate='rest' whileHover={isDesktop ? 'hover' : undefined}>
 								<div className='grid grid-cols-2 h-full w-full'>
 									<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em] '></div>
 
@@ -70,8 +89,8 @@ export function Works() {
 									</motion.div>
 								</div>
 
-								<div className='mt-2 flex justify-between text-[0.9rem]  tracking-[0.03em] uppercase'>
-									<div className='max-w-[70%] font-[500] '>
+								<div className='lg:mt-2 mt-4 flex justify-between text-[0.9rem]  tracking-[0.03em] uppercase'>
+									<div className='lg:max-w-[70%] font-[500] '>
 										<AnimatedH1>{item.title}</AnimatedH1>
 									</div>
 									{item.year && <AnimatedH1>{item.year}</AnimatedH1>}

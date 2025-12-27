@@ -23,7 +23,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 			</div>
 
 			<div className='col-span-1 grid grid-cols-2 gap-x-[100px]'>
-				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? 'INFORMAÇÃO -' : 'INFORMAÇÃO +'}</AnimatedButton>
+				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '- INFO' : '+ INFO'}</AnimatedButton>
 
 				<AnimatedButton onClick={() => navigate(-1)} className='text-right'>
 					FECHAR

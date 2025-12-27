@@ -106,8 +106,8 @@ export function WorkSingle() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40  px-5 pt-[100px] pb-13 '>
-					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[60px]'>
+				<div className='inset-0 z-40  px-5 pt-[100px] pb-5'>
+					<div className='grid grid-cols-6 gap-x-[100px] gap-y-[50px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
 								key={i}

@@ -19,7 +19,7 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				<AnimatedButton onClick={onToggleList}className='hover:underline'>{isListOpen ? ' SLIDER ' : ' LISTA '}</AnimatedButton>
 			</div>
 			<div className='col-span-1 grid grid-cols-2 gap-x-[100px]'>
-				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  INFORMAÇÃO - ' : ' INFORMAÇÃO + '}</AnimatedButton>
+				<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
 				<AnimatedButton onClick={() => navigate(-1)} className='text-right'> FECHAR </AnimatedButton>
 			</div>
 			

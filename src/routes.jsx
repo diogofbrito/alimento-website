@@ -8,6 +8,7 @@ import { About } from './pages/About.jsx';
 import { ErrorPage } from './pages/ErrorPage.jsx';
 import { Press } from './pages/Press';
 
+
 export const router = createBrowserRouter([
 	{
 		path: '/',
@@ -22,13 +23,12 @@ export const router = createBrowserRouter([
 				path: '/projetos',
 				element: <Works />,
 			},
-			
 
 			{
 				path: '/projetos/:slug',
 				element: <WorkSingle />,
 			},
-			
+
 			{
 				path: '/imaisd',
 				element: <IPlusD />,
@@ -37,6 +37,7 @@ export const router = createBrowserRouter([
 				path: '/press',
 				element: <Press />,
 			},
+			
 			{
 				path: '/sobre',
 				element: <About />,
