@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
-import { AnimatedH1, AnimatedPAfterH1, AnimatedImage1 } from '../components/AnimatedText';
+import {  AnimatedPAfterH1, AnimatedImage1 } from '../components/AnimatedText';
 import video from '../assets/studio.mp4';
 import bg from '../assets/patricia.jpg';
 
@@ -60,9 +60,9 @@ export function About() {
 					<div>
 						<AnimatedPAfterH1 className=' font-[500] text-[0.85rem] pb-6'>Alimento Studio</AnimatedPAfterH1>
 						<AnimatedPAfterH1 className='tracking-wide leading-[1.3] font-[500] text-[1.2rem]'>
-							Um pequeno texto sobre o studio. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum eaque suscipit sequi voluptatem nisi, atque nihil iste eius cum natus! Molestiae incidunt dolores non laudantium cumque
-							praesentium! Delectus, voluptate adipisci! Ullam illum perspiciatis praesentium expedita labore quos quaerat odit provident, officiis, impedit quas recusandae numquam obcaecati cumque
-							doloremque corporis earum non adipisci cupiditate. Nemo adipisci quae, illo delectus dolorem pariatur.
+							Um pequeno texto sobre o studio. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum eaque suscipit sequi voluptatem nisi, atque nihil iste eius cum natus! Molestiae
+							incidunt dolores non laudantium cumque praesentium! Delectus, voluptate adipisci! Ullam illum perspiciatis praesentium expedita labore quos quaerat odit provident, officiis, impedit quas
+							recusandae numquam obcaecati cumque doloremque corporis earum non adipisci cupiditate. Nemo adipisci quae, illo delectus dolorem pariatur.
 						</AnimatedPAfterH1>
 					</div>
 				</div>
@@ -71,29 +71,33 @@ export function About() {
 			<div className='h-[30vh] grid grid-cols-4 gap-x-[100px] mt-[100px] '>
 				<div className='col-span-1  '>
 					<AnimatedPAfterH1 className=' font-[500] text-[0.85rem] pb-1'>Reservas & Colaborações</AnimatedPAfterH1>
-					<u>geral@alimento.studio</u>
+					<AnimatedPAfterH1>
+						<u>geral@alimento.studio</u>
+					</AnimatedPAfterH1>
 				</div>
 				<div className='col-span-1 flex flex-col '>
 					<AnimatedPAfterH1 className=' font-[500] text-[0.85rem] pb-1'>Social</AnimatedPAfterH1>
-					<a href='https://www.instagram.com/___alimento___/' className='underline' target='_blank'>
-						Instagram
-					</a>
-					<a
+					<AnimatedPAfterH1>
+						<a href='https://www.instagram.com/___alimento___/' className='underline' target='_blank'>
+							Instagram
+						</a>
+					</AnimatedPAfterH1>
+					<AnimatedPAfterH1><a
 						href='https://linktr.ee/patriciagabriel?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnmDa3gKRt3Citq-xduwGYwL8FLL3tcHfsF7fS4uC4uxlcVevS0AhPl2WWI_M_aem_hMKmhYM7dx3oGTlTAmylUg'
 						className='underline'
 						target='_blank'
 					>
 						Linktree
-					</a>
+					</a></AnimatedPAfterH1>
 				</div>
 				<div className='col-span-2 flex flex-col'>
 					<AnimatedPAfterH1 className=' font-[500] text-[0.85rem] pb-1'>Info</AnimatedPAfterH1>
-					<div>
+					<AnimatedPAfterH1>
 						disclaimer qualquer aqui Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe accusantium, quod dolore magnam alias reprehenderit sapiente nihil ipsa nulla corporis quo ea nam
 						accusamus voluptate distinctio laboriosam vel beatae nisi.
 						<br></br>
 						Para visitar o estudio apenas com marcação prévia.
-					</div>
+					</AnimatedPAfterH1>
 				</div>
 			</div>
 			<div className='grid grid-cols-4 gap-x-[100px] '>

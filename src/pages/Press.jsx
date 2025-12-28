@@ -47,7 +47,7 @@ export function Press() {
 								ease: 'easeInOut',
 								delay: index * 0.05,
 							}}
-							className='py-1.5 border-b border-dashed border-black/40 '
+							className='py-1.5 border-b border-dashed border-black/100 '
 							onMouseEnter={e => {
 								const rect = e.currentTarget.getBoundingClientRect();
 								setHoverIndex(index);
