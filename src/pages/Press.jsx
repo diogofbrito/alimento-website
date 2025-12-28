@@ -7,6 +7,7 @@ import { AnimatedImage1 } from '../components/AnimatedText';
 export function Press() {
 	const [press, setPress] = useState([]);
 	const [hoverIndex, setHoverIndex] = useState(null);
+	const [hoverPos, setHoverPos] = useState({ top: 0, left: 0 });
 
 	useEffect(() => {
 		const fetchPress = async () => {
@@ -32,7 +33,7 @@ export function Press() {
 
 	return (
 		<>
-			<div className='px-3 lg:px-5 pt-[100px] lg:pb-13 lg:grid lg:grid-cols-2 gap-x-[100px]'>
+			<div className='px-3 lg:px-5 pt-[70px] lg:pt-[100px] lg:pb-5 lg:grid lg:grid-cols-2 lg:gap-x-[100px]'>
 				{press.map((item, index) => {
 					const href = item.pdfUrl || item.link;
 
@@ -46,7 +47,15 @@ export function Press() {
 								ease: 'easeInOut',
 								delay: index * 0.05,
 							}}
-							onMouseEnter={() => setHoverIndex(index)}
+							className='py-1.5 border-b border-dashed border-black/40 '
+							onMouseEnter={e => {
+								const rect = e.currentTarget.getBoundingClientRect();
+								setHoverIndex(index);
+								setHoverPos({
+									top: rect.bottom + 10,
+									left: rect.left,
+								});
+							}}
 							onMouseLeave={() => setHoverIndex(null)}
 						>
 							{href ? (
@@ -54,13 +63,13 @@ export function Press() {
 									href={href}
 									target='_blank'
 									rel='noopener noreferrer'
-									className='flex justify-between items-center text-[0.9rem] tracking-[0.03em] hover:underline transition-opacity duration-300 ease-in-out'
+									className='flex justify-between gap-12 lg:gap-0 lg:items-center text-[0.9rem] tracking-[0.03em] hover:underline transition-opacity duration-300 ease-in-out'
 								>
 									<span className='font-[500] uppercase'>{item.title}</span>
 									<span className='font-[400]'>{item.year}</span>
 								</a>
 							) : (
-								<div className='flex justify-between items-center text-[0.9rem] opacity-40 tracking-[0.03em]'>
+								<div className='flex justify-between gap-12 lg:gap-0 lg:items-center text-[0.9rem] opacity-40 tracking-[0.03em]'>
 									<span className='font-[500] uppercase'>{item.title}</span>
 									<span className='font-[400]'>{item.year}</span>
 								</div>
@@ -74,13 +83,12 @@ export function Press() {
 			{hoverIndex !== null && press[hoverIndex]?.placeholderImage && (
 				<AnimatedImage1
 					key={press[hoverIndex]._id}
-					src={urlFor(press[hoverIndex].placeholderImage).width(420).quality(80).auto('format').url()}
+					src={urlFor(press[hoverIndex].placeholderImage).width(300).quality(80).auto('format').url()}
 					alt=''
 					className='hidden md:block fixed -z-2 pointer-events-none'
 					style={{
-						top: '50%',
-						left: '50%',
-						transform: 'translate(-50%, -50%)',
+						top: hoverPos.top,
+						left: hoverPos.left,
 					}}
 				/>
 			)}

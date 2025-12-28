@@ -132,7 +132,7 @@ export function IPlusD() {
 			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40 pt-[30px] px-3 pb-3 lg:px-5 lg:pt-[100px] lg:pb-5'>
-					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[100px] lg:gap-y-[50px]'>
+					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
 						{items.map((it, i) => (
 							<AnimatedImage1
 								key={it._key}
