@@ -89,7 +89,7 @@ export function Works() {
 									</motion.div>
 								</div>
 
-								<div className='lg:mt-2 mt-4 flex justify-between text-[0.9rem]  tracking-[0.03em] uppercase'>
+								<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem]  tracking-[0.03em] uppercase'>
 									<div className='lg:max-w-[70%] font-[500] '>
 										<AnimatedH1>{item.title}</AnimatedH1>
 									</div>

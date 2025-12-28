@@ -151,17 +151,17 @@ export function IPlusD() {
 
 			{/* INFORMAÇÕES (todas as publicações) */}
 			{isInfoOpen && (
-				<div className=' z-40 px-3 pt-[30px] pb-3 lg:mx-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3] '>
+				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3] '>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2 '>
-							<AnimatedP className=' tracking-[0.02em] text-[1.1rem]'>
+							<AnimatedP className=' tracking-[0.02em] text-[1.2rem] font-[500]'>
 								I + D é um arquivo de investigação, referências e processos — imagens, materiais e exercícios que alimentam a prática do Alimento.
 							</AnimatedP>
 						</div>
 					</div>
 
 					<div className='lg:pt-12 pt-6'>
-						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] opacity-45 pb-4'>
+						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] opacity-45 pb-4 text-[0.85rem]'>
 							<AnimatedH1>Publicações de receitas</AnimatedH1>
 							<AnimatedH1>Nome</AnimatedH1>
 							<AnimatedH1>Ano</AnimatedH1>
