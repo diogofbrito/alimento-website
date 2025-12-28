@@ -98,7 +98,7 @@ export function About() {
 			</div>
 			<div className='grid grid-cols-4 gap-x-[100px] '>
 				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem] '>© 2026, Alimento Studio</AnimatedPAfterH1>
-				<AnimatedPAfterH1 className='col-span-2 font-[500] text-[0.85rem] '>Projeto Spin off | Instituto Superior de Agronomia de Lisboa</AnimatedPAfterH1>
+				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem] '>Projeto Spin off | Instituto Superior de Agronomia da U.L.</AnimatedPAfterH1>
 				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem] '>
 					Website Design{' '}
 					<a href='https://www.diogobrito.xyz' className='underline' target='_blank'>
