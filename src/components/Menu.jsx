@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatedH1 } from './AnimatedText';
+import { AnimatedButton, AnimatedH1 } from './AnimatedText';
 
 export function Menu() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +8,7 @@ export function Menu() {
 	return (
 		<>
 			{/* HEADER */}
-			<div className='fixed left-5 top-4 right-5 z-50 mix-blend-difference text-white'>
+			<div className='fixed left-3 lg:left-5 top-3 lg:top-4 right-3 lg:right-5 z-50 mix-blend-difference text-white'>
 				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center'>
 					{/* LOGO */}
 					<AnimatedH1>
@@ -17,22 +17,9 @@ export function Menu() {
 						</Link>
 					</AnimatedH1>
 
-					{/* HAMBURGER (mobile only) */}
-					<div className='lg:hidden flex justify-end'>
-						<button onClick={() => setIsOpen(!isOpen)} className='relative w-8 h-6 focus:outline-none'>
-							{/* linha 1 */}
-							<span
-								className={`absolute left-0 top-0 w-full h-[1px] bg-white transition-transform duration-300 ease-in-out
-                ${isOpen ? 'rotate-45 top-2' : ''}`}
-							/>
-
-							{/* linha 2 */}
-							<span
-								className={`absolute left-0  w-full h-[1px] bg-white transition-transform duration-300 ease-in-out
-                ${isOpen ? '-rotate-45 top-2' : 'top-2'}`}
-							/>
-						</button>
-					</div>
+					<AnimatedButton onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen} className='block lg:hidden text-right' aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}>
+						{isOpen ? 'Fechar' : 'Menu'}
+					</AnimatedButton>
 
 					{/* MENU DESKTOP */}
 					<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
@@ -70,7 +57,7 @@ export function Menu() {
 
 			{/* OVERLAY MOBILE */}
 			{isOpen && (
-				<div className='fixed inset-0 z-40 bg-[#f7f7f7] flex flex-col justify-center px-5'>
+				<div className='fixed inset-0 z-40 bg-[#f7f7f7] flex flex-col justify-center px-3 '>
 					<nav className='flex flex-col gap-1 text-[1.4rem] tracking-[0.02em] font-[500] uppercase '>
 						<AnimatedH1>
 							<Link onClick={() => setIsOpen(false)} to='/projetos'>
@@ -94,7 +81,7 @@ export function Menu() {
 						</AnimatedH1>
 					</nav>
 
-					<div className='absolute bottom-1 left-5 text-[1.1rem] uppercase tracking-[0.02em] font-[500]'>
+					<div className='absolute bottom-0 left-3 text-[1.1rem] uppercase tracking-[0.02em] font-[500]'>
 						<AnimatedH1>© Alimento 2025</AnimatedH1>
 					</div>
 				</div>

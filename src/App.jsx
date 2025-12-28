@@ -4,6 +4,9 @@ import { IntroLoader } from './components/IntroLoader';
 import { pageTransition } from './components/animations/variants.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu } from './components/Menu';
+import { ScrollToTop } from './components/ScrollToTop';
+
+
 
 function App() {
 	const location = useLocation();
@@ -24,6 +27,7 @@ function App() {
 	const isIPlusD = location.pathname === '/imaisd';
 	return (
 		<>
+			<ScrollToTop />
 			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
 			<motion.div key={location.pathname} variants={pageTransition} initial={isFirstLoad ? false : 'hidden'} animate={isFirstLoad ? false : 'enter'} exit='exit' className='min-h-screen relative z-0'>

@@ -131,7 +131,7 @@ export function IPlusD() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40 px-5 pt-[100px] pb-5'>
+				<div className='inset-0 z-40 pt-[30px] px-3 pb-3 lg:px-5 lg:pt-[100px] lg:pb-5'>
 					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[100px] lg:gap-y-[50px]'>
 						{items.map((it, i) => (
 							<AnimatedImage1
@@ -151,7 +151,7 @@ export function IPlusD() {
 
 			{/* INFORMAÇÕES (todas as publicações) */}
 			{isInfoOpen && (
-				<div className=' z-40 mx-5 pt-[100px] pb-5 tracking-wide leading-[1.3]'>
+				<div className=' z-40 px-3 pt-[30px] pb-3 lg:mx-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3] '>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2 '>
 							<AnimatedP className=' tracking-[0.02em] text-[1.1rem]'>
@@ -208,7 +208,7 @@ export function IPlusD() {
 											)}
 										</div>
 
-										<div className='flex flex-col gap-2'>
+										<div className='flex flex-col gap-1'>
 											{/* nome */}
 											<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
 
@@ -289,14 +289,14 @@ export function IPlusD() {
 					</div>
 
 					{/* mobile */}
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-5 pt-[100px] pb-5 '>
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]  '>
 						{/* foto principal */}
-						<div className='w-full flex flex-col gap-3 items-center justify-center'>
+						<div className='w-full  flex flex-col gap-3 items-center justify-center'>
 							<img
 								key={currentImageIndex}
 								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
 								alt={current?.projectTitle || ''}
-								className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none'
+								className=' object-contain image-main opacity-0 pointer-events-none'
 								onLoad={e => {
 									e.currentTarget.classList.add('opacity-100');
 									setIsMainLoaded(true);
@@ -312,16 +312,14 @@ export function IPlusD() {
 							)}
 						</div>
 						{/* foto posterior */}
-						<div className='flex justify-center items-center'>
+						<div className='h-[120px] flex justify-center'>
 							{nextIndex !== null && (
-								<div className='group block w-1/2'>
-									<img
-										src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
-										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-										onClick={() => setCurrentImageIndex(nextIndex)}
-									/>
-								</div>
+								<img
+									src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
+									alt=''
+									className='h-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+									onClick={() => setCurrentImageIndex(nextIndex)}
+								/>
 							)}
 						</div>
 					</div>

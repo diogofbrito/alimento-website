@@ -67,9 +67,9 @@ export function Works() {
 	}, []);
 
 	return (
-		<div className='w-full px-5 pt-[80px] lg:pt-[100px] pb-13'>
+		<div className='w-full lg:px-5 px-3 pt-[60px] lg:pt-[100px] lg:pb-12 '>
 			{/* 6 colunas no total */}
-			<div className='grid lg:grid-cols-4 gap-x-[100px] gap-y-[80px]'>
+			<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
 				{projetos.map(item => {
 					const img1 = item.img1 ? urlFor(item.img1).width(1000).quality(80).auto('format').url() : null;
 

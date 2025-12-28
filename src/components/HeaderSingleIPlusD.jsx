@@ -32,20 +32,20 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 				</div>
 			</div>
 
-			<div className='lg:hidden z-90 absolute w-full left-0 right-0 top-4 px-4 tracking-[0.02em] font-[500] text-[0.9rem] uppercase '>
+			<div className='lg:hidden z-90 m-3 tracking-[0.02em] font-[500] text-[1rem] uppercase leading-5'>
 				<div className='flex justify-between'>
 					<AnimatedH1>i + d</AnimatedH1>
-					<AnimatedH1>
-						img: {currentIndex + 1}/{totalImages}
-					</AnimatedH1>
-				</div>
-				<div className='flex justify-between pt-3'>
-					<AnimatedButton onClick={onToggleList}>{isListOpen ? ' SLIDER ' : ' LISTA '}</AnimatedButton>
-					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
 					<AnimatedButton onClick={() => navigate(-1)} className='text-right'>
 						{' '}
 						FECHAR{' '}
 					</AnimatedButton>
+				</div>
+				<div className='flex justify-between pt-3'>
+					<AnimatedButton onClick={onToggleList}>{isListOpen ? ' SLIDER ' : ' LISTA '}</AnimatedButton>
+					<AnimatedH1>
+						imagem: {currentIndex + 1}/{totalImages}
+					</AnimatedH1>
+					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
 				</div>
 			</div>
 		</>

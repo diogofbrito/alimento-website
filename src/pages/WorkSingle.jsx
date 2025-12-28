@@ -14,8 +14,6 @@ export function WorkSingle() {
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 
-
-
 	useEffect(() => {
 		sanityClient
 			.fetch(
@@ -106,7 +104,7 @@ export function WorkSingle() {
 
 			{/* Lista de imagens */}
 			{isListOpen && (
-				<div className='inset-0 z-40  px-5 pt-[100px] pb-5'>
+				<div className='inset-0 z-40 px-3 pb-3 lg:px-5 pt-[30px] lg:pt-[100px] lg:pb-5'>
 					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[100px] lg:gap-y-[50px]'>
 						{projeto.gallery.map((img, i) => (
 							<AnimatedImage1
@@ -126,7 +124,7 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='z-40 mx-5 pt-[100px] pb-13 lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
+				<div className='z-40 px-3 lg:px-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
 						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
@@ -161,7 +159,7 @@ export function WorkSingle() {
 
 			{!isListOpen && !isInfoOpen && (
 				<>
-					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-13  gap-x-[100px] '>
+					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-5  gap-x-[100px] '>
 						{/* foto anterior */}
 						<div className='col-span-1'>
 							{prevIndex !== null && (
@@ -203,28 +201,26 @@ export function WorkSingle() {
 					</div>
 
 					{/* mobile */}
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-5 pt-[100px] pb-13 '>
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px] '>
 						{/* foto principal */}
-						<div>
+						<div className='h-[300px] flex justify-center'>
 							<img
 								key={currentImageIndex}
 								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
 								alt={projeto.title}
-								className='max-h-[90vh] object-contain image-main opacity-0 pointer-events-none '
+								className='h-full  object-cover image-main opacity-0 pointer-events-none '
 								onLoad={e => e.currentTarget.classList.add('opacity-100')}
 							/>
 						</div>
 						{/* foto posterior */}
-						<div className=' flex justify-center items-center'>
+						<div className='h-[120px] flex justify-center '>
 							{nextIndex !== null && (
-								<div className='group block w-1/2 '>
-									<img
-										src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
-										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-										onClick={() => setCurrentImageIndex(nextIndex)}
-									/>
-								</div>
+								<img
+									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
+									alt=''
+									className='h-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
+									onClick={() => setCurrentImageIndex(nextIndex)}
+								/>
 							)}
 						</div>
 					</div>

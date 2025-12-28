@@ -32,7 +32,7 @@ export function Press() {
 
 	return (
 		<>
-			<div className='px-5 pt-[100px] pb-13 grid grid-cols-2 gap-x-[100px]'>
+			<div className='px-3 lg:px-5 pt-[100px] lg:pb-13 lg:grid lg:grid-cols-2 gap-x-[100px]'>
 				{press.map((item, index) => {
 					const href = item.pdfUrl || item.link;
 
