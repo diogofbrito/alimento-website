@@ -160,8 +160,8 @@ export function IPlusD() {
 						</div>
 					</div>
 
-					<div className='lg:pt-12 pt-6'>
-						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] opacity-45 pb-4 text-[0.85rem]'>
+					<div className='lg:pt-16 pt-12'>
+						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] font-[500]  pb-4 text-[0.85rem]'>
 							<AnimatedH1>Publicações de receitas</AnimatedH1>
 							<AnimatedH1>Nome</AnimatedH1>
 							<AnimatedH1>Ano</AnimatedH1>
