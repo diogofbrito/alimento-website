@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
-import { AnimatedImage1, AnimatedH1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedImage1, AnimatedH1, AnimatedP, AnimatedPAfterH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
 
@@ -182,13 +182,13 @@ export function IPlusD() {
 										</div>
 
 										{/* nome */}
-										<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
+										<AnimatedPAfterH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedPAfterH1>
 
 										{/* ano */}
-										<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
+										<AnimatedPAfterH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedPAfterH1>
 
 										{/* pdf */}
-										<AnimatedH1>
+										<AnimatedPAfterH1>
 											{p.pdfUrl ? (
 												<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
 													PDF
@@ -196,7 +196,7 @@ export function IPlusD() {
 											) : (
 												<div className='opacity-40'>—</div>
 											)}
-										</AnimatedH1>
+										</AnimatedPAfterH1>
 									</div>
 
 									<div key={p._id} className='lg:hidden grid grid-cols-2 gap-6'>

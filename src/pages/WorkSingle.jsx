@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleWork } from '../components/HeaderSingleWork';
-import { AnimatedImage1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedImage1, AnimatedH1, AnimatedPAfterH1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
 
@@ -131,34 +131,38 @@ export function WorkSingle() {
 			{isInfoOpen && (
 				<div className='z-40 px-3 lg:px-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
-						<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
+						<AnimatedP>
+							<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
+						</AnimatedP>
 					</div>
-					<div className='col-span-4 pt-12'>
-						<div className='grid grid-cols-4 gap-x-[100px]  '>
+					<div className='lg:col-span-4 pt-12'>
+						<div className='grid grid-cols-2 lg:grid-cols-4 lg:gap-x-[100px] gap-y-[30px] l	]  '>
 							<div className='col-span-1  flex flex-col '>
-								<div className='opacity-45'>Tipo</div>
-								<div>{projeto.type}</div>
+								<AnimatedH1 className='text-[0.85rem] font-[500] '>Tipo</AnimatedH1>
+								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
 							</div>
 							{projeto.cliente && (
 								<div className='col-span-1 flex flex-col'>
-									<div className='opacity-45'>Cliente</div>
-									<div>{projeto.cliente}</div>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Cliente</AnimatedH1>
+									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
 								</div>
 							)}
 							{projeto.local && (
 								<div className='col-span-1 flex flex-col'>
-									<div className='opacity-45'>Local</div>
-									<div>{projeto.local}</div>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Local</AnimatedH1>
+									<AnimatedPAfterH1>{projeto.local}</AnimatedPAfterH1>
 								</div>
 							)}
 							<div className='col-span-1 flex flex-col'>
-								<div className='opacity-45'>Ano</div>
-								<div>{projeto.year}</div>
+								<AnimatedH1 className='text-[0.85rem] font-[500] '>Ano</AnimatedH1>
+								<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
 							</div>
-							<div className='col-span-1 flex flex-col'>
-								<div className='opacity-45'>Créditos</div>
-								<div>{projeto.creditos}</div>
-							</div>
+							{projeto.creditos && (
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Créditos</AnimatedH1>
+									<AnimatedPAfterH1>{projeto.creditos}</AnimatedPAfterH1>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
