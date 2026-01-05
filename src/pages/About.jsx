@@ -36,7 +36,7 @@ export function About() {
 					<div>
 						<AnimatedPAfterH1 className=' font-[500] text-[0.85rem] pb-6'>Alimento de Patrícia Gabriel</AnimatedPAfterH1>
 						<AnimatedPAfterH1 className='tracking-wide leading-[1.3] font-[500] text-[1.2rem]'>
-							Sobre sobre Alimento e quem é a patricia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores iste fuga veniam itaque! Recusandae cum odit voluptas rerum nobis atque
+							Texto sobre o projeto Alimento e quem é a patricia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores iste fuga veniam itaque! Recusandae cum odit voluptas rerum nobis atque
 							quibusdam expedita reiciendis quos possimus dignissimos nisi dolorem, tempora placeat! Optio corrupti laboriosam dignissimos beatae deserunt ad eligendi itaque animi ipsum quis vitae
 							esse perferendis dolorum quo provident fuga, expedita id nisi, voluptatem eveniet laudantium tenetur voluptates. Laudantium, doloremque inventore.
 							<br></br>

@@ -82,7 +82,7 @@ export function Menu() {
 					</nav>
 
 					<div className='absolute bottom-0 left-3 text-[1.1rem] uppercase tracking-[0.02em] font-[500]'>
-						<AnimatedH1>© Alimento 2025</AnimatedH1>
+						<AnimatedH1>© Alimento 2026</AnimatedH1>
 					</div>
 				</div>
 			)}

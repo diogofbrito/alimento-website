@@ -30,7 +30,7 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				</div>
 			</div>
 
-			<div className='lg:hidden z-90 m-3 tracking-[0.02em] font-[500] text-[1rem] leading-5 uppercase '>
+			<div className='lg:hidden z-90 m-3 tracking-[0.02em] font-[500] text-[1.1rem] leading-5 uppercase '>
 				<div className='grid grid-cols-3'>
 					<div className='col-span-2'>
 						<AnimatedH1>{title}</AnimatedH1>

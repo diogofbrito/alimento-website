@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-
-
-
-
 body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -15,11 +11,6 @@ body {
 
 }
 
-
-
-.masonry-column {
-  background-clip: padding-box;
-}
 
 @font-face {
   font-family: 'ClashGrotesk-Regular';
@@ -49,9 +40,6 @@ body {
   font-style: normal;
 }
 
-
-
-
 .transition {
   transition: opacity 0.5s ease-out;
 }
@@ -60,19 +48,3 @@ body {
   transition: opacity 0.3s ease-in-out;
 }
 
-@media  (max-width: 768px) {
-  .home {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    height: 100vh;
-    justify-content: center;
-  }
-  
-}
-
-/* global.css */
-.fade-out {
-	opacity: 0;
-	transition: opacity 0.5s ease-out;
-}

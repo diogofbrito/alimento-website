@@ -39,7 +39,7 @@ function App() {
 				initial={isFirstLoad ? false : 'hidden'}
 				animate={isFirstLoad ? false : 'enter'}
 				exit='exit'
-				className='min-h-screen relative z-0'
+				
 				onAnimationComplete={() => {
 					// força o topo depois da animação de página
 					window.scrollTo(0, 0);

@@ -155,7 +155,7 @@ export function IPlusD() {
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2 '>
 							<AnimatedP className=' tracking-[0.02em] text-[1.2rem] font-[500]'>
-								I + D é um arquivo de investigação, referências e processos — imagens, materiais e exercícios que alimentam a prática do Alimento.
+								I + D é um arquivo de investigação, referências e processos: imagens, materiais e exercícios que alimentam a prática de Alimento.
 							</AnimatedP>
 						</div>
 					</div>
@@ -289,14 +289,14 @@ export function IPlusD() {
 					</div>
 
 					{/* mobile */}
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]  '>
+					<div className=' z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]  '>
 						{/* foto principal */}
-						<div className='w-full  flex flex-col gap-3 items-center justify-center'>
+						<div className='w-full  flex flex-col gap-3 items-center justify-center '>
 							<img
 								key={currentImageIndex}
 								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
 								alt={current?.projectTitle || ''}
-								className=' object-contain image-main opacity-0 pointer-events-none'
+								className='h-[300px] object-cover image-main opacity-0 pointer-events-none'
 								onLoad={e => {
 									e.currentTarget.classList.add('opacity-100');
 									setIsMainLoaded(true);

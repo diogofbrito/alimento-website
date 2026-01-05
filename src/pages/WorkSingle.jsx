@@ -21,6 +21,11 @@ export function WorkSingle() {
           title,
           "slug": slug.current,
           placeholderImage,
+		  year,
+		  cliente,
+		  tipo,
+		  local,
+		  creditos,
           gallery,
           description,
         }`,
@@ -126,34 +131,36 @@ export function WorkSingle() {
 			{isInfoOpen && (
 				<div className='z-40 px-3 lg:px-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus assumenda dolores sapiente. Unde exercitationem eum possimus quod itaque error facilis non deserunt suscipit repellendus?
-						Architecto consectetur quasi quas adipisci sequi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius rem porro ut voluptatum reprehenderit nihil nobis omnis sapiente aliquid
-						perferendis facilis sed vitae asperiores, doloremque architecto dicta alias exercitationem neque.
+						<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
 					</div>
 					<div className='col-span-4 pt-12'>
 						<div className='grid grid-cols-4 gap-x-[100px]  '>
 							<div className='col-span-1  flex flex-col '>
 								<div className='opacity-45'>Tipo</div>
-								<div>Almoço para 14 pax</div>
+								<div>{projeto.type}</div>
 							</div>
-							<div className='col-span-1 flex flex-col '>
-								<div className='opacity-45'>Cliente</div>
-								<div>Escola de Agronomia</div>
-							</div>
+							{projeto.cliente && (
+								<div className='col-span-1 flex flex-col'>
+									<div className='opacity-45'>Cliente</div>
+									<div>{projeto.cliente}</div>
+								</div>
+							)}
+							{projeto.local && (
+								<div className='col-span-1 flex flex-col'>
+									<div className='opacity-45'>Local</div>
+									<div>{projeto.local}</div>
+								</div>
+							)}
 							<div className='col-span-1 flex flex-col'>
 								<div className='opacity-45'>Ano</div>
-								<div>2021</div>
+								<div>{projeto.year}</div>
 							</div>
 							<div className='col-span-1 flex flex-col'>
 								<div className='opacity-45'>Créditos</div>
-								<div>lorem ipsum</div>
+								<div>{projeto.creditos}</div>
 							</div>
 						</div>
 					</div>
-
-					<AnimatedP>
-						<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
-					</AnimatedP>
 				</div>
 			)}
 
@@ -203,7 +210,7 @@ export function WorkSingle() {
 					{/* mobile */}
 					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px] '>
 						{/* foto principal */}
-						<div className='h-[300px] flex justify-center'>
+						<div className='h-[300px] flex justify-center '>
 							<img
 								key={currentImageIndex}
 								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
