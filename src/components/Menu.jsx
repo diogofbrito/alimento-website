@@ -13,7 +13,7 @@ export function Menu() {
 					{/* LOGO */}
 					<AnimatedH1>
 						<Link to='/' className='hover:underline'>
-							Alimento
+							A l i m e n t o
 						</Link>
 					</AnimatedH1>
 

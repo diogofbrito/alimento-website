@@ -6,7 +6,7 @@ export function MenuIntro() {
 		<>
 			<div className='fixed  lg:flex lg:items-center left-5 right-5 bottom-0 top-5 lg:top-0 z-50 pointer-events-none mix-blend-difference text-white '>
 				<div className='hidden lg:grid grid-cols-4 uppercase tracking-[0.02em] font-[500] text-[0.9rem] pointer-events-auto w-full'>
-					<AnimatedH1 className='col-span-1 '>Alimento</AnimatedH1>
+					<AnimatedH1 className='col-span-1 '>A l i m e n t o</AnimatedH1>
 					<menu className='col-span-3 grid grid-cols-3 '>
 						<li className='col-span-1 '>
 							<AnimatedH1>

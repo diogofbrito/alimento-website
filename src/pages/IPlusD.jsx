@@ -173,13 +173,13 @@ export function IPlusD() {
 								<>
 									<div key={p._id} className='hidden lg:grid grid-cols-4 gap-x-[100px] items-start'>
 										{/* capa */}
-										<div>
+										<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' >
 											{p.coverImage?.asset ? (
 												<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
 											) : (
 												<div className='opacity-40'>—</div>
 											)}
-										</div>
+										</a>
 
 										{/* nome */}
 										<AnimatedPAfterH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedPAfterH1>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { h1SlideUp } from './animations/variants.js';
-import videoFile from '../assets/videoIntroAlimento.mp4';
+import videoFile from '../assets/mao.mp4';
 
 export function IntroLoader({ onFinish }) {
 	const [showTitle, setShowTitle] = useState(false);
@@ -14,7 +14,7 @@ export function IntroLoader({ onFinish }) {
 
 		const fadeOutTimer = setTimeout(() => {
 			setIsVisible(false);
-		}, 10000);
+		}, 7000);
 
 		return () => {
 			clearTimeout(titleFramer);
