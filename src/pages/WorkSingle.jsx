@@ -212,7 +212,7 @@ export function WorkSingle() {
 					</div>
 
 					{/* mobile */}
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px] '>
+					<div className='z-40 lg:hidden flex flex-col gap-16 px-3 pt-[30px] '>
 						{/* foto principal */}
 						<div className='h-[300px] flex justify-center '>
 							<img

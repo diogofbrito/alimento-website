@@ -1,9 +1,8 @@
-// App.jsx
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { IntroLoader } from './components/IntroLoader';
-import { pageTransition } from './components/animations/variants.js';
 import { AnimatePresence, motion } from 'framer-motion';
+import { pageTransition } from './components/animations/variants.js';
 import { Menu } from './components/Menu';
 import { ScrollToTop } from './components/ScrollToTop';
 
@@ -11,10 +10,14 @@ function App() {
 	const location = useLocation();
 	const [showLoader, setShowLoader] = useState(false);
 	const [isFirstLoad, setIsFirstLoad] = useState(true);
+	const [revealHome, setRevealHome] = useState(false);
+	const [startHomeCarousel, setStartHomeCarousel] = useState(false);
 
 	useEffect(() => {
 		if (location.pathname === '/' && isFirstLoad) {
 			setShowLoader(true);
+			setRevealHome(false);
+			setStartHomeCarousel(false);
 		} else {
 			setShowLoader(false);
 		}
@@ -27,39 +30,44 @@ function App() {
 
 	return (
 		<>
-			{/* só controla scrollRestoration */}
 			<ScrollToTop />
-
-			{/* Menu fora de certas páginas */}
 			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
+			{/* Outlet SEMPRE renderizado (para preload), mas na Home controlamos opacidade */}
 			<motion.div
 				key={location.pathname}
 				variants={pageTransition}
 				initial={isFirstLoad ? false : 'hidden'}
 				animate={isFirstLoad ? false : 'enter'}
 				exit='exit'
-				
+				style={
+					isHome && showLoader
+						? { opacity: revealHome ? 1 : 0 } // antes do fade: invisível; quando fade começa: aparece
+						: undefined
+				}
 				onAnimationComplete={() => {
-					// força o topo depois da animação de página
 					window.scrollTo(0, 0);
 					document.documentElement.scrollTop = 0;
 					document.body.scrollTop = 0;
 				}}
 			>
-				<Outlet />
+				<Outlet context={{ startHomeCarousel }} />
 			</motion.div>
 
 			<AnimatePresence>
 				{showLoader && (
-					<div className='absolute inset-0 z-50'>
-						<IntroLoader
-							onFinish={() => {
-								setShowLoader(false);
-								setIsFirstLoad(false);
-							}}
-						/>
-					</div>
+					<IntroLoader
+						onFadeStart={() => {
+							// começa o fade do loader → mostra a Home já com a imagem 0
+							setRevealHome(true);
+						}}
+						onFinish={() => {
+							setShowLoader(false);
+							setIsFirstLoad(false);
+							// loader já saiu → agora sim pode arrancar a galeria
+							setStartHomeCarousel(true);
+						}}
+					/>
 				)}
 			</AnimatePresence>
 		</>

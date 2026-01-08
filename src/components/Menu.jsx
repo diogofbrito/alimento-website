@@ -81,9 +81,7 @@ export function Menu() {
 						</AnimatedH1>
 					</nav>
 
-					<div className='absolute bottom-0 left-3 text-[1.1rem] uppercase tracking-[0.02em] font-[500]'>
-						<AnimatedH1>© Alimento 2026</AnimatedH1>
-					</div>
+					
 				</div>
 			)}
 		</>

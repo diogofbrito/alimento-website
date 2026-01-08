@@ -1,28 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { h1SlideUp } from './animations/variants.js';
-import videoFile from '../assets/mao.mp4';
+import videoDesktop from '../assets/mao.mp4';
+import videoMobile from '../assets/videoIntroAlimento.mp4';
 
-export function IntroLoader({ onFinish }) {
+export function IntroLoader({ onFadeStart, onFinish }) {
 	const [showTitle, setShowTitle] = useState(false);
 	const [isVisible, setIsVisible] = useState(true);
+	const [videoSrc, setVideoSrc] = useState(videoDesktop);
+	const firedFadeRef = useRef(false);
 
 	useEffect(() => {
-		const titleFramer = setTimeout(() => {
-			setShowTitle(true);
-		}, 2000);
+		const mq = window.matchMedia('(min-width: 1024px)');
+		const apply = () => setVideoSrc(mq.matches ? videoDesktop : videoMobile);
+		apply();
+		mq.addEventListener?.('change', apply);
+		return () => mq.removeEventListener?.('change', apply);
+	}, []);
 
-		const fadeOutTimer = setTimeout(() => {
+	useEffect(() => {
+		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
+
+		// quando começar a desaparecer (fade), avisamos o App
+		const fadeStartTimer = setTimeout(() => {
+			if (!firedFadeRef.current) {
+				firedFadeRef.current = true;
+				onFadeStart?.();
+			}
 			setIsVisible(false);
 		}, 7000);
 
 		return () => {
-			clearTimeout(titleFramer);
-			clearTimeout(fadeOutTimer);
+			clearTimeout(titleTimer);
+			clearTimeout(fadeStartTimer);
 		};
-	}, []);
+	}, [onFadeStart]);
 
 	const handleSkip = () => {
+		if (!firedFadeRef.current) {
+			firedFadeRef.current = true;
+			onFadeStart?.();
+		}
 		setIsVisible(false);
 	};
 
@@ -37,7 +55,7 @@ export function IntroLoader({ onFinish }) {
 							animate='show'
 							exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 						>
-							<motion.h1 variants={h1SlideUp} className='inline-block will-change-transform  uppercase tracking-[0.62em] font-[500] text-[1.1rem]  '>
+							<motion.h1 variants={h1SlideUp} className='inline-block uppercase tracking-[0.62em] font-[500] text-[1.1rem]'>
 								Alimento
 							</motion.h1>
 						</motion.div>
@@ -46,11 +64,13 @@ export function IntroLoader({ onFinish }) {
 					<div className='absolute inset-0 z-0 bg-black' />
 
 					<motion.video
-						src={videoFile}
+						key={videoSrc}
+						src={videoSrc}
 						autoPlay
-						onClick={handleSkip}
 						muted
 						playsInline
+						preload='auto'
+						onClick={handleSkip}
 						className='absolute inset-0 w-full h-full object-cover z-10'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
