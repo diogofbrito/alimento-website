@@ -28,7 +28,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 				onFadeStart?.();
 			}
 			setIsVisible(false);
-		}, 7000);
+		}, 8000);
 
 		return () => {
 			clearTimeout(titleTimer);
