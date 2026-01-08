@@ -1,31 +1,28 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { AnimatedPAfterH1 } from '../components/AnimatedText';
-import video from '../assets/studio.mp4';
+import { PortableText } from '@portabletext/react';
+import { Paragraph } from '../components/Paragraph';
 import bg from '../assets/patricia.jpg';
 
 export function About() {
-	const [press, setPress] = useState([]);
+	const [about, setAbout] = useState([]);
 
 	useEffect(() => {
-		const fetchPress = async () => {
+		const fetchAbout = async () => {
 			try {
 				const data = await sanityClient.fetch(
-					`*[_type == "press"] | order(year desc) {
-            _id,
-            title,
-            link,
-            year,
-            placeholderImage
+					`*[_type == "about"] [0] {
+           content
           }`,
 				);
-				setPress(data);
+				setAbout(data);
 			} catch (error) {
-				console.error('Erro ao buscar Press:', error.message);
+				console.error('Erro ao buscar About:', error.message);
 			}
 		};
 
-		fetchPress();
+		fetchAbout();
 	}, []);
 
 	return (
@@ -39,13 +36,7 @@ export function About() {
 						<AnimatedPAfterH1 className='font-[500] text-[0.85rem] pb-6 text-white '>Alimento de Patrícia Gabriel</AnimatedPAfterH1>
 
 						<AnimatedPAfterH1 className='tracking-wide leading-[1.3] font-[500] text-[1.2rem] text-white'>
-							Texto sobre o projeto Alimento e quem é a Patrícia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores iste fuga veniam itaque! Recusandae cum odit voluptas rerum nobis
-							atque quibusdam expedita reiciendis quos possimus dignissimos nisi dolorem, tempora placeat! Optio corrupti laboriosam dignissimos beatae deserunt ad eligendi itaque animi ipsum quis
-							vitae esse perferendis dolorum quo provident fuga, expedita id nisi, voluptatem eveniet laudantium tenetur voluptates. Laudantium, doloremque inventore.
-							<br />
-							<br />
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum eaque suscipit sequi voluptatem nisi, atque nihil iste eius cum natus! Molestiae incidunt dolores non laudantium cumque
-							praesentium! Delectus, voluptate adipisci!
+							<PortableText  value={about.content} components={{ block: { normal: Paragraph } }} />
 						</AnimatedPAfterH1>
 					</div>
 				</div>
@@ -53,7 +44,7 @@ export function About() {
 
 			{/* FOOTER */}
 			<div className='grid lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white '>
-				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>© 2026,  Alimento Studio</AnimatedPAfterH1>
+				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>© 2026, Alimento Studio</AnimatedPAfterH1>
 
 				<AnimatedPAfterH1 className='lg:col-span-2 font-[500] text-[0.85rem]'>Projeto Spin-off | Instituto Superior de Agronomia da U.L.</AnimatedPAfterH1>
 
