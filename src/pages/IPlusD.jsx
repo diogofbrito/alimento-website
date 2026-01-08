@@ -5,6 +5,40 @@ import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
 import { AnimatedImage1, AnimatedH1, AnimatedP, AnimatedPAfterH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { Paragraph } from '../components/Paragraph';
+import { motion } from 'framer-motion';
+
+/* ✅ IGUAL AO TEU WORKS */
+function useIsDesktop() {
+	const [isDesktop, setIsDesktop] = useState(false);
+
+	useEffect(() => {
+		const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+		setIsDesktop(mq.matches);
+
+		const handler = e => setIsDesktop(e.matches);
+		mq.addEventListener('change', handler);
+
+		return () => mq.removeEventListener('change', handler);
+	}, []);
+
+	return isDesktop;
+}
+
+/* ✅ IGUAL AO WORKS */
+const movingImageVariants = {
+	rest: { x: '0%' },
+	hover: { x: '100%' },
+};
+
+const img1Variants = {
+	rest: { opacity: 1 },
+	hover: { opacity: 0 },
+};
+
+const img2Variants = {
+	rest: { opacity: 0 },
+	hover: { opacity: 1 },
+};
 
 export function IPlusD() {
 	const [projects, setProjects] = useState([]);
@@ -14,6 +48,8 @@ export function IPlusD() {
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 	const [isMainLoaded, setIsMainLoaded] = useState(false);
 
+	const isDesktop = useIsDesktop();
+
 	useEffect(() => {
 		sanityClient
 			.fetch(
@@ -22,9 +58,10 @@ export function IPlusD() {
           _id,
           title,
           year,
-		  coverImage,
+          coverImage,
+          coverImage2,
           description,
-		"pdfUrl": pdf.asset->url,
+          "pdfUrl": pdf.asset->url,
           "slug": slug.current,
           gallery[]{
             _key,
@@ -35,27 +72,30 @@ export function IPlusD() {
       `,
 			)
 			.then(data => {
-				setProjects(data || []);
-				const flattened = (data || []).flatMap(
-					doc =>
+				const docs = data || [];
+				setProjects(docs);
+
+				const flattened = docs
+					.flatMap(doc =>
 						(doc.gallery || [])
 							.map(g => ({
 								_key: g._key || `${doc._id}-${Math.random()}`,
-								image: g.image, // imagem do item
-								imageTitle: g.title, // título desta imagem (blockContent)
+								image: g.image,
+								imageTitle: g.title,
+
 								projectTitle: doc.title,
 								projectYear: doc.year,
 								projectDescription: doc.description,
 								projectSlug: doc.slug,
 								projectId: doc._id,
+
 								coverImage: doc.coverImage,
+								coverImage2: doc.coverImage2,
 								pdfUrl: doc.pdfUrl,
 							}))
-							.filter(it => it.image?.asset?._ref), // evita urlFor(null)
-				);
-
-				// se quiseres manter por ano desc (e manter ordem “ok”)
-				flattened.sort((a, b) => (b.projectYear || 0) - (a.projectYear || 0));
+							.filter(it => it.image?.asset?._ref),
+					)
+					.sort((a, b) => (b.projectYear || 0) - (a.projectYear || 0));
 
 				setItems(flattened);
 				setCurrentImageIndex(0);
@@ -71,13 +111,8 @@ export function IPlusD() {
 			if (isListOpen || isInfoOpen) return;
 			if (!items?.length) return;
 
-			if (e.key === 'ArrowRight') {
-				setCurrentImageIndex(prev => (prev < items.length - 1 ? prev + 1 : 0));
-			}
-
-			if (e.key === 'ArrowLeft') {
-				setCurrentImageIndex(prev => (prev > 0 ? prev - 1 : items.length - 1));
-			}
+			if (e.key === 'ArrowRight') setCurrentImageIndex(prev => (prev < items.length - 1 ? prev + 1 : 0));
+			if (e.key === 'ArrowLeft') setCurrentImageIndex(prev => (prev > 0 ? prev - 1 : items.length - 1));
 		};
 
 		window.addEventListener('keydown', handleKeyDown);
@@ -85,15 +120,15 @@ export function IPlusD() {
 	}, [items, isListOpen, isInfoOpen]);
 
 	useEffect(() => {
-		if (items?.length) {
-			const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
-			preload.forEach(i => {
-				if (i >= 0 && i < items.length) {
-					const image = new Image();
-					image.src = urlFor(items[i].image).width(1600).quality(80).auto('format').url();
-				}
-			});
-		}
+		if (!items?.length) return;
+
+		const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
+		preload.forEach(i => {
+			if (i >= 0 && i < items.length) {
+				const image = new Image();
+				image.src = urlFor(items[i].image).width(1600).quality(80).auto('format').url();
+			}
+		});
 	}, [currentImageIndex, items]);
 
 	if (!items?.length) return null;
@@ -129,7 +164,7 @@ export function IPlusD() {
 				}}
 			/>
 
-			{/* Lista de imagens */}
+			{/* LISTA */}
 			{isListOpen && (
 				<div className='inset-0 z-40 pt-[30px] px-3 pb-3 lg:px-5 lg:pt-[100px] lg:pb-5'>
 					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
@@ -149,95 +184,78 @@ export function IPlusD() {
 				</div>
 			)}
 
-			{/* INFORMAÇÕES (todas as publicações) */}
+			{/* INFO — AGORA COM A MESMA LÓGICA DO WORKS */}
 			{isInfoOpen && (
-				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3] '>
+				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
-						<div className='col-span-2 '>
-							<AnimatedP className=' tracking-[0.02em] text-[1.2rem] font-[500]'>
+						<div className='col-span-2'>
+							<AnimatedP className='tracking-[0.02em] text-[1.2rem] font-[500]'>
 								I + D é um arquivo de investigação, referências e processos: imagens, materiais e exercícios que alimentam a prática de Alimento.
 							</AnimatedP>
 						</div>
 					</div>
 
-					<div className='lg:pt-16 pt-12'>
-						<div className='hidden lg:grid grid-cols-4 gap-x-[100px] font-[500]  pb-4 text-[0.85rem]'>
-							<AnimatedH1>Publicações de receitas</AnimatedH1>
-							<AnimatedH1>Nome</AnimatedH1>
-							<AnimatedH1>Ano</AnimatedH1>
-							<AnimatedH1>Ver</AnimatedH1>
-						</div>
+					{/* GRID CARDS (TIPO WORKS) */}
+					<div className='pt-12 lg:pt-16 pb-5'>
+						<AnimatedH1 className='font-[500] text-[0.85rem] pb-4'>Publicações</AnimatedH1>
+						<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
+							{projects.map(p => {
+								const href = p.pdfUrl || null;
 
-						<div className='grid gap-y-6'>
-							{projects.map(p => (
-								<>
-									<div key={p._id} className='hidden lg:grid grid-cols-4 gap-x-[100px] items-start'>
-										{/* capa */}
-										<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' >
-											{p.coverImage?.asset ? (
-												<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
-											) : (
-												<div className='opacity-40'>—</div>
-											)}
-										</a>
+								const img1 = p.coverImage?.asset ? urlFor(p.coverImage).width(1200).quality(85).auto('format').url() : null;
 
-										{/* nome */}
-										<AnimatedPAfterH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedPAfterH1>
+								// ✅ só carrega img2 em desktop real
+								const img2 = isDesktop && p.coverImage2?.asset ? urlFor(p.coverImage2).width(1200).quality(85).auto('format').url() : null;
 
-										{/* ano */}
-										<AnimatedPAfterH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedPAfterH1>
+								return (
+									<a
+										key={p._id}
+										href={href || undefined}
+										target={href ? '_blank' : undefined}
+										rel={href ? 'noopener noreferrer' : undefined}
+										className={`contents ${href ? '' : 'pointer-events-none opacity-40'}`}
+									>
+										<motion.div className='col-span-2 relative h-[200px] lg:h-[400px]' initial='rest' animate='rest' whileHover={isDesktop && img2 ? 'hover' : undefined}>
+											{/* ✅ MESMA ESTRUTURA DO WORKS */}
+											<div className='grid grid-cols-2 h-full w-full'>
+												<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em]' />
+												<div className='relative h-full w-full' />
 
-										{/* pdf */}
-										<AnimatedPAfterH1>
-											{p.pdfUrl ? (
-												<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
-													PDF
-												</a>
-											) : (
-												<div className='opacity-40'>—</div>
-											)}
-										</AnimatedPAfterH1>
-									</div>
+												<motion.div className='absolute top-0 left-0 h-full w-1/2 overflow-hidden' variants={movingImageVariants} transition={{ duration: 0.5, ease: 'easeOut' }}>
+													{img1 ? (
+														<motion.img src={img1} alt={p.title} className='w-full h-full object-cover absolute inset-0' variants={img1Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
+													) : (
+														<div className='absolute inset-0 bg-black/5' />
+													)}
 
-									<div key={p._id} className='lg:hidden grid grid-cols-2 gap-6'>
-										<div>
-											{p.coverImage?.asset ? (
-												<AnimatedImage1 src={urlFor(p.coverImage).width(330).quality(90).auto('format').url()} alt={p.title} className='object-contain pointer-events-none' />
-											) : (
-												<div className='opacity-40'>—</div>
-											)}
-										</div>
+													{/* img2 só existe em desktop */}
+													{img2 && (
+														<motion.img src={img2} alt={p.title} className='w-full h-full object-cover absolute inset-0' variants={img2Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
+													)}
+												</motion.div>
+											</div>
 
-										<div className='flex flex-col gap-1'>
-											{/* nome */}
-											<AnimatedH1 className='uppercase tracking-[0.02em] font-[500] text-[0.9rem]'>{p.title}</AnimatedH1>
-
-											{/* ano */}
-											<AnimatedH1 className='uppercase text-[0.9rem] tracking-[0.02em] '>{p.year || '—'}</AnimatedH1>
-
-											{/* pdf */}
-											<AnimatedH1>
-												{p.pdfUrl ? (
-													<a href={p.pdfUrl} target='_blank' rel='noopener noreferrer' className='underline tracking-[0.02em]  text-[0.9rem] hover:opacity-60 transition'>
-														PDF
-													</a>
-												) : (
-													<div className='opacity-40'>—</div>
-												)}
-											</AnimatedH1>
-										</div>
-									</div>
-								</>
-							))}
+											{/* ✅ em baixo só title + year (sem “PDF”) */}
+											<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] uppercase'>
+												<div className='lg:max-w-[70%] font-[500]'>
+													<AnimatedH1>{p.title}</AnimatedH1>
+												</div>
+												<AnimatedH1>{p.year || '—'}</AnimatedH1>
+											</div>
+										</motion.div>
+									</a>
+								);
+							})}
 						</div>
 					</div>
 				</div>
 			)}
 
+			{/* SLIDER */}
 			{!isListOpen && !isInfoOpen && (
 				<>
+					{/* desktop */}
 					<div className='z-40 hidden lg:grid lg:grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
-						{/* foto anterior */}
 						<div className='col-span-1'>
 							{prevIndex !== null && (
 								<div className='group block'>
@@ -251,8 +269,7 @@ export function IPlusD() {
 							)}
 						</div>
 
-						{/* foto principal + titulo da imagem */}
-						<div className='col-span-3 flex flex-col gap-5 items-center justify-center'>
+						<div className='col-span-3 flex flex-col gap-4 items-center justify-center'>
 							<img
 								key={currentImageIndex}
 								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
@@ -273,7 +290,6 @@ export function IPlusD() {
 							)}
 						</div>
 
-						{/* foto posterior */}
 						<div className='col-span-1'>
 							{nextIndex !== null && (
 								<div className='group block'>
@@ -289,9 +305,8 @@ export function IPlusD() {
 					</div>
 
 					{/* mobile */}
-					<div className=' z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]  '>
-						{/* foto principal */}
-						<div className='w-full  flex flex-col gap-3 items-center justify-center '>
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]'>
+						<div className='w-full flex flex-col gap-3 items-center justify-center'>
 							<img
 								key={currentImageIndex}
 								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
@@ -311,7 +326,7 @@ export function IPlusD() {
 								<div className='h-[24px]' />
 							)}
 						</div>
-						{/* foto posterior */}
+
 						<div className='h-[120px] flex justify-center'>
 							{nextIndex !== null && (
 								<img
