@@ -52,12 +52,12 @@ export function About() {
 			</div>
 
 			{/* FOOTER */}
-			<div className='grid lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-5 left-5 text-white'>
-				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem]'>© 2026, Alimento Studio</AnimatedPAfterH1>
+			<div className='grid lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white '>
+				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>© 2026,  Alimento Studio</AnimatedPAfterH1>
 
-				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem]'>Projeto Spin-off | Instituto Superior de Agronomia da U.L.</AnimatedPAfterH1>
+				<AnimatedPAfterH1 className='lg:col-span-2 font-[500] text-[0.85rem]'>Projeto Spin-off | Instituto Superior de Agronomia da U.L.</AnimatedPAfterH1>
 
-				<AnimatedPAfterH1 className='col-span-1 font-[500] text-[0.85rem]'>
+				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>
 					Website Design{' '}
 					<a href='https://www.diogobrito.xyz' className='underline' target='_blank' rel='noreferrer'>
 						Diogo Brito
