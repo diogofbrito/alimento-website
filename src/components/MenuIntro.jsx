@@ -41,7 +41,7 @@ export function MenuIntro() {
 
 			<div className='lg:hidden fixed bottom-0 top-0 right-0 left-0 z-50 flex flex-col p-5 justify-between mix-blend-difference text-white uppercase tracking-[0.02em] font-[500] '>
 				<AnimatedH1 className='text-[1.1rem]'>A l i m e n t o</AnimatedH1>
-				<nav className='flex flex-col gap-1 text-[1.4rem] '>
+				<nav className='flex text-center flex-col gap-1 text-[1.4rem] '>
 					
 						<AnimatedH1>
 							<Link to='/projetos'>Projetos</Link>

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatedButton, AnimatedH1 } from './AnimatedText';
+import { AnimatedH1 } from './AnimatedText';
+import { HamburgerButton } from './HamburguerBtn';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export function Menu() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,9 +19,9 @@ export function Menu() {
 						</Link>
 					</AnimatedH1>
 
-					<AnimatedButton onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen} className='block lg:hidden text-right' aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}>
-						{isOpen ? 'Fechar' : 'Menu'}
-					</AnimatedButton>
+					<div className='col-span-1 flex justify-end lg:hidden'>
+						<HamburgerButton isOpen={isOpen} toggle={() => setIsOpen(prev => !prev)} />
+					</div>
 
 					{/* MENU DESKTOP */}
 					<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
@@ -55,35 +57,48 @@ export function Menu() {
 				</div>
 			</div>
 
-			{/* OVERLAY MOBILE */}
-			{isOpen && (
-				<div className='fixed inset-0 z-40 bg-[#f7f7f7] flex flex-col justify-center px-3 '>
-					<nav className='flex flex-col gap-1 text-[1.4rem] tracking-[0.02em] font-[500] uppercase '>
-						<AnimatedH1>
-							<Link onClick={() => setIsOpen(false)} to='/projetos'>
-								Projetos
-							</Link>
-						</AnimatedH1>
-						<AnimatedH1>
-							<Link onClick={() => setIsOpen(false)} to='/imaisd'>
-								I + D
-							</Link>
-						</AnimatedH1>
-						<AnimatedH1>
-							<Link onClick={() => setIsOpen(false)} to='/press'>
-								Press
-							</Link>
-						</AnimatedH1>
-						<AnimatedH1>
-							<Link onClick={() => setIsOpen(false)} to='/sobre'>
-								Sobre
-							</Link>
-						</AnimatedH1>
-					</nav>
-
-					
-				</div>
-			)}
+			{/* OVERLAY MOBILE (com fade in/out) */}
+			<AnimatePresence>
+				{isOpen && (
+					<motion.div
+						className='fixed inset-0 z-40 bg-[#f7f7f7] flex flex-col justify-center px-3'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.5, ease: 'easeInOut' }}
+					>
+						{/* opcional: ligeiro “soft entrance” do conteúdo */}
+						<motion.nav
+							className='flex flex-col text-center gap-1 text-[1.4rem] tracking-[0.02em] font-[500] uppercase'
+							initial={{ opacity: 0, y: 6 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: 6 }}
+							transition={{ duration: 0.5, ease: 'easeInOut' }}
+						>
+							<AnimatedH1>
+								<Link onClick={() => setIsOpen(false)} to='/projetos'>
+									Projetos
+								</Link>
+							</AnimatedH1>
+							<AnimatedH1>
+								<Link onClick={() => setIsOpen(false)} to='/imaisd'>
+									I + D
+								</Link>
+							</AnimatedH1>
+							<AnimatedH1>
+								<Link onClick={() => setIsOpen(false)} to='/press'>
+									Press
+								</Link>
+							</AnimatedH1>
+							<AnimatedH1>
+								<Link onClick={() => setIsOpen(false)} to='/sobre'>
+									Sobre
+								</Link>
+							</AnimatedH1>
+						</motion.nav>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</>
 	);
 }
