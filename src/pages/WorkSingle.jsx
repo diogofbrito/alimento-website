@@ -21,12 +21,18 @@ export function WorkSingle() {
           title,
           "slug": slug.current,
           placeholderImage,
+		  data,
 		  year,
 		  cliente,
 		  tipo,
 		  local,
+		  agradecimentos,
 		  creditos,
           gallery,
+		  pdf{
+			title,
+			"url": file.asset->url
+		},
           description,
         }`,
 				{ slug },
@@ -141,26 +147,47 @@ export function WorkSingle() {
 								<AnimatedH1 className='text-[0.85rem] font-[500] '>Tipo</AnimatedH1>
 								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
 							</div>
-							{projeto.cliente && (
-								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Cliente</AnimatedH1>
-									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
-								</div>
-							)}
+							<div className='col-span-1 flex flex-col'>
+								<AnimatedH1 className='text-[0.85rem] font-[500] '>Data</AnimatedH1>
+								{projeto.data && (
+									<div>
+										<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
+									</div>
+								)}
+								<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
+							</div>
 							{projeto.local && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500] '>Local</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.local}</AnimatedPAfterH1>
 								</div>
 							)}
-							<div className='col-span-1 flex flex-col'>
-								<AnimatedH1 className='text-[0.85rem] font-[500] '>Ano</AnimatedH1>
-								<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
-							</div>
+							{projeto.cliente && (
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Cliente</AnimatedH1>
+									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
+								</div>
+							)}
 							{projeto.creditos && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500] '>Créditos</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.creditos}</AnimatedPAfterH1>
+								</div>
+							)}
+							{projeto.agradecimentos && (
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Agradecimentos</AnimatedH1>
+									<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
+								</div>
+							)}
+
+							{projeto.pdf?.url && (
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Mais informações</AnimatedH1>
+
+									<a href={projeto.pdf.url} target='_blank' rel='noopener noreferrer' className='underline hover:opacity-60 transition'>
+										<AnimatedPAfterH1>{projeto.pdf.title?.trim() ? projeto.pdf.title : 'Abrir PDF'}</AnimatedPAfterH1>
+									</a>
 								</div>
 							)}
 						</div>

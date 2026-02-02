@@ -33,7 +33,7 @@ export function About() {
 				<div className='col-span-2 '></div>
 				<div className='col-span-2 lg:pl-0 pr-3 lg:pr-5 pl-3'>
 					<div>
-						<AnimatedPAfterH1 className='font-[500] text-[0.85rem] pb-6 text-white '>Alimento de Patrícia Gabriel</AnimatedPAfterH1>
+						<AnimatedPAfterH1 className='font-[500] text-[0.85rem] pb-6 text-white '>Sobre</AnimatedPAfterH1>
 
 						<AnimatedPAfterH1 className='tracking-wide leading-[1.3] font-[500] text-[1.2rem] text-white'>
 							<PortableText  value={about.content} components={{ block: { normal: Paragraph } }} />
