@@ -137,9 +137,10 @@ export function WorkSingle() {
 			{isInfoOpen && (
 				<div className='z-40 px-3 lg:px-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
-						<AnimatedP>
+						<AnimatedH1 className='text-[0.85rem] font-[500]'>Sobre</AnimatedH1>
+						<AnimatedPAfterH1>
 							<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
-						</AnimatedP>
+						</AnimatedPAfterH1>
 					</div>
 					<div className='lg:col-span-4 pt-12'>
 						<div className='grid grid-cols-2 lg:grid-cols-4 lg:gap-x-[100px] gap-y-[30px] l	]  '>
