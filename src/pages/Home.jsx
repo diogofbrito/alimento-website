@@ -5,7 +5,7 @@ import sanityClient from '../SanityClient';
 import { urlFor } from '../utils/imageUrlBuilder';
 import { MenuIntro } from '../components/MenuIntro';
 
-const DISPLAY_TIME = 5000;
+const DISPLAY_TIME = 2000;
 const FADE_TIME = 2000;
 
 export function Home() {

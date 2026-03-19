@@ -21,20 +21,21 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 	useEffect(() => {
 		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
 
-		// quando começar a desaparecer (fade), avisamos o App
+		const fadeDelay = videoSrc === videoMobile ? 4600 : 8000;
+
 		const fadeStartTimer = setTimeout(() => {
 			if (!firedFadeRef.current) {
 				firedFadeRef.current = true;
 				onFadeStart?.();
 			}
 			setIsVisible(false);
-		}, 8000);
+		}, fadeDelay);
 
 		return () => {
 			clearTimeout(titleTimer);
 			clearTimeout(fadeStartTimer);
 		};
-	}, [onFadeStart]);
+	}, [onFadeStart, videoSrc]);
 
 	const handleSkip = () => {
 		if (!firedFadeRef.current) {

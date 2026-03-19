@@ -42,7 +42,7 @@ function App() {
 				exit='exit'
 				style={
 					isHome && showLoader
-						? { opacity: revealHome ? 1 : 0 } // antes do fade: invisível; quando fade começa: aparece
+						? { opacity: revealHome ? 1 : 0 } 
 						: undefined
 				}
 				onAnimationComplete={() => {

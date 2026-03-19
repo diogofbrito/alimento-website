@@ -92,7 +92,7 @@ export function Menu() {
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/sobre'>
-									Sobre
+									Info
 								</Link>
 							</AnimatedH1>
 						</motion.nav>

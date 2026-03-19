@@ -6,7 +6,7 @@ import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleID } from '../components/HeaderSingleID';
 import { AnimatedImage1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
-import { Paragraph } from '../components/Paragraph';
+import { portableTextComponents } from '../components/Paragraph';
 
 export function IPlusDSingle() {
 	const { slug } = useParams();

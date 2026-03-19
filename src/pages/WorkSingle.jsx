@@ -5,8 +5,7 @@ import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleWork } from '../components/HeaderSingleWork';
 import { AnimatedImage1, AnimatedH1, AnimatedPAfterH1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
-import { Paragraph } from '../components/Paragraph';
-
+import { portableTextComponents } from '../components/Paragraph';
 export function WorkSingle() {
 	const { slug } = useParams();
 	const [projeto, setProjeto] = useState(null);
@@ -18,23 +17,33 @@ export function WorkSingle() {
 		sanityClient
 			.fetch(
 				`*[_type == "projetos" && slug.current == $slug][0]{
-          title,
-          "slug": slug.current,
-          placeholderImage,
-		  data,
-		  year,
-		  cliente,
-		  tipo,
-		  local,
-		  agradecimentos,
-		  creditos,
-          gallery,
-		  pdf{
-			title,
-			"url": file.asset->url
-		},
-          description,
-        }`,
+					title,
+					"slug": slug.current,
+					placeholderImage,
+					data,
+					year,
+					cliente,
+					tipo,
+					local,
+					agradecimentos,
+					creditos,
+					gallery,
+					description,
+					fichaTecnica[]{
+						titulo,
+						conteudo
+					},
+					links{
+						pdf{
+							title,
+							"url": file.asset->url
+						},
+						urls[]{
+							title,
+							url
+						}
+					}
+				}`,
 				{ slug },
 			)
 			.then(data => setProjeto(data));
@@ -135,27 +144,29 @@ export function WorkSingle() {
 
 			{/* Informações */}
 			{isInfoOpen && (
-				<div className='z-40 px-3 lg:px-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
+				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
 					<div className='col-span-2 '>
 						<AnimatedH1 className='text-[0.85rem] font-[500]'>Sobre</AnimatedH1>
 						<AnimatedPAfterH1>
-							<PortableText value={projeto.description} components={{ block: { normal: Paragraph } }} />
+							<PortableText value={projeto.description} components={portableTextComponents} />
 						</AnimatedPAfterH1>
 					</div>
-					<div className='lg:col-span-4 pt-12'>
-						<div className='grid grid-cols-2 lg:grid-cols-4 lg:gap-x-[100px] gap-y-[30px] l	]  '>
+					<div className='col-span-2 pt-12 lg:pt-0 '>
+						<div className='grid grid-cols-2  lg:gap-x-[100px] gap-y-[30px] '>
 							<div className='col-span-1  flex flex-col '>
 								<AnimatedH1 className='text-[0.85rem] font-[500] '>Tipo</AnimatedH1>
 								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
 							</div>
 							<div className='col-span-1 flex flex-col'>
 								<AnimatedH1 className='text-[0.85rem] font-[500] '>Data</AnimatedH1>
-								{projeto.data && (
-									<div>
-										<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
-									</div>
-								)}
-								<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
+								<div className='flex gap-2'>
+									{projeto.data && (
+										<div>
+											<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
+										</div>
+									)}
+									<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
+								</div>
 							</div>
 							{projeto.local && (
 								<div className='col-span-1 flex flex-col'>
@@ -164,17 +175,35 @@ export function WorkSingle() {
 								</div>
 							)}
 							{projeto.cliente && (
-								<div className='col-span-1 flex flex-col'>
+								<div className='col-span-1 flex flex-col '>
 									<AnimatedH1 className='text-[0.85rem] font-[500] '>Cliente</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
 								</div>
 							)}
 							{projeto.creditos && (
-								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Créditos</AnimatedH1>
+								<div className='col-span-1 flex flex-col '>
+									<AnimatedH1 className='text-[0.85rem] font-[500] '>Fotografias</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.creditos}</AnimatedPAfterH1>
 								</div>
 							)}
+						</div>
+
+						<div className='grid grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[80px]'>
+							{projeto.fichaTecnica?.length > 0 && (
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='font-[500] text-[0.85rem] '>Ficha técnica</AnimatedH1>
+
+									<div className='flex flex-col gap-4 pt-2'>
+										{projeto.fichaTecnica.map((item, index) => (
+											<div key={index} className='flex flex-col'>
+												<AnimatedPAfterH1 className='font-[500] text-[0.85rem]'>{item.titulo}</AnimatedPAfterH1>
+												<AnimatedPAfterH1>{item.conteudo}</AnimatedPAfterH1>
+											</div>
+										))}
+									</div>
+								</div>
+							)}
+
 							{projeto.agradecimentos && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500] '>Agradecimentos</AnimatedH1>
@@ -182,13 +211,23 @@ export function WorkSingle() {
 								</div>
 							)}
 
-							{projeto.pdf?.url && (
+							{(projeto.links?.pdf?.url || projeto.links?.urls?.length > 0) && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Mais informações</AnimatedH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-									<a href={projeto.pdf.url} target='_blank' rel='noopener noreferrer' className='underline hover:opacity-60 transition'>
-										<AnimatedPAfterH1>{projeto.pdf.title?.trim() ? projeto.pdf.title : 'Abrir PDF'}</AnimatedPAfterH1>
-									</a>
+									<div className='flex flex-col gap-2'>
+										{projeto.links?.pdf?.url && (
+											<a href={projeto.links.pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+												<AnimatedPAfterH1>{projeto.links.pdf.title?.trim() ? projeto.links.pdf.title : 'Abrir PDF'}</AnimatedPAfterH1>
+											</a>
+										)}
+
+										{projeto.links?.urls?.map((link, index) => (
+											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+												<AnimatedPAfterH1>{link.title}</AnimatedPAfterH1>
+											</a>
+										))}
+									</div>
 								</div>
 							)}
 						</div>

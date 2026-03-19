@@ -77,7 +77,7 @@ export function Works() {
 
 					return (
 						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
-							<motion.div className='col-span-2 relative h-[200px] lg:h-[300px]' initial='rest' animate='rest' whileHover={isDesktop ? 'hover' : undefined}>
+							<motion.div className='col-span-2 relative h-[200px] md:h-[300px] ' initial='rest' animate='rest' whileHover={isDesktop ? 'hover' : undefined}>
 								<div className='grid grid-cols-2 h-full w-full'>
 									<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em] '></div>
 

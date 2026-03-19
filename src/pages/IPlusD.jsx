@@ -4,7 +4,7 @@ import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
 import { AnimatedImage1, AnimatedH1, AnimatedP, AnimatedPAfterH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
-import { Paragraph } from '../components/Paragraph';
+import { portableTextComponents } from '../components/Paragraph';
 import { motion } from 'framer-motion';
 
 /* ✅ IGUAL AO TEU WORKS */
@@ -190,7 +190,7 @@ export function IPlusD() {
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2'>
 							<AnimatedP className='tracking-[0.02em] text-[1.2rem] font-[500]'>
-								I + D é um arquivo de investigação, referências, receitas e processos: imagens, materiais e exercícios que alimentam a prática de Alimento.
+								I + D reúne projetos de Investigação e Desenvolvimento quer sejam de receitas, produtos ou outras práticas de A L I M E N T O.
 							</AnimatedP>
 						</div>
 					</div>
@@ -283,7 +283,7 @@ export function IPlusD() {
 
 							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
 								<AnimatedP className='text-center'>
-									<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
+									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
 							) : (
 								<div className='h-[24px]' />
@@ -320,7 +320,7 @@ export function IPlusD() {
 
 							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
 								<AnimatedP className='text-center'>
-									<PortableText value={items[currentImageIndex].imageTitle} components={{ block: { normal: Paragraph } }} />
+									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
 							) : (
 								<div className='h-[24px]' />
