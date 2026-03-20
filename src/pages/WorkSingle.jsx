@@ -161,7 +161,7 @@ export function WorkSingle() {
 							</div>
 							<div className='col-span-1 flex flex-col'>
 								<AnimatedH1 className='text-[0.85rem] font-[500] '>Data</AnimatedH1>
-								<div className='flex gap-2'>
+								<div className='flex gap-1'>
 									{projeto.data && (
 										<div>
 											<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
