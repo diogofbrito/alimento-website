@@ -6,6 +6,8 @@ import { HeaderSingleWork } from '../components/HeaderSingleWork';
 import { AnimatedImage1, AnimatedH1, AnimatedPAfterH1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
+import { ArrowUpRight } from 'lucide-react';
+
 export function WorkSingle() {
 	const { slug } = useParams();
 	const [projeto, setProjeto] = useState(null);
@@ -34,7 +36,7 @@ export function WorkSingle() {
 						conteudo
 					},
 					links{
-						pdf{
+						pdfs[]{
 							title,
 							"url": file.asset->url
 						},
@@ -211,20 +213,24 @@ export function WorkSingle() {
 								</div>
 							)}
 
-							{(projeto.links?.pdf?.url || projeto.links?.urls?.length > 0) && (
+							{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-									<div className='flex flex-col gap-2'>
-										{projeto.links?.pdf?.url && (
-											<a href={projeto.links.pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-												<AnimatedPAfterH1>{projeto.links.pdf.title?.trim() ? projeto.links.pdf.title : 'Abrir PDF'}</AnimatedPAfterH1>
+									<div className='flex flex-col '>
+										{projeto.links?.pdfs?.map((pdf, index) => (
+											<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+												<AnimatedPAfterH1 className='flex'>
+													{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} />
+												</AnimatedPAfterH1>
 											</a>
-										)}
+										))}
 
 										{projeto.links?.urls?.map((link, index) => (
-											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-												<AnimatedPAfterH1>{link.title}</AnimatedPAfterH1>
+											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60 '>
+												<AnimatedPAfterH1 className='flex'>
+													{link.title} <ArrowUpRight size={16} strokeWidth={1.5} />
+												</AnimatedPAfterH1>
 											</a>
 										))}
 									</div>
