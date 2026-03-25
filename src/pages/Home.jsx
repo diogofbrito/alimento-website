@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOutletContext } from 'react-router-dom';
 import sanityClient from '../SanityClient';
-import { urlFor } from '../utils/imageUrlBuilder';
+import { imageUrl } from '../utils/sanity.image';
+import { HOME_DESKTOP_QUERY, HOME_MOBILE_QUERY } from '../lib/sanity.queries';
 import { MenuIntro } from '../components/MenuIntro';
 
 const DISPLAY_TIME = 2000;
@@ -10,9 +11,9 @@ const FADE_TIME = 2000;
 
 export function Home() {
 	const { startHomeCarousel } = useOutletContext();
-	const [carouselType, setCarouselType] = useState('carouselHome'); 
+
+	const [isDesktop, setIsDesktop] = useState(true);
 	const [images, setImages] = useState([]);
-	const [alts, setAlts] = useState([]);
 	const [index, setIndex] = useState(0);
 	const [isReady, setIsReady] = useState(false);
 
@@ -20,70 +21,84 @@ export function Home() {
 		const mq = window.matchMedia('(min-width: 1024px)');
 
 		const apply = () => {
-			setCarouselType(mq.matches ? 'carouselHome' : 'carouselHomeMobile');
+			setIsDesktop(mq.matches);
 		};
 
 		apply();
 		mq.addEventListener?.('change', apply);
+
 		return () => mq.removeEventListener?.('change', apply);
 	}, []);
 
 	useEffect(() => {
 		let cancelled = false;
 
-		const fetchAndPreload = async () => {
+		const fetchCarousel = async () => {
 			try {
 				setIsReady(false);
 				setImages([]);
-				setAlts([]);
 				setIndex(0);
 
-				const query = `
-          *[_type == "${carouselType}"][0]{
-            images[]{ image, alt }
-          }
-        `;
-
+				const query = isDesktop ? HOME_DESKTOP_QUERY : HOME_MOBILE_QUERY;
 				const data = await sanityClient.fetch(query);
+
 				if (cancelled) return;
 
-				if (!data?.images?.length) return;
+				const list =
+					(data?.images || [])
+						.map(item => {
+							const image = item?.image;
+							const src = imageUrl(image, 'home');
 
-				const urls = data.images.map(img => urlFor(img.image).auto('format').quality(80).url());
+							if (!src) return null;
 
-				const altTexts = data.images.map(img => img?.alt || '');
+							return {
+								src,
+								alt: item?.alt || '',
+							};
+						})
+						.filter(Boolean) || [];
 
-				
-				let loadedCount = 0;
-				const total = urls.length;
+				if (!list.length) return;
 
-				urls.forEach(src => {
-					const img = new Image();
-					img.src = src;
-					img.onload = img.onerror = () => {
-						loadedCount += 1;
-						if (loadedCount === total && !cancelled) {
-							setImages(urls);
-							setAlts(altTexts);
-							setIsReady(true);
-							setIndex(0); 
-						}
-					};
-				});
+				const firstImage = new Image();
+				firstImage.src = list[0].src;
+
+				firstImage.onload = () => {
+					if (cancelled) return;
+
+					setImages(list);
+					setIndex(0);
+					setIsReady(true);
+
+					list.slice(1).forEach(item => {
+						const img = new Image();
+						img.src = item.src;
+					});
+				};
+
+				firstImage.onerror = () => {
+					if (cancelled) return;
+
+					setImages(list);
+					setIndex(0);
+					setIsReady(true);
+				};
 			} catch (error) {
 				console.error('Erro ao buscar carousel da Home:', error.message);
 			}
 		};
 
-		fetchAndPreload();
+		fetchCarousel();
+
 		return () => {
 			cancelled = true;
 		};
-	}, [carouselType]);
+	}, [isDesktop]);
 
 	useEffect(() => {
 		if (!startHomeCarousel) return;
-		if (!isReady || images.length === 0) return;
+		if (!isReady || images.length <= 1) return;
 
 		const timeout = setTimeout(() => {
 			setIndex(prev => (prev + 1) % images.length);
@@ -100,9 +115,9 @@ export function Home() {
 				<AnimatePresence mode='popLayout'>
 					{isReady && images.length > 0 && (
 						<motion.img
-							key={`${carouselType}-${index}`}
-							src={images[index]}
-							alt={alts[index] || ''}
+							key={`${isDesktop ? 'desktop' : 'mobile'}-${index}`}
+							src={images[index].src}
+							alt={images[index].alt || ''}
 							className='absolute inset-0 w-full h-full object-cover pointer-events-none'
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}

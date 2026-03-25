@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
-import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
-import { AnimatedImage1, AnimatedH1, AnimatedP, AnimatedPAfterH1 } from '../components/AnimatedText';
+import { AnimatedH1, AnimatedP } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import { motion } from 'framer-motion';
+import { IMAISD_INFO_QUERY, IMAISD_SINGLE_QUERY } from '../lib/sanity.queries';
+import { imageUrl } from '../utils/sanity.image';
+import { SanityImage } from '../components/SanityImage';
 
-/* ✅ IGUAL AO TEU WORKS */
 function useIsDesktop() {
 	const [isDesktop, setIsDesktop] = useState(false);
 
@@ -24,7 +25,6 @@ function useIsDesktop() {
 	return isDesktop;
 }
 
-/* ✅ IGUAL AO WORKS */
 const movingImageVariants = {
 	rest: { x: '0%' },
 	hover: { x: '100%' },
@@ -46,65 +46,36 @@ export function IPlusD() {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
-	const [isMainLoaded, setIsMainLoaded] = useState(false);
+	const [description, setDescription] = useState(null);
 
 	const isDesktop = useIsDesktop();
 
 	useEffect(() => {
-		sanityClient
-			.fetch(
-				`
-        *[_type == "imaisd"] | order(year desc, _createdAt desc) {
-          _id,
-          title,
-          year,
-          coverImage,
-          coverImage2,
-          description,
-          "pdfUrl": pdf.asset->url,
-          "slug": slug.current,
-          gallery[]{
-            _key,
-            "image": coalesce(image, @),
-            title
-          }
-        }
-      `,
-			)
-			.then(data => {
-				const docs = data || [];
+		const fetchData = async () => {
+			try {
+				const [projectsData, singleData] = await Promise.all([sanityClient.fetch(IMAISD_INFO_QUERY), sanityClient.fetch(IMAISD_SINGLE_QUERY)]);
+
+				const docs = projectsData || [];
 				setProjects(docs);
+				setDescription(singleData?.description || null);
 
-				const flattened = docs
-					.flatMap(doc =>
-						(doc.gallery || [])
-							.map(g => ({
-								_key: g._key || `${doc._id}-${Math.random()}`,
-								image: g.image,
-								imageTitle: g.title,
-
-								projectTitle: doc.title,
-								projectYear: doc.year,
-								projectDescription: doc.description,
-								projectSlug: doc.slug,
-								projectId: doc._id,
-
-								coverImage: doc.coverImage,
-								coverImage2: doc.coverImage2,
-								pdfUrl: doc.pdfUrl,
-							}))
-							.filter(it => it.image?.asset?._ref),
-					)
-					.sort((a, b) => (b.projectYear || 0) - (a.projectYear || 0));
+				const flattened = (singleData?.gallery || [])
+					.map((g, index) => ({
+						_key: g.image?.asset?._id || `iad-${index}`,
+						image: g.image,
+						imageTitle: g.title,
+					}))
+					.filter(it => it.image?.asset?._id);
 
 				setItems(flattened);
 				setCurrentImageIndex(0);
-			});
-	}, []);
+			} catch (error) {
+				console.error('Erro ao buscar I + D:', error.message);
+			}
+		};
 
-	useEffect(() => {
-		setIsMainLoaded(false);
-	}, [currentImageIndex]);
+		fetchData();
+	}, []);
 
 	useEffect(() => {
 		const handleKeyDown = e => {
@@ -123,10 +94,14 @@ export function IPlusD() {
 		if (!items?.length) return;
 
 		const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
+
 		preload.forEach(i => {
 			if (i >= 0 && i < items.length) {
+				const src = imageUrl(items[i].image, 'singleMain');
+				if (!src) return;
+
 				const image = new Image();
-				image.src = urlFor(items[i].image).width(1600).quality(80).auto('format').url();
+				image.src = src;
 			}
 		});
 	}, [currentImageIndex, items]);
@@ -149,7 +124,7 @@ export function IPlusD() {
 	return (
 		<>
 			<HeaderSingleIPlusD
-				title={current?.projectTitle || 'I + D'}
+				title='I + D'
 				currentIndex={currentImageIndex}
 				totalImages={items.length}
 				isListOpen={isListOpen}
@@ -164,27 +139,26 @@ export function IPlusD() {
 				}}
 			/>
 
-			{/* LISTA */}
 			{isListOpen && (
 				<div className='inset-0 z-40 pt-[30px] px-3 pb-3 lg:px-5 lg:pt-[100px] lg:pb-5'>
-					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
+					<div className='grid lg:grid-cols-6 items-start grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
 						{items.map((it, i) => (
-							<AnimatedImage1
+							<button
 								key={it._key}
-								src={urlFor(it.image).width(500).quality(80).auto('format').url()}
-								alt=''
-								className='cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101'
+								type='button'
+								className='block cursor-pointer text-left'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
 								}}
-							/>
+							>
+								<SanityImage image={it.image} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
+							</button>
 						))}
 					</div>
 				</div>
 			)}
 
-			{/* INFO — AGORA COM A MESMA LÓGICA DO WORKS */}
 			{isInfoOpen && (
 				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
@@ -192,20 +166,24 @@ export function IPlusD() {
 							<AnimatedP className='tracking-[0.02em] text-[1.2rem] font-[500]'>
 								I + D reúne projetos de Investigação e Desenvolvimento quer sejam de receitas, produtos ou outras práticas de A L I M E N T O.
 							</AnimatedP>
+
+							{description ? (
+								<div className='pt-6'>
+									<AnimatedP>
+										<PortableText value={description} components={portableTextComponents} />
+									</AnimatedP>
+								</div>
+							) : null}
 						</div>
 					</div>
 
-					{/* GRID CARDS (TIPO WORKS) */}
 					<div className='pt-12 lg:pt-16 pb-5'>
 						<AnimatedH1 className='font-[500] text-[0.85rem] pb-4'>Publicações</AnimatedH1>
+
 						<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
-							{projects.map(p => {
+							{projects.map((p, index) => {
 								const href = p.pdfUrl || null;
-
-								const img1 = p.coverImage?.asset ? urlFor(p.coverImage).width(1200).quality(85).auto('format').url() : null;
-
-								// ✅ só carrega img2 em desktop real
-								const img2 = isDesktop && p.coverImage2?.asset ? urlFor(p.coverImage2).width(1200).quality(85).auto('format').url() : null;
+								const hasImg2 = isDesktop && p.coverImage2?.asset;
 
 								return (
 									<a
@@ -215,27 +193,50 @@ export function IPlusD() {
 										rel={href ? 'noopener noreferrer' : undefined}
 										className={`contents ${href ? '' : 'pointer-events-none opacity-40'}`}
 									>
-										<motion.div className='col-span-2 relative h-[200px] lg:h-[400px]' initial='rest' animate='rest' whileHover={isDesktop && img2 ? 'hover' : undefined}>
-											{/* ✅ MESMA ESTRUTURA DO WORKS */}
+										<motion.div
+											className='col-span-2 relative h-[200px] lg:h-[400px]'
+											initial='rest'
+											animate='rest'
+											whileHover={hasImg2 ? 'hover' : undefined}
+											transition={{
+												duration: 0.5,
+												ease: 'easeOut',
+												delay: index * 0.03,
+											}}
+										>
 											<div className='grid grid-cols-2 h-full w-full'>
 												<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em]' />
 												<div className='relative h-full w-full' />
 
 												<motion.div className='absolute top-0 left-0 h-full w-1/2 overflow-hidden' variants={movingImageVariants} transition={{ duration: 0.5, ease: 'easeOut' }}>
-													{img1 ? (
-														<motion.img src={img1} alt={p.title} className='w-full h-full object-cover absolute inset-0' variants={img1Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
-													) : (
-														<div className='absolute inset-0 bg-black/5' />
-													)}
+													<motion.div className='absolute inset-0' variants={img1Variants} transition={{ duration: 0.5, ease: 'easeOut' }}>
+														<SanityImage
+															image={p.coverImage}
+															preset='iadInfoCard'
+															alt={p.title || ''}
+															className='w-full h-full'
+															imgClassName='w-full h-full object-cover'
+															loading='lazy'
+															sizes='(max-width: 1023px) 50vw, 25vw'
+														/>
+													</motion.div>
 
-													{/* img2 só existe em desktop */}
-													{img2 && (
-														<motion.img src={img2} alt={p.title} className='w-full h-full object-cover absolute inset-0' variants={img2Variants} transition={{ duration: 0.5, ease: 'easeOut' }} />
+													{hasImg2 && (
+														<motion.div className='absolute inset-0' variants={img2Variants} transition={{ duration: 0.5, ease: 'easeOut' }}>
+															<SanityImage
+																image={p.coverImage2}
+																preset='iadInfoCard'
+																alt={p.title || ''}
+																className='w-full h-full'
+																imgClassName='w-full h-full object-cover'
+																loading='lazy'
+																sizes='25vw'
+															/>
+														</motion.div>
 													)}
 												</motion.div>
 											</div>
 
-											{/* ✅ em baixo só title + year (sem “PDF”) */}
 											<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] uppercase'>
 												<div className='lg:max-w-[70%] font-[500]'>
 													<AnimatedH1>{p.title}</AnimatedH1>
@@ -251,37 +252,38 @@ export function IPlusD() {
 				</div>
 			)}
 
-			{/* SLIDER */}
 			{!isListOpen && !isInfoOpen && (
 				<>
-					{/* desktop */}
 					<div className='z-40 hidden lg:grid lg:grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
 						<div className='col-span-1'>
 							{prevIndex !== null && (
-								<div className='group block'>
-									<img
-										src={urlFor(items[prevIndex].image).width(400).quality(60).auto('format').url()}
+								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
+									<SanityImage
+										image={items[prevIndex].image}
+										preset='singleSide'
 										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-										onClick={() => setCurrentImageIndex(prevIndex)}
+										className='w-full'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										loading='lazy'
+										sizes='20vw'
 									/>
-								</div>
+								</button>
 							)}
 						</div>
 
 						<div className='col-span-3 flex flex-col gap-4 items-center justify-center'>
-							<img
-								key={currentImageIndex}
-								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
-								alt={current?.projectTitle || ''}
-								className='max-h-[60vh] object-contain image-main opacity-0 pointer-events-none'
-								onLoad={e => {
-									e.currentTarget.classList.add('opacity-100');
-									setIsMainLoaded(true);
-								}}
+							<SanityImage
+								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
+								image={items[currentImageIndex].image}
+								preset='singleMain'
+								alt='I + D'
+								className='w-full max-w-[900px]'
+								imgClassName='w-full h-auto object-contain'
+								loading='eager'
+								sizes='60vw'
 							/>
 
-							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
+							{items[currentImageIndex]?.imageTitle?.length ? (
 								<AnimatedP className='text-center'>
 									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
@@ -292,33 +294,35 @@ export function IPlusD() {
 
 						<div className='col-span-1'>
 							{nextIndex !== null && (
-								<div className='group block'>
-									<img
-										src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
+								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+									<SanityImage
+										image={items[nextIndex].image}
+										preset='singleSide'
 										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-										onClick={() => setCurrentImageIndex(nextIndex)}
+										className='w-full'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										loading='lazy'
+										sizes='20vw'
 									/>
-								</div>
+								</button>
 							)}
 						</div>
 					</div>
 
-					{/* mobile */}
 					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]'>
 						<div className='w-full flex flex-col gap-3 items-center justify-center'>
-							<img
-								key={currentImageIndex}
-								src={urlFor(items[currentImageIndex].image).width(1800).quality(80).auto('format').url()}
-								alt={current?.projectTitle || ''}
-								className='h-[300px] object-cover image-main opacity-0 pointer-events-none'
-								onLoad={e => {
-									e.currentTarget.classList.add('opacity-100');
-									setIsMainLoaded(true);
-								}}
+							<SanityImage
+								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
+								image={items[currentImageIndex].image}
+								preset='singleMain'
+								alt='I + D'
+								className='w-full'
+								imgClassName='w-full h-auto object-cover'
+								loading='eager'
+								sizes='100vw'
 							/>
 
-							{isMainLoaded && items[currentImageIndex]?.imageTitle?.length ? (
+							{items[currentImageIndex]?.imageTitle?.length ? (
 								<AnimatedP className='text-center'>
 									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
@@ -329,12 +333,9 @@ export function IPlusD() {
 
 						<div className='h-[120px] flex justify-center'>
 							{nextIndex !== null && (
-								<img
-									src={urlFor(items[nextIndex].image).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='h-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-									onClick={() => setCurrentImageIndex(nextIndex)}
-								/>
+								<button type='button' className='block h-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
+								</button>
 							)}
 						</div>
 					</div>

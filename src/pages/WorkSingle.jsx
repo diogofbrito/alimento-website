@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
-import { urlFor } from '../utils/imageUrlBuilder.js';
 import { HeaderSingleWork } from '../components/HeaderSingleWork';
-import { AnimatedImage1, AnimatedH1, AnimatedPAfterH1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedH1, AnimatedPAfterH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import { ArrowUpRight } from 'lucide-react';
+import { WORK_SINGLE_QUERY } from '../lib/sanity.queries';
+import { imageUrl } from '../utils/sanity.image';
+import { SanityImage } from '../components/SanityImage';
 
 export function WorkSingle() {
 	const { slug } = useParams();
@@ -16,44 +18,11 @@ export function WorkSingle() {
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 
 	useEffect(() => {
-		sanityClient
-			.fetch(
-				`*[_type == "projetos" && slug.current == $slug][0]{
-					title,
-					"slug": slug.current,
-					placeholderImage,
-					data,
-					year,
-					cliente,
-					tipo,
-					local,
-					agradecimentos,
-					creditos,
-					gallery,
-					description,
-					fichaTecnica[]{
-						titulo,
-						conteudo
-					},
-					links{
-						pdfs[]{
-							title,
-							"url": file.asset->url
-						},
-						urls[]{
-							title,
-							url
-						}
-					}
-				}`,
-				{ slug },
-			)
-			.then(data => setProjeto(data));
+		sanityClient.fetch(WORK_SINGLE_QUERY, { slug }).then(data => setProjeto(data));
 	}, [slug]);
 
 	useEffect(() => {
 		const handleKeyDown = e => {
-			// não navegar se overlays estiverem abertos
 			if (isListOpen || isInfoOpen) return;
 			if (!projeto?.gallery?.length) return;
 
@@ -76,10 +45,14 @@ export function WorkSingle() {
 	useEffect(() => {
 		if (projeto?.gallery) {
 			const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
+
 			preload.forEach(i => {
 				if (i >= 0 && i < projeto.gallery.length) {
+					const src = imageUrl(projeto.gallery[i], 'singleMain');
+					if (!src) return;
+
 					const image = new Image();
-					image.src = urlFor(projeto.gallery[i]).width(1600).quality(80).auto('format').url();
+					image.src = src;
 				}
 			});
 		}
@@ -124,43 +97,44 @@ export function WorkSingle() {
 				}}
 			/>
 
-			{/* Lista de imagens */}
 			{isListOpen && (
 				<div className='inset-0 z-40 px-3 pb-3 lg:px-5 pt-[30px] lg:pt-[100px] lg:pb-5'>
-					<div className='grid lg:grid-cols-6 grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
+					<div className='grid lg:grid-cols-6 grid-cols-2 items-start gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
 						{projeto.gallery.map((img, i) => (
-							<AnimatedImage1
-								key={i}
-								src={urlFor(img).width(500).quality(80).auto('format').url()}
-								alt=''
-								className=' cursor-pointer  transition-transform duration-1000 ease-out group-hover:scale-101'
+							<button
+								key={img.asset?._id || i}
+								type='button'
+								className='block cursor-pointer text-left'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
 								}}
-							/>
+							>
+								<SanityImage image={img} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
+							</button>
 						))}
 					</div>
 				</div>
 			)}
 
-			{/* Informações */}
 			{isInfoOpen && (
-				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[30px] lg:pt-[100px]  lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3] '>
-					<div className='col-span-2 '>
+				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[30px] lg:pt-[100px] lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
+					<div className='col-span-2'>
 						<AnimatedH1 className='text-[0.85rem] font-[500]'>Sobre</AnimatedH1>
 						<AnimatedPAfterH1>
 							<PortableText value={projeto.description} components={portableTextComponents} />
 						</AnimatedPAfterH1>
 					</div>
-					<div className='col-span-2 pt-12 lg:pt-0 '>
-						<div className='grid grid-cols-2  lg:gap-x-[100px] gap-y-[30px] '>
-							<div className='col-span-1  flex flex-col '>
-								<AnimatedH1 className='text-[0.85rem] font-[500] '>Tipo</AnimatedH1>
+
+					<div className='col-span-2 pt-12 lg:pt-0'>
+						<div className='grid grid-cols-2 lg:gap-x-[100px] gap-y-[30px]'>
+							<div className='col-span-1 flex flex-col'>
+								<AnimatedH1 className='text-[0.85rem] font-[500]'>Tipo</AnimatedH1>
 								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
 							</div>
+
 							<div className='col-span-1 flex flex-col'>
-								<AnimatedH1 className='text-[0.85rem] font-[500] '>Data</AnimatedH1>
+								<AnimatedH1 className='text-[0.85rem] font-[500]'>Data</AnimatedH1>
 								<div className='flex gap-1'>
 									{projeto.data && (
 										<div>
@@ -170,21 +144,24 @@ export function WorkSingle() {
 									<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
 								</div>
 							</div>
+
 							{projeto.local && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Local</AnimatedH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Local</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.local}</AnimatedPAfterH1>
 								</div>
 							)}
+
 							{projeto.cliente && (
-								<div className='col-span-1 flex flex-col '>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Cliente</AnimatedH1>
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Cliente</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
 								</div>
 							)}
+
 							{projeto.creditos && (
-								<div className='col-span-1 flex flex-col '>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Fotografias</AnimatedH1>
+								<div className='col-span-1 flex flex-col'>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Fotografias</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.creditos}</AnimatedPAfterH1>
 								</div>
 							)}
@@ -193,7 +170,7 @@ export function WorkSingle() {
 						<div className='grid grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[80px]'>
 							{projeto.fichaTecnica?.length > 0 && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='font-[500] text-[0.85rem] '>Ficha técnica</AnimatedH1>
+									<AnimatedH1 className='font-[500] text-[0.85rem]'>Ficha técnica</AnimatedH1>
 
 									<div className='flex flex-col gap-4 pt-2'>
 										{projeto.fichaTecnica.map((item, index) => (
@@ -208,7 +185,7 @@ export function WorkSingle() {
 
 							{projeto.agradecimentos && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500] '>Agradecimentos</AnimatedH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>Agradecimentos</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
 								</div>
 							)}
@@ -217,7 +194,7 @@ export function WorkSingle() {
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-									<div className='flex flex-col '>
+									<div className='flex flex-col'>
 										{projeto.links?.pdfs?.map((pdf, index) => (
 											<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
 												<AnimatedPAfterH1 className='flex'>
@@ -227,7 +204,7 @@ export function WorkSingle() {
 										))}
 
 										{projeto.links?.urls?.map((link, index) => (
-											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60 '>
+											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
 												<AnimatedPAfterH1 className='flex'>
 													{link.title} <ArrowUpRight size={16} strokeWidth={1.5} />
 												</AnimatedPAfterH1>
@@ -243,68 +220,72 @@ export function WorkSingle() {
 
 			{!isListOpen && !isInfoOpen && (
 				<>
-					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-5  gap-x-[100px] '>
-						{/* foto anterior */}
+					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
 						<div className='col-span-1'>
 							{prevIndex !== null && (
-								<div className='group block'>
-									<img
-										src={urlFor(projeto.gallery[prevIndex]).width(400).quality(60).auto('format').url()}
+								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
+									<SanityImage
+										image={projeto.gallery[prevIndex]}
+										preset='singleSide'
 										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101  opacity-80'
-										onClick={() => setCurrentImageIndex(prevIndex)}
+										className='w-full'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										loading='lazy'
+										sizes='20vw'
 									/>
-								</div>
+								</button>
 							)}
 						</div>
 
-						{/* foto principal */}
 						<div className='col-span-3 flex items-center justify-center'>
-							<img
-								key={currentImageIndex}
-								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
-								alt={projeto.title}
-								className='max-h-[80vh] object-contain image-main opacity-0 pointer-events-none '
-								onLoad={e => e.currentTarget.classList.add('opacity-100')}
+							<SanityImage
+								key={projeto.gallery[currentImageIndex]?.asset?._id || currentImageIndex}
+								image={projeto.gallery[currentImageIndex]}
+								preset='singleMain'
+								alt={projeto.title || ''}
+								className='w-full max-w-[1000px]'
+								imgClassName='w-full h-auto object-contain'
+								loading='eager'
+								sizes='60vw'
 							/>
 						</div>
 
-						{/* foto posterior */}
-						<div className='col-span-1 '>
+						<div className='col-span-1'>
 							{nextIndex !== null && (
-								<div className='group block'>
-									<img
-										src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
+								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+									<SanityImage
+										image={projeto.gallery[nextIndex]}
+										preset='singleSide'
 										alt=''
-										className='w-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-										onClick={() => setCurrentImageIndex(nextIndex)}
+										className='w-full'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										loading='lazy'
+										sizes='20vw'
 									/>
-								</div>
+								</button>
 							)}
 						</div>
 					</div>
 
-					{/* mobile */}
-					<div className='z-40 lg:hidden flex flex-col gap-16 px-3 pt-[30px] '>
-						{/* foto principal */}
-						<div className='h-[300px] flex justify-center '>
-							<img
-								key={currentImageIndex}
-								src={urlFor(projeto.gallery[currentImageIndex]).width(1800).quality(80).url()}
-								alt={projeto.title}
-								className='h-full  object-cover image-main opacity-0 pointer-events-none '
-								onLoad={e => e.currentTarget.classList.add('opacity-100')}
+					<div className='z-40 lg:hidden flex flex-col gap-16 px-3 pt-[30px]'>
+						<div className='h-[300px] flex justify-center'>
+							<SanityImage
+								key={projeto.gallery[currentImageIndex]?.asset?._id || currentImageIndex}
+								image={projeto.gallery[currentImageIndex]}
+								preset='singleMain'
+								alt={projeto.title || ''}
+								className='h-full'
+								imgClassName='w-full h-full object-cover'
+								loading='eager'
+								sizes='100vw'
 							/>
 						</div>
-						{/* foto posterior */}
-						<div className='h-[120px] flex justify-center '>
+
+						<div className='h-[120px] flex justify-center'>
 							{nextIndex !== null && (
-								<img
-									src={urlFor(projeto.gallery[nextIndex]).width(400).quality(60).auto('format').url()}
-									alt=''
-									className='h-full object-contain cursor-pointer transition-transform duration-1000 ease-out group-hover:scale-101 opacity-80'
-									onClick={() => setCurrentImageIndex(nextIndex)}
-								/>
+								<button type='button' className='block h-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+									<SanityImage image={projeto.gallery[nextIndex]} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
+								</button>
 							)}
 						</div>
 					</div>

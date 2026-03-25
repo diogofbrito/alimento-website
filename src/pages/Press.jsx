@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import sanityClient from '../SanityClient.js';
 import { motion } from 'framer-motion';
-import { urlFor } from '../utils/imageUrlBuilder.js';
-import { AnimatedImage1 } from '../components/AnimatedText';
+import { PRESS_QUERY } from '../lib/sanity.queries';
+import { SanityImage } from '../components/SanityImage.jsx';
 
 export function Press() {
 	const [press, setPress] = useState([]);
@@ -12,17 +12,8 @@ export function Press() {
 	useEffect(() => {
 		const fetchPress = async () => {
 			try {
-				const data = await sanityClient.fetch(`
-          *[_type == "press"] | order(year desc) {
-            _id,
-            title,
-            year,
-            link,
-            "pdfUrl": pdf.asset->url,
-            placeholderImage
-          }
-        `);
-				setPress(data);
+				const data = await sanityClient.fetch(PRESS_QUERY);
+				setPress(data || []);
 			} catch (error) {
 				console.error('Erro ao buscar Press:', error.message);
 			}
@@ -79,18 +70,17 @@ export function Press() {
 				})}
 			</div>
 
-			{/* PREVIEW FIXO */}
+
 			{hoverIndex !== null && press[hoverIndex]?.placeholderImage && (
-				<AnimatedImage1
-					key={press[hoverIndex]._id}
-					src={urlFor(press[hoverIndex].placeholderImage).width(300).quality(80).auto('format').url()}
-					alt=''
+				<div
 					className='hidden md:block fixed -z-2 pointer-events-none'
 					style={{
 						top: hoverPos.top,
 						left: hoverPos.left,
 					}}
-				/>
+				>
+					<SanityImage image={press[hoverIndex].placeholderImage} preset='pressThumb' alt='' className='w-[300px]' imgClassName='w-full h-auto object-cover' loading='eager' sizes='300px' />
+				</div>
 			)}
 		</>
 	);
