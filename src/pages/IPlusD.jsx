@@ -146,13 +146,21 @@ export function IPlusD() {
 							<button
 								key={it._key}
 								type='button'
-								className='block cursor-pointer text-left'
+								className='group block cursor-pointer text-left'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
 								}}
 							>
-								<SanityImage image={it.image} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
+								<SanityImage
+									image={it.image}
+									preset='singleList'
+									alt=''
+									className='w-full'
+									imgClassName='w-full h-auto object-cover group-hover:scale-104 transition-transform duration-800 '
+									loading='lazy'
+									sizes='(max-width: 1023px) 50vw, 16vw'
+								/>
 							</button>
 						))}
 					</div>
@@ -263,7 +271,7 @@ export function IPlusD() {
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
 										loading='lazy'
 										sizes='20vw'
 									/>
@@ -278,7 +286,7 @@ export function IPlusD() {
 								preset='singleMain'
 								alt='I + D'
 								className='w-full max-w-[900px]'
-								imgClassName='w-full h-auto object-contain'
+								imgClassName='w-full h-auto object-contain pointer-events-none'
 								loading='eager'
 								sizes='60vw'
 							/>
@@ -300,7 +308,7 @@ export function IPlusD() {
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
 										loading='lazy'
 										sizes='20vw'
 									/>

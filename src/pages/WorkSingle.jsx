@@ -104,13 +104,13 @@ export function WorkSingle() {
 							<button
 								key={img.asset?._id || i}
 								type='button'
-								className='block cursor-pointer text-left'
+								className='group block cursor-pointer text-left'
 								onClick={() => {
 									setCurrentImageIndex(i);
 									setIsListOpen(false);
 								}}
 							>
-								<SanityImage image={img} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
+								<SanityImage image={img} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover transition-transform duration-800 group-hover:scale-104' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
 							</button>
 						))}
 					</div>
@@ -229,7 +229,7 @@ export function WorkSingle() {
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
 										loading='lazy'
 										sizes='20vw'
 									/>
@@ -244,7 +244,7 @@ export function WorkSingle() {
 								preset='singleMain'
 								alt={projeto.title || ''}
 								className='w-full max-w-[1000px]'
-								imgClassName='w-full h-auto object-contain'
+								imgClassName='w-full h-auto object-contain pointer-events-none'
 								loading='eager'
 								sizes='60vw'
 							/>
@@ -258,7 +258,7 @@ export function WorkSingle() {
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-1000 ease-out group-hover:scale-101'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
 										loading='lazy'
 										sizes='20vw'
 									/>
