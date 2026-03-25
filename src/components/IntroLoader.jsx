@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { h1SlideUp } from './animations/variants.js';
-import videoDesktop from '../assets/mao.mp4';
+import videoDesktop from '../assets/mao1.mp4';
 import videoMobile from '../assets/videoIntroAlimento.mp4';
 
 export function IntroLoader({ onFadeStart, onFinish }) {
