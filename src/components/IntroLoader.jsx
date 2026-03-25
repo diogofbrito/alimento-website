@@ -21,7 +21,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 	useEffect(() => {
 		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
 
-		const fadeDelay = videoSrc === videoMobile ? 4300 : 8000;
+		const fadeDelay = videoSrc === videoMobile ? 4200 : 8000;
 
 		const fadeStartTimer = setTimeout(() => {
 			if (!firedFadeRef.current) {

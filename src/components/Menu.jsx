@@ -69,7 +69,7 @@ export function Menu() {
 					>
 						{/* opcional: ligeiro “soft entrance” do conteúdo */}
 						<motion.nav
-							className='flex flex-col text-center gap-1 text-[1.4rem] tracking-[0.02em] font-[500] uppercase'
+							className='flex flex-col  gap-1 text-[1.4rem] tracking-[0.02em] font-[500] uppercase'
 							initial={{ opacity: 0, y: 6 }}
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: 6 }}
