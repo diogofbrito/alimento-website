@@ -9,23 +9,39 @@ import { ArrowUpRight } from 'lucide-react';
 import { WORK_SINGLE_QUERY } from '../lib/sanity.queries';
 import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
+import { ErrorPage } from './ErrorPage';
 
 export function WorkSingle() {
 	const { slug } = useParams();
 	const [projeto, setProjeto] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 
 	useEffect(() => {
-		sanityClient.fetch(WORK_SINGLE_QUERY, { slug }).then(data => setProjeto(data));
+		const fetchProjeto = async () => {
+			try {
+				setLoading(true);
+				const data = await sanityClient.fetch(WORK_SINGLE_QUERY, { slug });
+				setProjeto(data || null);
+			} catch (error) {
+				console.error('Erro ao buscar projeto:', error.message);
+				setProjeto(null);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchProjeto();
 	}, [slug]);
 
 	useEffect(() => {
-		const handleKeyDown = e => {
-			if (isListOpen || isInfoOpen) return;
-			if (!projeto?.gallery?.length) return;
+		if (loading) return;
+		if (isListOpen || isInfoOpen) return;
+		if (!projeto?.gallery?.length) return;
 
+		const handleKeyDown = e => {
 			if (e.key === 'ArrowRight') {
 				setCurrentImageIndex(prev => (prev < projeto.gallery.length - 1 ? prev + 1 : 0));
 			}
@@ -36,45 +52,36 @@ export function WorkSingle() {
 		};
 
 		window.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [projeto, isListOpen, isInfoOpen]);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [loading, projeto, isListOpen, isInfoOpen]);
 
 	useEffect(() => {
-		if (projeto?.gallery) {
-			const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
+		if (!projeto?.gallery) return;
 
-			preload.forEach(i => {
-				if (i >= 0 && i < projeto.gallery.length) {
-					const src = imageUrl(projeto.gallery[i], 'singleMain');
-					if (!src) return;
+		const preload = [currentImageIndex - 1, currentImageIndex, currentImageIndex + 1];
 
-					const image = new Image();
-					image.src = src;
-				}
-			});
-		}
+		preload.forEach(i => {
+			if (i >= 0 && i < projeto.gallery.length) {
+				const src = imageUrl(projeto.gallery[i], 'singleMain');
+				if (!src) return;
+
+				const image = new Image();
+				image.src = src;
+			}
+		});
 	}, [currentImageIndex, projeto]);
 
-	if (!projeto) return null;
+	if (loading) return null;
+
+	if (!projeto) return <ErrorPage />;
 
 	let prevIndex = null;
 	let nextIndex = null;
 
 	if (projeto.gallery.length > 1) {
-		if (currentImageIndex > 0) {
-			prevIndex = currentImageIndex - 1;
-		} else if (currentImageIndex === 0) {
-			prevIndex = null;
-		}
-
-		if (currentImageIndex < projeto.gallery.length - 1) {
-			nextIndex = currentImageIndex + 1;
-		} else {
-			nextIndex = 0;
-		}
+		if (currentImageIndex > 0) prevIndex = currentImageIndex - 1;
+		if (currentImageIndex < projeto.gallery.length - 1) nextIndex = currentImageIndex + 1;
+		else nextIndex = 0;
 	}
 
 	return (
@@ -110,7 +117,15 @@ export function WorkSingle() {
 									setIsListOpen(false);
 								}}
 							>
-								<SanityImage image={img} preset='singleList' alt='' className='w-full' imgClassName='w-full h-auto object-cover transition-transform duration-800 group-hover:scale-104' loading='lazy' sizes='(max-width: 1023px) 50vw, 16vw' />
+								<SanityImage
+									image={img}
+									preset='singleList'
+									alt=''
+									className='w-full'
+									imgClassName='w-full h-auto object-cover transition-transform duration-800 group-hover:scale-104'
+									loading='lazy'
+									sizes='(max-width: 1023px) 50vw, 16vw'
+								/>
 							</button>
 						))}
 					</div>
