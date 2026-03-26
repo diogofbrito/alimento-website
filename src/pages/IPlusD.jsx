@@ -350,14 +350,14 @@ export function IPlusD() {
 									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
 							) : (
-								<div className='h-[24px]' />
+								<div className='h-[70px]' />
 							)}
 						</div>
 
-						<div className='mt-8 h-[120px] flex justify-center'>
+						<div className='mt-9 h-[120px] flex justify-center'>
 							{nextIndex !== null && (
 								<button type='button' className='block h-full text-left opacity-80' onClick={() => setCurrentImageIndex(nextIndex)}>
-									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain ' loading='lazy' sizes='40vw' />
+									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='w-full h-full' imgClassName='w-full h-full object-cover ' loading='lazy' sizes='40vw' />
 								</button>
 							)}
 						</div>
