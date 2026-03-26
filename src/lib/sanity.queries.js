@@ -106,7 +106,7 @@ export const WORK_SINGLE_QUERY = `
 ========================= */
 
 export const PRESS_QUERY = `
-*[_type == "press"] | order(year desc) {
+*[_type == "press"] | order(year desc, order desc) {
   _id,
   title,
   year,
