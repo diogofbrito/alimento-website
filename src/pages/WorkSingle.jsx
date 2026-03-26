@@ -135,7 +135,6 @@ export function WorkSingle() {
 			{isInfoOpen && (
 				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[30px] lg:pt-[100px] lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
 					<div className='col-span-2'>
-						<AnimatedH1 className='text-[0.85rem] font-[500]'>Sobre</AnimatedH1>
 						<AnimatedPAfterH1>
 							<PortableText value={projeto.description} components={portableTextComponents} />
 						</AnimatedPAfterH1>
@@ -202,30 +201,30 @@ export function WorkSingle() {
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='text-[0.85rem] font-[500]'>Agradecimentos</AnimatedH1>
 									<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
-								</div>
-							)}
 
-							{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
-								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
+									{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
+										<div className='col-span-1 flex flex-col pt-[30px]'>
+											<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-									<div className='flex flex-col'>
-										{projeto.links?.pdfs?.map((pdf, index) => (
-											<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-												<AnimatedPAfterH1 className='flex'>
-													{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} />
-												</AnimatedPAfterH1>
-											</a>
-										))}
+											<div className='flex flex-col'>
+												{projeto.links?.pdfs?.map((pdf, index) => (
+													<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+														<AnimatedPAfterH1 className='flex'>
+															{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} />
+														</AnimatedPAfterH1>
+													</a>
+												))}
 
-										{projeto.links?.urls?.map((link, index) => (
-											<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-												<AnimatedPAfterH1 className='flex'>
-													{link.title} <ArrowUpRight size={16} strokeWidth={1.5} />
-												</AnimatedPAfterH1>
-											</a>
-										))}
-									</div>
+												{projeto.links?.urls?.map((link, index) => (
+													<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+														<AnimatedPAfterH1 className='flex'>
+															{link.title} <ArrowUpRight size={16} strokeWidth={1.5} />
+														</AnimatedPAfterH1>
+													</a>
+												))}
+											</div>
+										</div>
+									)}
 								</div>
 							)}
 						</div>
@@ -258,7 +257,7 @@ export function WorkSingle() {
 								image={projeto.gallery[currentImageIndex]}
 								preset='singleMain'
 								alt={projeto.title || ''}
-								className='w-full max-w-[1000px]'
+								className='w-full max-h-[80vh]'
 								imgClassName='w-full h-auto object-contain pointer-events-none'
 								loading='eager'
 								sizes='60vw'

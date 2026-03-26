@@ -4,6 +4,14 @@ import { AnimatedH1, AnimatedButton } from '../components/AnimatedText';
 export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, totalImages, onToggleList, onToggleInfo }) {
 	const navigate = useNavigate();
 
+	const handleClose = () => {
+		if (window.history.length > 1) {
+			navigate(-1);
+		} else {
+			navigate('/projetos');
+		}
+	};
+
 	return (
 		<>
 			<div className='hidden z-90 absolute w-full left-0 right-0 top-4 px-5  lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase  '>
@@ -23,7 +31,8 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				</div>
 				<div className='col-span-1 grid grid-cols-2 gap-x-[100px]'>
 					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
-					<AnimatedButton onClick={() => navigate(-1)} className='text-right'>
+
+					<AnimatedButton onClick={handleClose} className='text-right'>
 						{' '}
 						FECHAR{' '}
 					</AnimatedButton>
@@ -36,7 +45,7 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 						<AnimatedH1>{title}</AnimatedH1>
 					</div>
 					<div className='col-span-1 text-right'>
-						<AnimatedButton onClick={() => navigate(-1)}> FECHAR </AnimatedButton>
+						<AnimatedButton onClick={handleClose}> FECHAR </AnimatedButton>
 					</div>
 				</div>
 				<div className='flex justify-between pt-3'>
@@ -49,8 +58,6 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
 				</div>
 			</div>
-
-			
 		</>
 	);
 }

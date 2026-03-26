@@ -4,7 +4,7 @@ import { AnimatedPAfterH1, AnimatedH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import { LocalImage } from '../components/LocalImage';
-import bg from '../assets/patricia.jpg';
+import bg from '../assets/patriciacor.jpg';
 
 export function About() {
 	const [about, setAbout] = useState([]);

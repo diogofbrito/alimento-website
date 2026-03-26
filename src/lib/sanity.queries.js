@@ -122,6 +122,12 @@ export const PRESS_QUERY = `
    I + D
 ========================= */
 
+export const IMAISD_PAGE_SETTINGS_QUERY = `
+*[_type == "imaisdPageSettings"][0]{
+  introText
+}
+`;
+
 export const IMAISD_INFO_QUERY = `
 *[_type == "imaisd"] | order(year desc) {
   _id,
@@ -140,7 +146,7 @@ export const IMAISD_INFO_QUERY = `
 `;
 
 export const IMAISD_SINGLE_QUERY = `
-*[_type == "imaisd"][0]{
+*[_type == "imaisd"] | order(year desc) {
   _id,
   title,
   description,

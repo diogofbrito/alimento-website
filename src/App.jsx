@@ -4,7 +4,6 @@ import { IntroLoader } from './components/IntroLoader';
 import { AnimatePresence, motion } from 'framer-motion';
 import { pageTransition } from './components/animations/variants.js';
 import { Menu } from './components/Menu';
-import { ScrollToTop } from './components/ScrollToTop';
 
 function App() {
 	const location = useLocation();
@@ -30,7 +29,7 @@ function App() {
 
 	return (
 		<>
-			<ScrollToTop />
+			
 			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
 			{/* Outlet SEMPRE renderizado (para preload), mas na Home controlamos opacidade */}
@@ -45,11 +44,7 @@ function App() {
 						? { opacity: revealHome ? 1 : 0 } 
 						: undefined
 				}
-				onAnimationComplete={() => {
-					window.scrollTo(0, 0);
-					document.documentElement.scrollTop = 0;
-					document.body.scrollTop = 0;
-				}}
+				
 			>
 				<Outlet context={{ startHomeCarousel }} />
 			</motion.div>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AnimatedH1 } from '../components/AnimatedText';
 import { motion } from 'framer-motion';
 import sanityClient from '../SanityClient';
@@ -40,6 +40,8 @@ const img2Variants = {
 export function Works() {
 	const [projetos, setProjetos] = useState([]);
 	const isDesktop = useIsDesktop();
+	const location = useLocation();
+	const hasRestoredScroll = useRef(false);
 
 	useEffect(() => {
 		const fetchProjetos = async () => {
@@ -54,6 +56,23 @@ export function Works() {
 		fetchProjetos();
 	}, []);
 
+	useEffect(() => {
+		const savedScroll = location.state?.scrollY;
+
+		if (typeof savedScroll !== 'number') return;
+		if (!projetos.length) return;
+		if (hasRestoredScroll.current) return;
+
+		hasRestoredScroll.current = true;
+
+		requestAnimationFrame(() => {
+			window.scrollTo({
+				top: savedScroll,
+				behavior: 'auto',
+			});
+		})
+	}, [location.state, projetos]);
+
 	return (
 		<div className='w-full lg:px-5 px-3 pt-[60px] lg:pt-[100px] lg:pb-12'>
 			<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
@@ -61,8 +80,8 @@ export function Works() {
 					const hasImg2 = isDesktop && item.img2?.asset;
 
 					return (
-						<Link key={item._id} to={`/projetos/${item.slug}`} className='contents'>
-							<motion.div className='col-span-2 relative h-[200px] md:h-[300px]' initial='rest' animate='rest' whileHover={hasImg2 ? 'hover' : undefined}>
+						<Link key={item._id} to={`/projetos/${item.slug}`} state={{ scrollY: window.scrollY }} className='contents'>
+							<motion.div className='col-span-2 relative h-[190px] md:h-[300px] lg:h-[220px] xl:h-[300px]' initial='rest' animate='rest' whileHover={hasImg2 ? 'hover' : undefined}>
 								<div className='grid grid-cols-2 h-full w-full'>
 									<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em]' />
 									<div className='relative h-full w-full' />

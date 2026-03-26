@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import sanityClient from '../SanityClient';
 import { HeaderSingleIPlusD } from '../components/HeaderSingleIPlusD';
-import { AnimatedH1, AnimatedP } from '../components/AnimatedText';
+import { AnimatedH1, AnimatedP, AnimatedPAfterH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import { motion } from 'framer-motion';
-import { IMAISD_INFO_QUERY, IMAISD_SINGLE_QUERY } from '../lib/sanity.queries';
+import { IMAISD_INFO_QUERY, IMAISD_SINGLE_QUERY, IMAISD_PAGE_SETTINGS_QUERY } from '../lib/sanity.queries';
 import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
 
@@ -46,6 +46,7 @@ export function IPlusD() {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
+	const [introText, setIntroText] = useState(null);
 	const [description, setDescription] = useState(null);
 
 	const isDesktop = useIsDesktop();
@@ -53,18 +54,29 @@ export function IPlusD() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [projectsData, singleData] = await Promise.all([sanityClient.fetch(IMAISD_INFO_QUERY), sanityClient.fetch(IMAISD_SINGLE_QUERY)]);
+				const [projectsData, singleData, pageSettings] = await Promise.all([
+					sanityClient.fetch(IMAISD_INFO_QUERY),
+					sanityClient.fetch(IMAISD_SINGLE_QUERY),
+					sanityClient.fetch(IMAISD_PAGE_SETTINGS_QUERY),
+				]);
 
 				const docs = projectsData || [];
 				setProjects(docs);
-				setDescription(singleData?.description || null);
+				setDescription(null);
+				setIntroText(pageSettings?.introText || null);
 
-				const flattened = (singleData?.gallery || [])
-					.map((g, index) => ({
-						_key: g.image?.asset?._id || `iad-${index}`,
-						image: g.image,
-						imageTitle: g.title,
-					}))
+
+				const flattened = (singleData || [])
+					.flatMap((doc, docIndex) =>
+						(doc.gallery || []).map((g, imageIndex) => ({
+							_key: g.image?.asset?._id || `iad-${docIndex}-${imageIndex}`,
+							image: g.image,
+							imageTitle: g.title,
+							projectTitle: doc.title,
+							projectYear: doc.year,
+							projectDescription: doc.description,
+						})),
+					)
 					.filter(it => it.image?.asset?._id);
 
 				setItems(flattened);
@@ -171,9 +183,12 @@ export function IPlusD() {
 				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2'>
-							<AnimatedP className='tracking-[0.02em] text-[1.2rem] font-[500]'>
-								I + D reúne projetos de Investigação e Desenvolvimento quer sejam de receitas, produtos ou outras práticas de A L I M E N T O.
-							</AnimatedP>
+							<AnimatedH1 className='text-[0.85rem] font-[500]'>INVESTIGAÇÃO + DESENVOLVIMENTO</AnimatedH1>
+							{introText ? (
+								<AnimatedPAfterH1 className='tracking-wide leading-[1.3]'>
+									<PortableText value={introText} components={portableTextComponents} />
+								</AnimatedPAfterH1>
+							) : null}
 
 							{description ? (
 								<div className='pt-6'>
@@ -186,9 +201,9 @@ export function IPlusD() {
 					</div>
 
 					<div className='pt-12 lg:pt-16 pb-5'>
-						<AnimatedH1 className='font-[500] text-[0.85rem] pb-4'>Publicações</AnimatedH1>
+						<AnimatedH1 className='font-[500] text-[0.85rem] '>Publicações</AnimatedH1>
 
-						<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
+						<div className='pt-4 grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
 							{projects.map((p, index) => {
 								const href = p.pdfUrl || null;
 								const hasImg2 = isDesktop && p.coverImage2?.asset;
@@ -202,7 +217,7 @@ export function IPlusD() {
 										className={`contents ${href ? '' : 'pointer-events-none opacity-40'}`}
 									>
 										<motion.div
-											className='col-span-2 relative h-[200px] lg:h-[400px]'
+											className='col-span-2 relative h-[200px] lg:h-[300px]'
 											initial='rest'
 											animate='rest'
 											whileHover={hasImg2 ? 'hover' : undefined}
@@ -285,7 +300,7 @@ export function IPlusD() {
 								image={items[currentImageIndex].image}
 								preset='singleMain'
 								alt='I + D'
-								className='w-full max-w-[900px]'
+								className='w-full max-h-[80vh]'
 								imgClassName='w-full h-auto object-contain pointer-events-none'
 								loading='eager'
 								sizes='60vw'
@@ -318,14 +333,14 @@ export function IPlusD() {
 					</div>
 
 					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]'>
-						<div className='w-full flex flex-col gap-3 items-center justify-center'>
+						<div className='w-full flex flex-col gap-4 items-center justify-center'>
 							<SanityImage
 								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
 								image={items[currentImageIndex].image}
 								preset='singleMain'
 								alt='I + D'
 								className='w-full'
-								imgClassName='w-full h-auto object-cover'
+								imgClassName='w-full h-full object-cover'
 								loading='eager'
 								sizes='100vw'
 							/>
@@ -339,7 +354,7 @@ export function IPlusD() {
 							)}
 						</div>
 
-						<div className='h-[120px] flex justify-center'>
+						<div className='absolute bottom-4 w-full h-[130px] flex justify-center '>
 							{nextIndex !== null && (
 								<button type='button' className='block h-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
 									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
