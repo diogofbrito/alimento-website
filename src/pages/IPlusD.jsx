@@ -332,7 +332,7 @@ export function IPlusD() {
 						</div>
 					</div>
 
-					<div className='z-40 lg:hidden flex flex-col gap-12 px-3 pb-3 pt-[20px]'>
+					<div className='z-40 lg:hidden flex flex-col gap-8 px-3 pb-3 pt-[20px]'>
 						<div className='w-full flex flex-col gap-4 items-center justify-center'>
 							<SanityImage
 								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
@@ -354,7 +354,7 @@ export function IPlusD() {
 							)}
 						</div>
 
-						<div className='mt-12 h-[120px] flex justify-center'>
+						<div className='mt-8 h-[120px] flex justify-center'>
 							{nextIndex !== null && (
 								<button type='button' className='block h-full text-left opacity-80' onClick={() => setCurrentImageIndex(nextIndex)}>
 									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain ' loading='lazy' sizes='40vw' />
