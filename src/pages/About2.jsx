@@ -109,7 +109,7 @@ export function About2() {
 					}}
 				/>
 
-				<div className='h-[80vh]' />
+				<div className='h-[70vh]' />
 
 				<div className='relative z-10  pb-6'>
 					<div className='text-white p-3'>
