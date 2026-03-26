@@ -50,7 +50,7 @@ export function Menu() {
 							</AnimatedH1>
 							<AnimatedH1 className='text-right'>
 								<Link to='/sobre' className='hover:underline'>
-									Info
+									Sobre
 								</Link>
 							</AnimatedH1>
 						</li>
@@ -93,7 +93,7 @@ export function Menu() {
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/sobre'>
-									Info
+									Sobre
 								</Link>
 							</AnimatedH1>
 						</motion.nav>

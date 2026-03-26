@@ -332,7 +332,7 @@ export function IPlusD() {
 						</div>
 					</div>
 
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pb-3 pt-[20px]'>
+					<div className='z-40 lg:hidden flex flex-col gap-12 px-3 pb-3 pt-[20px]'>
 						<div className='w-full flex flex-col gap-4 items-center justify-center'>
 							<SanityImage
 								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
@@ -346,7 +346,7 @@ export function IPlusD() {
 							/>
 
 							{items[currentImageIndex]?.imageTitle?.length ? (
-								<AnimatedP className='text-center'>
+								<AnimatedP className='text-center h-[70px]'>
 									<PortableText value={items[currentImageIndex].imageTitle} components={portableTextComponents} />
 								</AnimatedP>
 							) : (

@@ -57,7 +57,7 @@ export function MenuIntro() {
 						</AnimatedH1>
 				
 						<AnimatedH1>
-							<Link to='/sobre'>Info</Link>
+							<Link to='/sobre'>Sobre</Link>
 						</AnimatedH1>
 					
 				</nav>
