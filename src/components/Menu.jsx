@@ -10,19 +10,20 @@ export function Menu() {
 	return (
 		<>
 			{/* HEADER */}
-			<div className='fixed left-3 lg:left-5 top-3 lg:top-4 right-3 lg:right-5 z-50 mix-blend-difference text-white'>
-				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center'>
-					{/* LOGO */}
-					<AnimatedH1>
-						<Link to='/' className='hover:underline'>
-							A l i m e n t o
-						</Link>
-					</AnimatedH1>
+			<div className='fixed left-0 lg:left-5 top-0 lg:top-4 right-0 lg:right-5 z-50 lg:mix-blend-difference lg:text-white'>
+				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center border-b lg:border-0 bg-white lg:bg-transparent px-3 lg:px-0 pt-3 pb-1 lg:pb-0 lg:pt-0'>
+					
+						{/* LOGO */}
+						<AnimatedH1>
+							<Link to='/' className='hover:underline'>
+								A l i m e n t o
+							</Link>
+						</AnimatedH1>
 
-					<div className='col-span-1 flex justify-end lg:hidden'>
-						<HamburgerButton isOpen={isOpen} toggle={() => setIsOpen(prev => !prev)} />
-					</div>
-
+						<div className='col-span-1 flex justify-end lg:hidden'>
+							<HamburgerButton isOpen={isOpen} toggle={() => setIsOpen(prev => !prev)} />
+						</div>
+				
 					{/* MENU DESKTOP */}
 					<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
 						<li>

@@ -153,7 +153,7 @@ export function IPlusD() {
 
 			{isListOpen && (
 				<div className='inset-0 z-40 pt-[30px] px-3 pb-3 lg:px-5 lg:pt-[100px] lg:pb-5'>
-					<div className='grid lg:grid-cols-6 items-start grid-cols-2 gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
+					<div className='grid lg:grid-cols-6 items-start grid-cols-2 gap-3 lg:gap-x-[10px] lg:gap-y-[50px]'>
 						{items.map((it, i) => (
 							<button
 								key={it._key}
@@ -180,7 +180,7 @@ export function IPlusD() {
 			)}
 
 			{isInfoOpen && (
-				<div className='z-40 px-3 pt-[30px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
+				<div className='z-40 px-3 pt-[20px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2'>
 							<AnimatedH1 className='text-[0.85rem] font-[500]'>INVESTIGAÇÃO + DESENVOLVIMENTO</AnimatedH1>
@@ -332,14 +332,14 @@ export function IPlusD() {
 						</div>
 					</div>
 
-					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pt-[30px]'>
+					<div className='z-40 lg:hidden flex flex-col gap-6 px-3 pb-3 pt-[20px]'>
 						<div className='w-full flex flex-col gap-4 items-center justify-center'>
 							<SanityImage
 								key={items[currentImageIndex].image?.asset?._id || currentImageIndex}
 								image={items[currentImageIndex].image}
 								preset='singleMain'
 								alt='I + D'
-								className='w-full'
+								className='w-full h-[35vh] overflow-hidden'
 								imgClassName='w-full h-full object-cover'
 								loading='eager'
 								sizes='100vw'
@@ -354,10 +354,10 @@ export function IPlusD() {
 							)}
 						</div>
 
-						<div className='absolute bottom-4 w-full h-[130px] flex justify-center '>
+						<div className='mt-12 h-[120px] flex justify-center'>
 							{nextIndex !== null && (
-								<button type='button' className='block h-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
-									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
+								<button type='button' className='block h-full text-left opacity-80' onClick={() => setCurrentImageIndex(nextIndex)}>
+									<SanityImage image={items[nextIndex].image} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain ' loading='lazy' sizes='40vw' />
 								</button>
 							)}
 						</div>

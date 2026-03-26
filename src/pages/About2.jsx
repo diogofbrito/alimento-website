@@ -4,17 +4,19 @@ import { AnimatedPAfterH1, AnimatedH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import bg from '../assets/patricia1.jpg';
+import spin from '../assets/spin.png';
 
 export function About2() {
 	const [about, setAbout] = useState([]);
+	const [mobileOverlayOpacity, setMobileOverlayOpacity] = useState(0);
 
 	useEffect(() => {
 		const fetchAbout = async () => {
 			try {
 				const data = await sanityClient.fetch(
-					`*[_type == "about"] [0] {
-           content
-          }`,
+					`*[_type == "about"][0]{
+						content
+					}`,
 				);
 				setAbout(data);
 			} catch (error) {
@@ -25,41 +27,127 @@ export function About2() {
 		fetchAbout();
 	}, []);
 
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.innerWidth >= 1024) return;
+
+			const maxDarkness = 0.5; // 40%
+			const fadeDistance = window.innerHeight * 0.5; // 50vh
+			const progress = Math.min(window.scrollY / fadeDistance, 1);
+
+			setMobileOverlayOpacity(progress * maxDarkness);
+		};
+
+		handleScroll();
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		window.addEventListener('resize', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('resize', handleScroll);
+		};
+	}, []);
+
 	return (
-		/* BACKGROUND FIXO */
-		<div className='relative h-screen bg-cover bg-center lg:bg-fixed' style={{ backgroundImage: `url(${bg})` }}>
-			{/* HERO */}
-			<div className='pt-[300px] grid lg:grid-cols-4 lg:gap-x-[100px] '>
-				<div className='col-span-2 '></div>
-				<div className='col-span-2 lg:pl-0 pr-3 lg:lg:pr-[100px] '>
-					<div>
-						<AnimatedPAfterH1 className='tracking-wide leading-[1.3]   text-white'>
-							<PortableText value={about.content} components={portableTextComponents} />
-						</AnimatedPAfterH1>
-					</div>
+		<>
+			{/* DESKTOP */}
+			<div className='relative hidden lg:block h-screen bg-cover bg-center bg-fixed' style={{ backgroundImage: `url(${bg})` }}>
+				<div className='pt-[200px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
+					<div className='col-span-2' />
+
+					<div className='col-span-2 pr-3 lg:pr-[100px]'>
+						<div>
+							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white'>
+								<PortableText value={about.content} components={portableTextComponents} />
+							</AnimatedPAfterH1>
+						</div>
 
 						<div className='mt-[40px] flex flex-col text-white'>
 							<AnimatedH1 className='font-[500] text-[0.85rem]'>Contactos</AnimatedH1>
-							<AnimatedPAfterH1>E-mail</AnimatedPAfterH1>
-							<AnimatedPAfterH1>Instagram</AnimatedPAfterH1>
+							<AnimatedPAfterH1>
+								<a href='mailto:JtK8t@example.com' className='underline transition hover:opacity-60'>
+									E-mail
+								</a>
+							</AnimatedPAfterH1>
+							<AnimatedPAfterH1>
+								<a href='https://www.instagram.com/___alimento___' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+									Instagram
+								</a>
+							</AnimatedPAfterH1>
 						</div>
-					
+					</div>
+				</div>
+
+				<div className='grid items-baseline lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white'>
+					<AnimatedPAfterH1 className='lg:col-start-3 lg:col-span-1 font-[500] text-[0.85rem]'>
+						<img src={spin} className='w-[100px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
+					</AnimatedPAfterH1>
+
+					<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>
+						Website{' '}
+						<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+							Diogo Brito
+						</a>
+					</AnimatedPAfterH1>
 				</div>
 			</div>
 
-			{/* FOOTER */}
-			<div className='grid lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white '>
-				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>© ALIMENTO 2026 </AnimatedPAfterH1>
+			{/* MOBILE */}
+			<div className='lg:hidden relative'>
+				<div
+					className='fixed inset-0 bg-cover -z-10'
+					style={{
+						backgroundImage: `url(${bg})`,
+						backgroundPosition: '20% center',
+					}}
+				/>
 
-				<AnimatedPAfterH1 className='lg:col-span-2 font-[500] text-[0.85rem]'>Projeto Spin-off | Instituto Superior de Agronomia da U.L.</AnimatedPAfterH1>
+				<div
+					className='fixed inset-0 bg-black pointer-events-none -z-10'
+					style={{
+						opacity: mobileOverlayOpacity,
+					}}
+				/>
 
-				<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>
-					Website Design{' '}
-					<a href='https://www.diogobrito.xyz' className='underline' target='_blank' rel='noreferrer'>
-						Diogo Brito
-					</a>
-				</AnimatedPAfterH1>
+				<div className='h-[80vh]' />
+
+				<div className='relative z-10  pb-6'>
+					<div className='text-white p-3'>
+						<AnimatedPAfterH1 className='tracking-wide leading-[1.3]'>
+							<PortableText value={about.content} components={portableTextComponents} />
+						</AnimatedPAfterH1>
+
+						<div className='mt-[40px] flex flex-col'>
+							<AnimatedH1 className='font-[500] text-[0.85rem]'>Contactos</AnimatedH1>
+
+							<AnimatedPAfterH1>
+								<a href='mailto:JtK8t@example.com' className='underline transition hover:opacity-60'>
+									E-mail
+								</a>
+							</AnimatedPAfterH1>
+
+							<AnimatedPAfterH1>
+								<a href='https://www.instagram.com/___alimento___' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+									Instagram
+								</a>
+							</AnimatedPAfterH1>
+						</div>
+
+						<div className='pt-[60px] text-white grid grid-cols-2 items-baseline'>
+							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] mb-6'>
+								<img src={spin} className='w-[100px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
+							</AnimatedPAfterH1>
+
+							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] text-right'>
+								Website{' '}
+								<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+									Diogo Brito
+								</a>
+							</AnimatedPAfterH1>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

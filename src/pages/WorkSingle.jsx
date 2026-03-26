@@ -105,8 +105,8 @@ export function WorkSingle() {
 			/>
 
 			{isListOpen && (
-				<div className='inset-0 z-40 px-3 pb-3 lg:px-5 pt-[30px] lg:pt-[100px] lg:pb-5'>
-					<div className='grid lg:grid-cols-6 grid-cols-2 items-start gap-6 lg:gap-x-[10px] lg:gap-y-[50px]'>
+				<div className='inset-0 z-40 px-3 pb-3 lg:px-5 pt-[20px] lg:pt-[100px] lg:pb-5'>
+					<div className='grid lg:grid-cols-6 grid-cols-2 items-start gap-3 lg:gap-x-[10px] lg:gap-y-[50px]'>
 						{projeto.gallery.map((img, i) => (
 							<button
 								key={img.asset?._id || i}
@@ -133,7 +133,7 @@ export function WorkSingle() {
 			)}
 
 			{isInfoOpen && (
-				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[30px] lg:pt-[100px] lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
+				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[20px] lg:pt-[100px] lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
 					<div className='col-span-2'>
 						<AnimatedPAfterH1>
 							<PortableText value={projeto.description} components={portableTextComponents} />
@@ -141,7 +141,7 @@ export function WorkSingle() {
 					</div>
 
 					<div className='col-span-2 pt-12 lg:pt-0'>
-						<div className='grid grid-cols-2 lg:gap-x-[100px] gap-y-[30px]'>
+						<div className='grid grid-cols-2  gap-x-[30px] lg:gap-x-[100px] gap-y-[30px]'>
 							<div className='col-span-1 flex flex-col'>
 								<AnimatedH1 className='text-[0.85rem] font-[500]'>Tipo</AnimatedH1>
 								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
@@ -149,7 +149,7 @@ export function WorkSingle() {
 
 							<div className='col-span-1 flex flex-col'>
 								<AnimatedH1 className='text-[0.85rem] font-[500]'>Data</AnimatedH1>
-								<div className='flex gap-1'>
+								<div className='flex flex-col '>
 									{projeto.data && (
 										<div>
 											<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
@@ -181,7 +181,7 @@ export function WorkSingle() {
 							)}
 						</div>
 
-						<div className='grid grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[80px]'>
+						<div className='grid lg:grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[80px]'>
 							{projeto.fichaTecnica?.length > 0 && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='font-[500] text-[0.85rem]'>Ficha técnica</AnimatedH1>
@@ -206,7 +206,7 @@ export function WorkSingle() {
 										<div className='col-span-1 flex flex-col pt-[30px]'>
 											<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-											<div className='flex flex-col'>
+											<div className='flex flex-col gap-2 lg:gap-0'>
 												{projeto.links?.pdfs?.map((pdf, index) => (
 													<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
 														<AnimatedPAfterH1 className='flex'>
@@ -281,7 +281,7 @@ export function WorkSingle() {
 						</div>
 					</div>
 
-					<div className='z-40 lg:hidden flex flex-col gap-16 px-3 pt-[30px]'>
+					<div className='z-40 lg:hidden flex flex-col gap-16 px-3 pt-[20px]'>
 						<div className='h-[300px] flex justify-center'>
 							<SanityImage
 								key={projeto.gallery[currentImageIndex]?.asset?._id || currentImageIndex}
@@ -297,7 +297,7 @@ export function WorkSingle() {
 
 						<div className='h-[120px] flex justify-center'>
 							{nextIndex !== null && (
-								<button type='button' className='block h-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+								<button type='button' className='block h-full text-left opacity-80' onClick={() => setCurrentImageIndex(nextIndex)}>
 									<SanityImage image={projeto.gallery[nextIndex]} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
 								</button>
 							)}

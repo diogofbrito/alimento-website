@@ -32,7 +32,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 				</div>
 			</div>
 
-			<div className='lg:hidden z-90 m-3 tracking-[0.02em] font-[500] text-[1.1rem] uppercase leading-5'>
+			<div className='lg:hidden z-90 m-3 tracking-[0.02em] font-[500] text-[1rem] uppercase leading-5'>
 				<div className='flex justify-between'>
 					<AnimatedH1>i + d</AnimatedH1>
 					<AnimatedButton onClick={() => navigate(-1)} className='text-right'>
