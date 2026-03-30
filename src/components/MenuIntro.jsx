@@ -31,7 +31,7 @@ export function MenuIntro() {
 							</AnimatedH1>
 							<AnimatedH1 className='text-right'>
 								<Link to='/sobre' className='hover:underline'>
-									Info
+									Sobre
 								</Link>
 							</AnimatedH1>
 						</li>
