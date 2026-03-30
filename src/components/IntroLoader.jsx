@@ -1,27 +1,63 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { h1SlideUp } from './animations/variants.js';
-import videoDesktop from '../assets/mao1.mp4';
-import videoMobile from '../assets/videoIntroAlimento.mp4';
+
+import videoDesktop from '../assets/mao1-web.mp4';
+import videoMobile from '../assets/videoIntroAlimento-web.mp4';
+import posterDesktop from '../assets/mao1-poster.jpg';
+import posterMobile from '../assets/videoIntroAlimento-poster.jpg';
 
 export function IntroLoader({ onFadeStart, onFinish }) {
 	const [showTitle, setShowTitle] = useState(false);
 	const [isVisible, setIsVisible] = useState(true);
-	const [videoSrc, setVideoSrc] = useState(videoDesktop);
+	const [isDesktop, setIsDesktop] = useState(true);
+	const [videoReady, setVideoReady] = useState(false);
+
+	const videoRef = useRef(null);
 	const firedFadeRef = useRef(false);
+
+	const videoSrc = isDesktop ? videoDesktop : videoMobile;
+	const posterSrc = isDesktop ? posterDesktop : posterMobile;
+	const fadeDelay = isDesktop ? 7000 : 4200;
 
 	useEffect(() => {
 		const mq = window.matchMedia('(min-width: 1024px)');
-		const apply = () => setVideoSrc(mq.matches ? videoDesktop : videoMobile);
+
+		const apply = () => {
+			setIsDesktop(mq.matches);
+			setVideoReady(false);
+		};
+
 		apply();
 		mq.addEventListener?.('change', apply);
+
 		return () => mq.removeEventListener?.('change', apply);
 	}, []);
 
 	useEffect(() => {
-		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
+		const video = videoRef.current;
+		if (!video) return;
 
-		const fadeDelay = videoSrc === videoMobile ? 4200 : 7000;
+		const tryPlay = async () => {
+			try {
+				video.muted = true;
+				video.defaultMuted = true;
+				video.playsInline = true;
+				video.setAttribute('muted', '');
+				video.setAttribute('playsinline', '');
+				video.setAttribute('webkit-playsinline', '');
+
+				await video.play();
+			} catch (error) {
+				console.warn('Autoplay falhou, poster visível até haver interação.', error);
+			}
+		};
+
+		tryPlay();
+	}, [videoSrc]);
+
+	useEffect(() => {
+		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
 
 		const fadeStartTimer = setTimeout(() => {
 			if (!firedFadeRef.current) {
@@ -35,7 +71,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 			clearTimeout(titleTimer);
 			clearTimeout(fadeStartTimer);
 		};
-	}, [onFadeStart, videoSrc]);
+	}, [fadeDelay, onFadeStart]);
 
 	const handleSkip = () => {
 		if (!firedFadeRef.current) {
@@ -48,7 +84,11 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 	return (
 		<AnimatePresence onExitComplete={onFinish}>
 			{isVisible && (
-				<motion.div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden' initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}>
+				<motion.div
+					className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black'
+					initial={{ opacity: 1 }}
+					exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
+				>
 					{showTitle && (
 						<motion.div
 							className='overflow-hidden inline-block z-20 text-white mix-blend-difference'
@@ -65,17 +105,22 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 					<div className='absolute inset-0 z-0 bg-black' />
 
 					<motion.video
+						ref={videoRef}
 						key={videoSrc}
 						src={videoSrc}
+						poster={posterSrc}
 						autoPlay
 						muted
 						playsInline
 						preload='auto'
 						onClick={handleSkip}
+						onLoadedData={() => setVideoReady(true)}
+						onCanPlay={() => setVideoReady(true)}
 						className='absolute inset-0 w-full h-full object-cover z-10'
 						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						animate={{ opacity: videoReady ? 1 : 0 }}
 						exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
+						transition={{ duration: 0.6, ease: 'easeOut' }}
 					/>
 				</motion.div>
 			)}
