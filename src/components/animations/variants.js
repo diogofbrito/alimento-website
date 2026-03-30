@@ -7,13 +7,6 @@ export const h1SlideUp = {
 	},
 };
 
-export const buttonFadeIn = {
-	hidden: { y: '100%' },
-	show: {
-		y: 0,
-		transition: { duration: 1, ease: [0.77, 0, 0.175, 1] },
-	},
-};
 
 
 // Fade-in para parágrafos (<p>) com delay de 0.8s (após o h1)

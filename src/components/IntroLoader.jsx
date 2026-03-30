@@ -96,7 +96,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 							animate='show'
 							exit={{ opacity: 0, transition: { duration: 1, ease: 'easeInOut' } }}
 						>
-							<motion.h1 variants={h1SlideUp} className='inline-block uppercase tracking-[0.62em] font-[500] text-[1.1rem]'>
+							<motion.h1 variants={h1SlideUp} className='inline-block uppercase tracking-[0.2em] font-[500] text-[1.2rem]'>
 								Alimento
 							</motion.h1>
 						</motion.div>

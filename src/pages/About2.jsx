@@ -111,7 +111,7 @@ export function About2() {
 
 				<div className='h-[70vh]' />
 
-				<div className='relative z-10  pb-6'>
+				<div className='relative z-10  '>
 					<div className='text-white p-3'>
 						<AnimatedPAfterH1 className='tracking-wide leading-[1.3]'>
 							<PortableText value={about.content} components={portableTextComponents} />
@@ -134,8 +134,8 @@ export function About2() {
 						</div>
 
 						<div className='pt-[60px] text-white grid grid-cols-2 items-baseline'>
-							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] mb-6'>
-								<img src={spin} className='w-[100px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
+							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] '>
+								<img src={spin} className='w-[100px] pointer-events-none pb-4 ' alt='Spin-off logo' />© <span className='tracking-[0.1em] uppercase'>Alimento</span>, 2026
 							</AnimatedPAfterH1>
 
 							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] text-right'>

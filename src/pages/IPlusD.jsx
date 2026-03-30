@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import { IMAISD_INFO_QUERY, IMAISD_SINGLE_QUERY, IMAISD_PAGE_SETTINGS_QUERY } from '../lib/sanity.queries';
 import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
+import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
+
 
 function useIsDesktop() {
 	const [isDesktop, setIsDesktop] = useState(false);
@@ -164,7 +166,7 @@ export function IPlusD() {
 									setIsListOpen(false);
 								}}
 							>
-								<SanityImage
+								<AnimatedSanityImage
 									image={it.image}
 									preset='singleList'
 									alt=''

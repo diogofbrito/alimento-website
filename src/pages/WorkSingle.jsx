@@ -10,6 +10,8 @@ import { WORK_SINGLE_QUERY } from '../lib/sanity.queries';
 import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
 import { ErrorPage } from './ErrorPage';
+import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
+
 
 export function WorkSingle() {
 	const { slug } = useParams();
@@ -117,7 +119,7 @@ export function WorkSingle() {
 									setIsListOpen(false);
 								}}
 							>
-								<SanityImage
+								<AnimatedSanityImage
 									image={img}
 									preset='singleList'
 									alt=''
