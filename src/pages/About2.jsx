@@ -4,7 +4,7 @@ import { AnimatedPAfterH1, AnimatedH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
 import bg from '../assets/patricia1.jpg';
-import spin from '../assets/spin.png';
+import spin from '../assets/logo_bw.png';
 
 export function About2() {
 	const [about, setAbout] = useState([]);
@@ -52,10 +52,10 @@ export function About2() {
 		<>
 			{/* DESKTOP */}
 			<div className='relative hidden lg:block h-screen bg-cover bg-center bg-fixed' style={{ backgroundImage: `url(${bg})` }}>
-				<div className='pt-[200px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
+				<div className='pt-[100px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
 					<div className='col-span-2' />
 
-					<div className='col-span-2 pr-3 lg:pr-[100px]'>
+					<div className='col-span-2 pr-3 lg:pr-[200px]'>
 						<div>
 							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white'>
 								<PortableText value={about.content} components={portableTextComponents} />
@@ -80,7 +80,7 @@ export function About2() {
 
 				<div className='grid items-baseline lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white'>
 					<AnimatedPAfterH1 className='lg:col-start-3 lg:col-span-1 font-[500] text-[0.85rem]'>
-						<img src={spin} className='w-[100px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
+						<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
 					</AnimatedPAfterH1>
 
 					<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>
