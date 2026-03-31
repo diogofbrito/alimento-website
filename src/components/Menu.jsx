@@ -11,7 +11,7 @@ export function Menu() {
 		<>
 			{/* HEADER */}
 			<div className='fixed left-0 lg:left-5 top-0 lg:top-4 right-0 lg:right-5 z-50 lg:mix-blend-difference lg:text-white'>
-				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center border-b border-b-gray-200 lg:border-0 bg-white lg:bg-transparent px-3 lg:px-0 pt-3 pb-0 lg:pt-0'>
+				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center border-b border-b-gray-200 lg:border-0 bg-[#f8f8f8] lg:bg-transparent px-3 lg:px-0 pt-2 pb-1 lg:pb-0 lg:pt-0'>
 					{/* LOGO */}
 					<AnimatedH1>
 						<Link to='/' className='hover:underline tracking-[0.2em]'>

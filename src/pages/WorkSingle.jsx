@@ -297,7 +297,7 @@ export function WorkSingle() {
 							/>
 						</div>
 
-						<div className='h-[120px] flex justify-center'>
+						<div className='h-[120px] flex justify-center mt-9'>
 							{nextIndex !== null && (
 								<button type='button' className='block h-full text-left opacity-80' onClick={() => setCurrentImageIndex(nextIndex)}>
 									<SanityImage image={projeto.gallery[nextIndex]} preset='singleSide' alt='' className='h-full' imgClassName='h-full object-contain opacity-80' loading='lazy' sizes='40vw' />
