@@ -18,7 +18,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 
 	const videoSrc = isDesktop ? videoDesktop : videoMobile;
 	const posterSrc = isDesktop ? posterDesktop : posterMobile;
-	const fadeDelay = isDesktop ? 7000 : 4200;
+	const fadeDelay = isDesktop ? 7000 : 3850;
 
 	useEffect(() => {
 		const mq = window.matchMedia('(min-width: 1024px)');

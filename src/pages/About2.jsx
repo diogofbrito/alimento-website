@@ -53,11 +53,11 @@ export function About2() {
 			{/* DESKTOP */}
 			<div className='relative hidden lg:block h-screen bg-cover bg-center bg-fixed' style={{ backgroundImage: `url(${bg})` }}>
 				<div className='pt-[100px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
-					<div className='col-span-2' />
+					<div className='col-span-2'/>
 
 					<div className='col-span-2 pr-3 lg:pr-[200px]'>
 						<div>
-							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white'>
+							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white '>
 								<PortableText value={about.content} components={portableTextComponents} />
 							</AnimatedPAfterH1>
 						</div>
@@ -80,7 +80,7 @@ export function About2() {
 
 				<div className='grid items-baseline lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white'>
 					<AnimatedPAfterH1 className='lg:col-start-3 lg:col-span-1 font-[500] text-[0.85rem]'>
-						<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />© ALIMENTO, 2026
+						<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />© 2026
 					</AnimatedPAfterH1>
 
 					<AnimatedPAfterH1 className='lg:col-span-1 font-[500] text-[0.85rem]'>

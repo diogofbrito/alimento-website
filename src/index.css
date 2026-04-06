@@ -48,3 +48,6 @@ body {
   transition: opacity 0.3s ease-in-out;
 }
 
+.alimento{
+  word-spacing: 2px;
+}

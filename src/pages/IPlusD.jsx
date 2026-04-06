@@ -203,7 +203,6 @@ export function IPlusD() {
 					</div>
 
 					<div className='pt-12 lg:pt-16 pb-5'>
-						<AnimatedH1 className='font-[500] text-[0.85rem] '>Publicações</AnimatedH1>
 
 						<div className='pt-4 grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
 							{projects.map((p, index) => {
@@ -262,11 +261,14 @@ export function IPlusD() {
 												</motion.div>
 											</div>
 
-											<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] uppercase'>
-												<div className='lg:max-w-[70%] font-[500]'>
+											<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] '>
+												<div className=' font-[500] uppercase'>
 													<AnimatedH1>{p.title}</AnimatedH1>
 												</div>
-												<AnimatedH1>{p.year || '—'}</AnimatedH1>
+												<div className='flex gap-4'>
+													<AnimatedH1 >Publicação</AnimatedH1>
+													<AnimatedH1 className=' text-right'>{p.year || '—'}</AnimatedH1>
+												</div>
 											</div>
 										</motion.div>
 									</a>

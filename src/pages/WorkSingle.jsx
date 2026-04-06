@@ -12,7 +12,6 @@ import { SanityImage } from '../components/SanityImage';
 import { ErrorPage } from './ErrorPage';
 import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
 
-
 export function WorkSingle() {
 	const { slug } = useParams();
 	const [projeto, setProjeto] = useState(null);
@@ -85,6 +84,9 @@ export function WorkSingle() {
 		if (currentImageIndex < projeto.gallery.length - 1) nextIndex = currentImageIndex + 1;
 		else nextIndex = 0;
 	}
+
+	console.log(projeto?.links);
+	console.log(projeto?.links?.urls);
 
 	return (
 		<div>
@@ -199,36 +201,37 @@ export function WorkSingle() {
 								</div>
 							)}
 
-							{projeto.agradecimentos && (
-								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Agradecimentos</AnimatedH1>
-									<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
+							<div className='col-span-1 flex flex-col'>
+								{projeto.agradecimentos && (
+									<div className='flex flex-col'>
+										<AnimatedH1 className='text-[0.85rem] font-[500]'>Agradecimentos</AnimatedH1>
+										<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
+									</div>
+								)}
+								{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
+									<div className='col-span-1 flex flex-col pt-[30px]'>
+										<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
 
-									{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
-										<div className='col-span-1 flex flex-col pt-[30px]'>
-											<AnimatedH1 className='text-[0.85rem] font-[500]'>Links</AnimatedH1>
+										<div className='flex flex-col gap-2 lg:gap-2'>
+											{projeto.links?.pdfs?.map((pdf, index) => (
+												<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+													<AnimatedPAfterH1>
+														{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
+													</AnimatedPAfterH1>
+												</a>
+											))}
 
-											<div className='flex flex-col gap-2 lg:gap-0'>
-												{projeto.links?.pdfs?.map((pdf, index) => (
-													<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-														<AnimatedPAfterH1 className='flex'>
-															{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} />
-														</AnimatedPAfterH1>
-													</a>
-												))}
-
-												{projeto.links?.urls?.map((link, index) => (
-													<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
-														<AnimatedPAfterH1 className='flex'>
-															{link.title} <ArrowUpRight size={16} strokeWidth={1.5} />
-														</AnimatedPAfterH1>
-													</a>
-												))}
-											</div>
+											{projeto.links?.urls?.map((link, index) => (
+												<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
+													<AnimatedPAfterH1>
+														{link.title} <ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
+													</AnimatedPAfterH1>
+												</a>
+											))}
 										</div>
-									)}
-								</div>
-							)}
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>
