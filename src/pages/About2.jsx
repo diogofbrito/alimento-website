@@ -98,7 +98,7 @@ export function About2() {
 					className='fixed inset-0 bg-cover -z-10'
 					style={{
 						backgroundImage: `url(${bg})`,
-						backgroundPosition: '20% center',
+						backgroundPosition: '12% center',
 					}}
 				/>
 
@@ -135,7 +135,7 @@ export function About2() {
 
 						<div className='pt-[60px] text-white grid grid-cols-2 items-baseline'>
 							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] '>
-								<img src={spin} className='w-[100px] pointer-events-none pb-4 ' alt='Spin-off logo' />© <span className='tracking-[0.1em] uppercase'>Alimento</span>, 2026
+								<img src={spin} className='w-[100px] pointer-events-none pb-4 ' alt='Spin-off logo' />© 2026
 							</AnimatedPAfterH1>
 
 							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] text-right'>

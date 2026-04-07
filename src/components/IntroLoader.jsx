@@ -12,9 +12,12 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 	const [isVisible, setIsVisible] = useState(true);
 	const [isDesktop, setIsDesktop] = useState(true);
 	const [videoReady, setVideoReady] = useState(false);
+	const [hasStarted, setHasStarted] = useState(false);
 
 	const videoRef = useRef(null);
 	const firedFadeRef = useRef(false);
+	const finishTimerRef = useRef(null);
+	const titleTimerRef = useRef(null);
 
 	const videoSrc = isDesktop ? videoDesktop : videoMobile;
 	const posterSrc = isDesktop ? posterDesktop : posterMobile;
@@ -26,6 +29,7 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 		const apply = () => {
 			setIsDesktop(mq.matches);
 			setVideoReady(false);
+			setHasStarted(false);
 		};
 
 		apply();
@@ -35,43 +39,95 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 	}, []);
 
 	useEffect(() => {
+		titleTimerRef.current = setTimeout(() => setShowTitle(true), 2000);
+		return () => clearTimeout(titleTimerRef.current);
+	}, []);
+
+	useEffect(() => {
 		const video = videoRef.current;
 		if (!video) return;
+
+		let cancelled = false;
+
+		const clearFinishTimer = () => {
+			if (finishTimerRef.current) {
+				clearTimeout(finishTimerRef.current);
+				finishTimerRef.current = null;
+			}
+		};
+
+		const startExitTimer = () => {
+			clearFinishTimer();
+
+			finishTimerRef.current = setTimeout(() => {
+				if (cancelled) return;
+
+				if (!firedFadeRef.current) {
+					firedFadeRef.current = true;
+					onFadeStart?.();
+				}
+
+				setIsVisible(false);
+			}, fadeDelay);
+		};
 
 		const tryPlay = async () => {
 			try {
 				video.muted = true;
 				video.defaultMuted = true;
 				video.playsInline = true;
+				video.autoplay = true;
+
 				video.setAttribute('muted', '');
 				video.setAttribute('playsinline', '');
 				video.setAttribute('webkit-playsinline', '');
 
-				await video.play();
+				video.load();
+
+				const playPromise = video.play();
+				if (playPromise !== undefined) {
+					await playPromise;
+				}
+
+				if (!cancelled) {
+					setHasStarted(true);
+					startExitTimer();
+				}
 			} catch (error) {
-				console.warn('Autoplay falhou, poster visível até haver interação.', error);
+				console.warn('Autoplay falhou.', error);
+
+				// fallback: mantém poster e permite skip manual
+				// opcionalmente podes arrancar o fade timer na mesma
+				if (!cancelled) {
+					startExitTimer();
+				}
 			}
 		};
 
-		tryPlay();
-	}, [videoSrc]);
+		const onCanPlay = () => {
+			setVideoReady(true);
+			tryPlay();
+		};
 
-	useEffect(() => {
-		const titleTimer = setTimeout(() => setShowTitle(true), 2000);
+		const onPlaying = () => {
+			setHasStarted(true);
+		};
 
-		const fadeStartTimer = setTimeout(() => {
-			if (!firedFadeRef.current) {
-				firedFadeRef.current = true;
-				onFadeStart?.();
-			}
-			setIsVisible(false);
-		}, fadeDelay);
+		video.addEventListener('canplay', onCanPlay);
+		video.addEventListener('playing', onPlaying);
+
+		// se já vier pronto do cache
+		if (video.readyState >= 3) {
+			onCanPlay();
+		}
 
 		return () => {
-			clearTimeout(titleTimer);
-			clearTimeout(fadeStartTimer);
+			cancelled = true;
+			clearFinishTimer();
+			video.removeEventListener('canplay', onCanPlay);
+			video.removeEventListener('playing', onPlaying);
 		};
-	}, [fadeDelay, onFadeStart]);
+	}, [videoSrc, fadeDelay, onFadeStart]);
 
 	const handleSkip = () => {
 		if (!firedFadeRef.current) {
@@ -109,13 +165,12 @@ export function IntroLoader({ onFadeStart, onFinish }) {
 						key={videoSrc}
 						src={videoSrc}
 						poster={posterSrc}
-						autoPlay
 						muted
+						autoPlay
 						playsInline
-						preload='auto'
+						preload='metadata'
 						onClick={handleSkip}
-						onLoadedData={() => setVideoReady(true)}
-						onCanPlay={() => setVideoReady(true)}
+						onLoadedMetadata={() => setVideoReady(true)}
 						className='absolute inset-0 w-full h-full object-cover z-10'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: videoReady ? 1 : 0 }}

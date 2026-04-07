@@ -153,14 +153,8 @@ export function WorkSingle() {
 
 							<div className='col-span-1 flex flex-col'>
 								<AnimatedH1 className='text-[0.85rem] font-[500]'>Data</AnimatedH1>
-								<div className='flex flex-col '>
-									{projeto.data && (
-										<div>
-											<AnimatedPAfterH1>{projeto.data}</AnimatedPAfterH1>
-										</div>
-									)}
-									<AnimatedPAfterH1>{projeto.year}</AnimatedPAfterH1>
-								</div>
+
+								<AnimatedPAfterH1>{projeto.data ? `${projeto.data} ${projeto.year}` : projeto.year}</AnimatedPAfterH1>
 							</div>
 
 							{projeto.local && (
@@ -185,7 +179,7 @@ export function WorkSingle() {
 							)}
 						</div>
 
-						<div className='grid lg:grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[80px]'>
+						<div className='grid lg:grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[30px] lg:pt-[80px]'>
 							{projeto.fichaTecnica?.length > 0 && (
 								<div className='col-span-1 flex flex-col'>
 									<AnimatedH1 className='font-[500] text-[0.85rem]'>Ficha técnica</AnimatedH1>
@@ -248,7 +242,7 @@ export function WorkSingle() {
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-w-resize'
 										loading='lazy'
 										sizes='20vw'
 									/>
@@ -271,13 +265,13 @@ export function WorkSingle() {
 
 						<div className='col-span-1'>
 							{nextIndex !== null && (
-								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+								<button type='button' className='group block w-full text-left ' onClick={() => setCurrentImageIndex(nextIndex)}>
 									<SanityImage
 										image={projeto.gallery[nextIndex]}
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-e-resize'
 										loading='lazy'
 										sizes='20vw'
 									/>
