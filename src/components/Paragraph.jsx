@@ -13,7 +13,7 @@ export const portableTextComponents = {
 		},
 	},
 	marks: {
-		strong: ({ children }) => <strong>{children}</strong>,
+		strong: ({ children }) => <span className='font-[500]'>{children}</span>,
 		em: ({ children }) => <em>{children}</em>,
 	},
 };
