@@ -9,7 +9,7 @@ export const portableTextComponents = {
 				return <div className='h-4' />;
 			}
 
-			return <p className='leading-[1.3]'>{children}</p>;
+			return <p className='leading-[1.2]'>{children}</p>;
 		},
 	},
 	marks: {
