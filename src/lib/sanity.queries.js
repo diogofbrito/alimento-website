@@ -11,6 +11,8 @@ export const IMAGE_ASSET_FIELDS = `
 `;
 
 export const SIMPLE_IMAGE_FIELDS = `
+  crop,
+  hotspot,
   asset->{
     ${IMAGE_ASSET_FIELDS}
   }
@@ -18,6 +20,8 @@ export const SIMPLE_IMAGE_FIELDS = `
 
 export const IMAGE_WITH_ALT_FIELDS = `
   alt,
+  crop,
+  hotspot,
   asset->{
     ${IMAGE_ASSET_FIELDS}
   }
@@ -134,6 +138,7 @@ export const IMAISD_INFO_QUERY = `
   title,
   "slug": slug.current,
   year,
+  tag,
   pdf,
   "pdfUrl": pdf.asset->url,
   coverImage{

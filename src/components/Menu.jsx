@@ -10,11 +10,11 @@ export function Menu() {
 	return (
 		<>
 			{/* HEADER */}
-			<div className='fixed left-0 lg:left-5 top-0 lg:top-4 right-0 lg:right-5 z-50 lg:mix-blend-difference lg:text-white'>
-				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center border-b border-b-gray-200 lg:border-0 bg-[#f8f8f8] lg:bg-transparent px-3 lg:px-0 pt-2 pb-1 lg:pb-0 lg:pt-0'>
+			<div className='fixed left-0 lg:left-5 top-0 lg:top-4 right-0 lg:right-5 z-50 mix-blend-difference text-white'>
+				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center    px-3 lg:px-0 pt-2 pb-1 lg:pb-0 lg:pt-0'>
 					{/* LOGO */}
 					<AnimatedH1>
-						<Link to='/' className='hover:underline tracking-[0.2em]'>
+						<Link to='/' className='hover:underline tracking-[0.2em] '>
 							Alimento
 						</Link>
 					</AnimatedH1>
@@ -61,7 +61,7 @@ export function Menu() {
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
-						className='fixed inset-0 z-40 bg-[#f7f7f7] flex flex-col justify-center px-3'
+						className='fixed inset-0 z-40 bg-[rgb(244,244,241)] flex flex-col justify-center px-3'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
