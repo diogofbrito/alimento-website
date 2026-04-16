@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { AnimatedH1 } from './AnimatedText';
 import { HamburgerButton } from './HamburguerBtn';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+
 
 export function Menu() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +63,7 @@ export function Menu() {
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
-						className='fixed inset-0 z-40 bg-[rgb(244,244,241)] flex flex-col justify-center px-3'
+						className='fixed inset-0 z-40 bg-[rgb(255,255,255)] flex flex-col justify-end p-3'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -79,21 +81,25 @@ export function Menu() {
 								<Link onClick={() => setIsOpen(false)} to='/projetos'>
 									Projetos
 								</Link>
+								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/imaisd'>
 									I + D
 								</Link>
+								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/press'>
 									Press
 								</Link>
+								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/sobre'>
 									Sobre
 								</Link>
+								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 						</motion.nav>
 					</motion.div>

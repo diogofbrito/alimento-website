@@ -10,7 +10,6 @@ import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
 import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
 
-
 function useIsDesktop() {
 	const [isDesktop, setIsDesktop] = useState(false);
 
@@ -66,7 +65,6 @@ export function IPlusD() {
 				setProjects(docs);
 				setDescription(null);
 				setIntroText(pageSettings?.introText || null);
-
 
 				const flattened = (singleData || [])
 					.flatMap((doc, docIndex) =>
@@ -203,7 +201,6 @@ export function IPlusD() {
 					</div>
 
 					<div className='pt-12 lg:pt-16 pb-5'>
-
 						<div className='pt-4 grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
 							{projects.map((p, index) => {
 								const href = p.pdfUrl || null;
@@ -266,7 +263,7 @@ export function IPlusD() {
 													<AnimatedH1>{p.title}</AnimatedH1>
 												</div>
 												<div className='flex gap-6'>
-													<AnimatedH1 >{p.tag || ''}</AnimatedH1>
+													<AnimatedH1>{p.tag || ''}</AnimatedH1>
 													<AnimatedH1 className=' text-right'>{p.year || '—'}</AnimatedH1>
 												</div>
 											</div>
@@ -282,19 +279,20 @@ export function IPlusD() {
 			{!isListOpen && !isInfoOpen && (
 				<>
 					<div className='z-40 hidden lg:grid lg:grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
-						<div className='col-span-1'>
+						<div className='col-span-1 '>
 							{prevIndex !== null && (
-								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
-									<SanityImage
-										image={items[prevIndex].image}
-										preset='singleSide'
-										alt=''
-										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
-										loading='lazy'
-										sizes='20vw'
-									/>
-								</button>
+									<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
+										<SanityImage
+											image={items[prevIndex].image}
+											preset='singleSide'
+											alt=''
+											className='w-full'
+											imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-w-resize'
+											loading='lazy'
+											sizes='20vw'
+										/>
+									</button>
+								
 							)}
 						</div>
 
@@ -319,21 +317,21 @@ export function IPlusD() {
 							)}
 						</div>
 
-						<div className='col-span-1'>
-							{nextIndex !== null && (
-								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(nextIndex)}>
+						{nextIndex !== null && (
+							<div className='col-span-1 cursor-e-resize' onClick={() => setCurrentImageIndex(nextIndex)}>
+								<button type='button' className='group block w-full text-left'>
 									<SanityImage
 										image={items[nextIndex].image}
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-pointer'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-e-resize'
 										loading='lazy'
 										sizes='20vw'
 									/>
 								</button>
-							)}
-						</div>
+							</div>
+						)}
 					</div>
 
 					<div className='z-40 lg:hidden flex flex-col gap-8 px-3 pb-3 pt-[20px]'>

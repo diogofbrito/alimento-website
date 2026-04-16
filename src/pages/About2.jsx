@@ -51,11 +51,18 @@ export function About2() {
 	return (
 		<>
 			{/* DESKTOP */}
-			<div className='relative hidden lg:block h-screen bg-cover bg-center bg-fixed' style={{ backgroundImage: `url(${bg})` }}>
-				<div className='pt-[100px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
+			<div className='relative hidden lg:block h-screen bg-cover bg-center bg-fixed'>
+				<div
+					className='fixed inset-0 bg-cover -z-10'
+					style={{
+						backgroundImage: `url(${bg})`,
+					}}
+				/>
+
+				<div className='pt-[210px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
 					<div className='col-span-2' />
 
-					<div className='col-span-2 pr-3 lg:pr-[200px]'>
+					<div className='col-span-2 pr-3 lg:pr-[200px] '>
 						<div>
 							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white lg:pt-[1rem]'>
 								<PortableText value={about.content} components={portableTextComponents} />
@@ -74,23 +81,23 @@ export function About2() {
 									Instagram
 								</a>
 							</AnimatedPAfterH1>
+
+							<div className=' pt-6 '>
+								<AnimatedPAfterH1>
+									<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />
+								</AnimatedPAfterH1>
+
+								<div className='flex flex-col pt-4'>
+									<AnimatedH1 className='font-[500] text-[0.85rem]'>Website</AnimatedH1>
+									<AnimatedPAfterH1>
+										<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+											Diogo Brito
+										</a>
+									</AnimatedPAfterH1>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<div className='grid items-baseline lg:grid-cols-4 gap-x-[100px] pt-[60px] absolute bottom-4 left-5 right-5 text-white'>
-					<AnimatedPAfterH1 className='lg:col-start-3 lg:col-span-1 font-[500] text-[0.85rem]'>
-						<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />
-						<div className='flex gap-3'>
-							<div>
-								Website{' '}
-								<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
-									Diogo Brito
-								</a>
-							</div>
-							<span>© 2026</span>
-						</div>
-					</AnimatedPAfterH1>
 				</div>
 			</div>
 

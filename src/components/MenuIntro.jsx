@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AnimatedH1 } from './AnimatedText';
+import { ArrowUpRight } from 'lucide-react';
+
 
 export function MenuIntro() {
 	return (
@@ -39,26 +41,29 @@ export function MenuIntro() {
 				</div>
 			</div>
 
-			<div className='lg:hidden fixed bottom-0 top-0 right-0 left-0 z-50 flex flex-col p-5 justify-between mix-blend-difference text-white uppercase tracking-[0.02em] font-[500] '>
+			<div className='lg:hidden fixed bottom-0 top-0 right-0 left-0 z-50 flex flex-col p-3 justify-between mix-blend-difference text-white uppercase tracking-[0.02em] font-[500] '>
 				<AnimatedH1 className='text-[1.1rem] tracking-[0.2em]'>Alimento</AnimatedH1>
-				<nav className='flex  flex-col gap-1 text-[1.4rem] '>
+				<nav className='flex  flex-col gap-1 text-[1.5rem] '>
 					<AnimatedH1>
 						<Link to='/projetos'>Projetos</Link>
+						<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 					</AnimatedH1>
 
 					<AnimatedH1>
 						<Link to='/imaisd'>I + D</Link>
+						<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 					</AnimatedH1>
 
 					<AnimatedH1>
 						<Link to='/press'>press</Link>
+						<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 					</AnimatedH1>
 
 					<AnimatedH1>
 						<Link to='/sobre'>Sobre</Link>
+						<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 					</AnimatedH1>
 				</nav>
-				<div></div>
 			</div>
 		</>
 	);
