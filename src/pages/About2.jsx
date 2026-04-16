@@ -59,7 +59,7 @@ export function About2() {
 					}}
 				/>
 
-				<div className='pt-[210px] grid lg:grid-cols-4 lg:gap-x-[100px]'>
+				<div className='pt-[210px] pb-4 grid lg:grid-cols-4 lg:gap-x-[100px]'>
 					<div className='col-span-2' />
 
 					<div className='col-span-2 pr-3 lg:pr-[200px] '>
