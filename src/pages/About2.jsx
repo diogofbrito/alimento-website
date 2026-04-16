@@ -142,17 +142,19 @@ export function About2() {
 							</AnimatedPAfterH1>
 						</div>
 
-						<div className='pt-[60px] text-white grid grid-cols-2 items-baseline'>
-							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] '>
-								<img src={spin} className='w-[100px] pointer-events-none pb-4 ' alt='Spin-off logo' />© 2026
+						<div className=' pt-6 '>
+							<AnimatedPAfterH1>
+								<img src={spin} className='w-[120px] pointer-events-none pb-4' alt='Spin-off logo' />
 							</AnimatedPAfterH1>
 
-							<AnimatedPAfterH1 className='font-[500] text-[0.85rem] text-right'>
-								Website{' '}
-								<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
-									Diogo Brito
-								</a>
-							</AnimatedPAfterH1>
+							<div className='flex flex-col pt-4'>
+								<AnimatedH1 className='font-[500] text-[0.85rem]'>Website</AnimatedH1>
+								<AnimatedPAfterH1>
+									<a href='https://www.diogobrito.xyz' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+										Diogo Brito
+									</a>
+								</AnimatedPAfterH1>
+							</div>
 						</div>
 					</div>
 				</div>
