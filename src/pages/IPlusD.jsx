@@ -41,6 +41,26 @@ const img2Variants = {
 	hover: { opacity: 1 },
 };
 
+function keepSpacedWordTogether(blocks) {
+	if (!Array.isArray(blocks)) return blocks;
+
+	return blocks.map(block => {
+		if (!block.children) return block;
+
+		return {
+			...block,
+			children: block.children.map(child => {
+				if (typeof child.text !== 'string') return child;
+
+				return {
+					...child,
+					text: child.text.replace(/A L I M E N T O/g, 'A\u00A0L\u00A0I\u00A0M\u00A0E\u00A0N\u00A0T\u00A0O'),
+				};
+			}),
+		};
+	});
+}
+
 export function IPlusD() {
 	const [projects, setProjects] = useState([]);
 	const [items, setItems] = useState([]);
@@ -186,7 +206,7 @@ export function IPlusD() {
 							<AnimatedH1 className='text-[0.85rem] font-[500]'>INVESTIGAÇÃO + DESENVOLVIMENTO</AnimatedH1>
 							{introText ? (
 								<AnimatedPAfterH1 className='tracking-wide leading-[1.3]'>
-									<PortableText value={introText} components={portableTextComponents} />
+									<PortableText components={portableTextComponents} value={keepSpacedWordTogether(introText)} />
 								</AnimatedPAfterH1>
 							) : null}
 
@@ -281,13 +301,13 @@ export function IPlusD() {
 					<div className='z-40 hidden lg:grid lg:grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
 						<div className='col-span-1 '>
 							{prevIndex !== null && (
-								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
+								<button type='button' className='group w-full h-full flex items-start cursor-w-resize text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
 									<SanityImage
 										image={items[prevIndex].image}
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-w-resize'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 '
 										loading='lazy'
 										sizes='20vw'
 									/>

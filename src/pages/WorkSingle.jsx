@@ -85,8 +85,6 @@ export function WorkSingle() {
 		else nextIndex = 0;
 	}
 
-	console.log(projeto?.links);
-	console.log(projeto?.links?.urls);
 
 	return (
 		<div>
@@ -95,7 +93,6 @@ export function WorkSingle() {
 				currentIndex={currentImageIndex}
 				totalImages={projeto.gallery.length}
 				description={projeto.description}
-				ingredients={projeto.ingredients}
 				isListOpen={isListOpen}
 				isInfoOpen={isInfoOpen}
 				onToggleList={() => {
@@ -236,13 +233,13 @@ export function WorkSingle() {
 					<div className='z-40 hidden lg:grid grid-cols-5 justify-between px-5 pt-[100px] pb-5 gap-x-[100px]'>
 						<div className='col-span-1'>
 							{prevIndex !== null && (
-								<button type='button' className='group block w-full text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
+								<button type='button' className='group w-full h-full flex items-start cursor-w-resize text-left' onClick={() => setCurrentImageIndex(prevIndex)}>
 									<SanityImage
 										image={projeto.gallery[prevIndex]}
 										preset='singleSide'
 										alt=''
 										className='w-full'
-										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 cursor-w-resize'
+										imgClassName='w-full h-auto object-contain opacity-80 transition-transform duration-800 ease-out group-hover:scale-104 '
 										loading='lazy'
 										sizes='20vw'
 									/>
