@@ -54,12 +54,13 @@ export const HOME_MOBILE_QUERY = `
 ========================= */
 
 export const WORKS_QUERY = `
-*[_type == "projetos"] | order(sortDate desc) {
+*[_type == "projetos"]  {
   _id,
   title,
   "slug": slug.current,
   year,
   data,
+  sortDate,
   subtitle,
   hoverPair[]{
     ${SIMPLE_IMAGE_FIELDS}

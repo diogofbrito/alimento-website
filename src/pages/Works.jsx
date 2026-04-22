@@ -22,6 +22,25 @@ function useIsDesktop() {
 	return isDesktop;
 }
 
+function sortProjects(a, b) {
+	const yearA = Number(a.year) || 0;
+	const yearB = Number(b.year) || 0;
+
+	if (yearB !== yearA) return yearB - yearA;
+
+	const hasSortDateA = Boolean(a.sortDate);
+	const hasSortDateB = Boolean(b.sortDate);
+
+	if (hasSortDateA && hasSortDateB) {
+		return new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime();
+	}
+
+	if (hasSortDateA && !hasSortDateB) return -1;
+	if (!hasSortDateA && hasSortDateB) return 1;
+
+	return String(b._id).localeCompare(String(a._id));
+}
+
 const movingImageVariants = {
 	rest: { x: '0%' },
 	hover: { x: '100%' },
@@ -47,7 +66,8 @@ export function Works() {
 		const fetchProjetos = async () => {
 			try {
 				const data = await sanityClient.fetch(WORKS_QUERY);
-				setProjetos(data || []);
+				const sorted = (data || []).slice().sort(sortProjects);
+				setProjetos(sorted);
 			} catch (error) {
 				console.error('Erro ao buscar Projetos:', error.message);
 			}
@@ -70,7 +90,7 @@ export function Works() {
 				top: savedScroll,
 				behavior: 'auto',
 			});
-		})
+		});
 	}, [location.state, projetos]);
 
 	return (
