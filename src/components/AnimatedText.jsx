@@ -14,7 +14,7 @@ export function AnimatedH1({ children, className = '' }) {
 export function AnimatedButton({ children, onClick, className = '' }) {
 	return (
 		<motion.div className={`overflow-hidden inline-block ${className}`} initial='hidden' whileInView='show' viewport={{ once: true, amount: 0.2 }}>
-			<motion.button onClick={onClick} variants={ButtonSlideUp}  className='inline-block will-change-transform cursor-pointer ' >
+			<motion.button onClick={onClick} variants={ButtonSlideUp} className='inline-block will-change-transform cursor-pointer hover:underline'>
 				{children}
 			</motion.button>
 		</motion.div>
