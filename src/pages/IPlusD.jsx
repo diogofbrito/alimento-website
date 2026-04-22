@@ -284,7 +284,7 @@ export function IPlusD() {
 												</div>
 												<div className='flex gap-6'>
 													<AnimatedH1>{p.tag || ''}</AnimatedH1>
-													<AnimatedH1 className=' text-right'>{p.year || '—'}</AnimatedH1>
+													<AnimatedH1 className=' text-right'>{p.year || '/...'}</AnimatedH1>
 												</div>
 											</div>
 										</motion.div>
