@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { IntroLoader } from './components/IntroLoader';
-import { AnimatePresence, motion } from 'framer-motion';
-import { pageTransition } from './components/animations/variants.js';
+import { AnimatePresence} from 'framer-motion';
 import { Menu } from './components/Menu';
 
 function App() {
@@ -29,25 +28,12 @@ function App() {
 
 	return (
 		<>
-			
 			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
 			{/* Outlet SEMPRE renderizado (para preload), mas na Home controlamos opacidade */}
-			<motion.div
-				key={location.pathname}
-				variants={pageTransition}
-				initial={isFirstLoad ? false : 'hidden'}
-				animate={isFirstLoad ? false : 'enter'}
-				exit='exit'
-				style={
-					isHome && showLoader
-						? { opacity: revealHome ? 1 : 0 } 
-						: undefined
-				}
-				
-			>
+			<div style={isHome && showLoader ? { opacity: revealHome ? 1 : 0 } : undefined}>
 				<Outlet context={{ startHomeCarousel }} />
-			</motion.div>
+			</div>
 
 			<AnimatePresence>
 				{showLoader && (

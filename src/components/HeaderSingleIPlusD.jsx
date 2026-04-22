@@ -6,7 +6,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 
 	return (
 		<>
-			<div className='hidden z-90 fixed w-full left-0 right-0 top-4 px-5 lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase '>
+			<div className='hidden z-90 fixed w-full left-0 right-0 top-4 px-5 lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase mix-blend-difference text-white'>
 				<div className='col-span-1 '>
 					<AnimatedH1>i + d</AnimatedH1>
 				</div>

@@ -14,11 +14,11 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 
 	return (
 		<>
-			<div className='hidden z-90 absolute w-full left-0 right-0 top-4 px-5  lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase  '>
-				<div className='col-span-1  '>
+			<div className='hidden z-90 fixed w-full left-0 right-0 top-4 px-5  lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase  mix-blend-difference text-white'>
+				<div className='col-span-1'>
 					<AnimatedH1>{title}</AnimatedH1>
 				</div>
-				<div className='col-span-1'>
+				<div className='col-span-1 '>
 					<AnimatedH1>
 						imagem: {currentIndex + 1}/{totalImages}
 					</AnimatedH1>
@@ -29,11 +29,10 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 						{isListOpen ? ' SLIDER ' : ' LISTA '}
 					</AnimatedButton>
 				</div>
-				<div className='col-span-1 grid grid-cols-2 gap-x-[100px]'>
+				<div className='col-span-1 flex justify-between '>
 					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
 
 					<AnimatedButton onClick={handleClose} className='text-right'>
-						{' '}
 						FECHAR{' '}
 					</AnimatedButton>
 				</div>

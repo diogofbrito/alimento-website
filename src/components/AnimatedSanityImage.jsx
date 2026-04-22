@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { pFadeInAfterH1 } from './animations/variants.js';
+import { pFadeIn } from './animations/variants.js';
 import { SanityImage } from './SanityImage';
 
 export function AnimatedSanityImage({
@@ -16,7 +16,7 @@ export function AnimatedSanityImage({
 	viewport = { once: true, amount: 0.15 },
 }) {
 	return (
-		<motion.div variants={pFadeInAfterH1} initial='hidden' whileInView='show' viewport={viewport}>
+		<motion.div variants={pFadeIn} initial='hidden' whileInView='show' viewport={viewport}>
 			<SanityImage
 				image={image}
 				preset={preset}
