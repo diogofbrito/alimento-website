@@ -101,7 +101,7 @@ export function Works() {
 
 					return (
 						<Link key={item._id} to={`/projetos/${item.slug}`} state={{ scrollY: window.scrollY }} className='contents'>
-							<motion.div className='col-span-2 relative h-[190px] md:h-[300px] lg:h-[220px] xl:h-[300px]' initial='rest' animate='rest' whileHover={hasImg2 ? 'hover' : undefined}>
+							<motion.div className='col-span-2 relative h-[190px] md:h-[300px] lg:h-[190px] xl:h-[300px]' initial='rest' animate='rest' whileHover={hasImg2 ? 'hover' : undefined}>
 								<div className='grid grid-cols-2 h-full w-full'>
 									<div className='relative h-full w-full flex items-center uppercase opacity-50 text-[0.8rem] font-[500] tracking-[0.03em]' />
 									<div className='relative h-full w-full' />

@@ -54,7 +54,7 @@ export function Press() {
 									href={href}
 									target='_blank'
 									rel='noopener noreferrer'
-									className='flex justify-between gap-12 lg:gap-0 lg:items-center text-[0.85rem] tracking-[0.03em] hover:underline transition-opacity duration-300 ease-in-out'
+									className='flex justify-between gap-12 lg:gap-0 lg:items-center text-[0.85rem] tracking-[0.03em] hover:underline transition-opacity duration-300 ease-in-out '
 								>
 									<span className='font-[500] uppercase'>{item.title}</span>
 									<span className='font-[400]'>{item.year}</span>
