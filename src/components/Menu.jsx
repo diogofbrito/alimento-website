@@ -16,7 +16,7 @@ export function Menu() {
 				<div className='grid lg:grid-cols-4 grid-cols-2 lg:gap-x-[100px] uppercase tracking-[0.02em] font-[500] lg:text-[0.9rem] text-[1.1rem] items-center    px-3 lg:px-0 pt-2 pb-1 lg:pb-0 lg:pt-0'>
 					{/* LOGO */}
 					<AnimatedH1>
-						<Link to='/' className='hover:underline tracking-[0.2em] '>
+						<Link to='/' className=' tracking-[0.2em] '>
 							Alimento
 						</Link>
 					</AnimatedH1>
@@ -29,7 +29,7 @@ export function Menu() {
 					<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
 						<li>
 							<AnimatedH1>
-								<Link to='/projetos' className='hover:underline'>
+								<Link to='/projetos' >
 									Projetos
 								</Link>
 							</AnimatedH1>
@@ -37,7 +37,7 @@ export function Menu() {
 
 						<li>
 							<AnimatedH1>
-								<Link to='/imaisd' className='hover:underline'>
+								<Link to='/imaisd' >
 									I + D
 								</Link>
 							</AnimatedH1>
@@ -45,12 +45,12 @@ export function Menu() {
 
 						<li className='grid grid-cols-2 gap-x-[100px]'>
 							<AnimatedH1>
-								<Link to='/press' className='hover:underline'>
+								<Link to='/press' >
 									Press
 								</Link>
 							</AnimatedH1>
 							<AnimatedH1 className='text-right'>
-								<Link to='/sobre' className='hover:underline'>
+								<Link to='/sobre'>
 									Sobre
 								</Link>
 							</AnimatedH1>

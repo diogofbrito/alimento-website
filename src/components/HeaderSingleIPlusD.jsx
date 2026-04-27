@@ -18,7 +18,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 				</div>
 
 				<div className='col-span-1'>
-					<AnimatedButton onClick={onToggleList} className='hover:underline'>
+					<AnimatedButton onClick={onToggleList} >
 						{isListOpen ? 'SLIDER' : 'LISTA'}
 					</AnimatedButton>
 				</div>

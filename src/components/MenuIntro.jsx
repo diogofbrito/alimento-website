@@ -12,14 +12,14 @@ export function MenuIntro() {
 					<menu className='col-span-3 grid grid-cols-3 '>
 						<li className='col-span-1 '>
 							<AnimatedH1>
-								<Link to='/projetos' className='hover:underline'>
+								<Link to='/projetos' >
 									Projetos
 								</Link>
 							</AnimatedH1>
 						</li>
 						<li className='col-span-1 '>
 							<AnimatedH1>
-								<Link to='/imaisd' className='hover:underline'>
+								<Link to='/imaisd' >
 									I + D
 								</Link>
 							</AnimatedH1>
@@ -27,12 +27,12 @@ export function MenuIntro() {
 
 						<li className='col-span-1 grid grid-cols-2  gap-x-[100px]'>
 							<AnimatedH1>
-								<Link to='/press' className='hover:underline'>
+								<Link to='/press' >
 									press
 								</Link>
 							</AnimatedH1>
 							<AnimatedH1 className='text-right'>
-								<Link to='/sobre' className='hover:underline'>
+								<Link to='/sobre' >
 									Sobre
 								</Link>
 							</AnimatedH1>

@@ -25,7 +25,7 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				</div>
 
 				<div className='col-span-1 '>
-					<AnimatedButton onClick={onToggleList} className='hover:underline'>
+					<AnimatedButton onClick={onToggleList} >
 						{isListOpen ? ' SLIDER ' : ' LISTA '}
 					</AnimatedButton>
 				</div>
