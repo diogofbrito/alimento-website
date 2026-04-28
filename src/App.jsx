@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { IntroLoader } from './components/IntroLoader';
-import { AnimatePresence} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import { Menu } from './components/Menu';
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
 			<div style={isHome && showLoader ? { opacity: revealHome ? 1 : 0 } : undefined}>
 				<Outlet context={{ startHomeCarousel }} />
 			</div>
-
+			<Analytics />
 			<AnimatePresence>
 				{showLoader && (
 					<IntroLoader
