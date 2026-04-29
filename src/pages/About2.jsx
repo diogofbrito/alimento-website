@@ -62,7 +62,7 @@ export function About2() {
 				<div className='pt-[210px] pb-4 grid lg:grid-cols-4 lg:gap-x-[100px]'>
 					<div className='col-span-2' />
 
-					<div className='col-span-2 pr-3 lg:pr-[200px] '>
+					<div className='col-span-2 pr-3 2xl:pr-[150px] lg:pr-3 '>
 						<div>
 							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white lg:pt-[1rem]'>
 								<PortableText value={about.content} components={portableTextComponents} />
