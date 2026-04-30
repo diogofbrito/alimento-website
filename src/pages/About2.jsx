@@ -77,7 +77,7 @@ export function About2() {
 								</a>
 							</AnimatedPAfterH1>
 							<AnimatedPAfterH1>
-								<a href='https://www.instagram.com/___alimento___' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
+								<a href='https://www.instagram.com/alimento_______/' className='underline transition hover:opacity-60' target='_blank' rel='noreferrer'>
 									Instagram
 								</a>
 							</AnimatedPAfterH1>
