@@ -4,10 +4,14 @@ import { AnimatedH1 } from './AnimatedText';
 import { HamburgerButton } from './HamburguerBtn';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../lang/translations';
 
 
 export function Menu() {
 	const [isOpen, setIsOpen] = useState(false);
+	const { lang, setLang } = useLanguage();
+	const t = translations[lang];
 
 	return (
 		<>
@@ -29,30 +33,22 @@ export function Menu() {
 					<menu className='col-span-3 lg:grid grid-cols-3 gap-x-[100px] hidden'>
 						<li>
 							<AnimatedH1>
-								<Link to='/projetos' >
-									Projetos
-								</Link>
+								<Link to='/projetos'>{t.nav.projects}</Link>
 							</AnimatedH1>
 						</li>
 
 						<li>
 							<AnimatedH1>
-								<Link to='/imaisd' >
-									I + D
-								</Link>
+								<Link to='/imaisd'>{t.nav.research}</Link>
 							</AnimatedH1>
 						</li>
 
 						<li className='grid grid-cols-2 gap-x-[100px]'>
 							<AnimatedH1>
-								<Link to='/press' >
-									Press
-								</Link>
+								<Link to='/press'>{t.nav.press}</Link>
 							</AnimatedH1>
 							<AnimatedH1 className='text-right'>
-								<Link to='/sobre'>
-									Sobre
-								</Link>
+								<Link to='/sobre'>{t.nav.about}</Link>
 							</AnimatedH1>
 						</li>
 					</menu>
@@ -79,25 +75,25 @@ export function Menu() {
 						>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/projetos'>
-									Projetos
+									{t.nav.projects}
 								</Link>
 								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/imaisd'>
-									I + D
+									{t.nav.research}
 								</Link>
 								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/press'>
-									Press
+									{t.nav.press}
 								</Link>
 								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>
 							<AnimatedH1>
 								<Link onClick={() => setIsOpen(false)} to='/sobre'>
-									Sobre
+									{t.nav.about}
 								</Link>
 								<ArrowUpRight size={25} strokeWidth={2} className='inline-block align-[-3px]' />
 							</AnimatedH1>

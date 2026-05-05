@@ -57,9 +57,11 @@ export const WORKS_QUERY = `
 *[_type == "projetos"]  {
   _id,
   title,
+  titleEN,
   "slug": slug.current,
   year,
   data,
+  dataEN,
   sortDate,
   subtitle,
   hoverPair[]{
@@ -78,26 +80,38 @@ export const WORK_SINGLE_QUERY = `
 *[_type == "projetos" && slug.current == $slug][0]{
   _id,
   title,
+  titleEN,
   "slug": slug.current,
   data,
+  dataEN,
   year,
   cliente,
+  clienteEN,
   tipo,
+  tipoEN,
   local,
+  localEN,
   agradecimentos,
+  agradecimentosEN,
   creditos,
+  creditosEN,
   description,
+  descriptionEN,
   fichaTecnica[]{
     titulo,
-    conteudo
+    tituloEN,
+    conteudo,
+    conteudoEN
   },
   links{
     pdfs[]{
       title,
+      titleEN,
       "url": file.asset->url
     },
     urls[]{
       title,
+      titleEN,
       url
     }
   },
@@ -130,7 +144,8 @@ export const PRESS_QUERY = `
 
 export const IMAISD_PAGE_SETTINGS_QUERY = `
 *[_type == "imaisdPageSettings"][0]{
-  introText
+  introText,
+  introTextEN
 }
 `;
 
@@ -138,9 +153,11 @@ export const IMAISD_INFO_QUERY = `
 *[_type == "imaisd"] | order(year desc) {
   _id,
   title,
+  titleEN,
   "slug": slug.current,
   year,
   tag,
+  tagEN,
   pdf,
   "pdfUrl": pdf.asset->url,
   coverImage{
@@ -156,12 +173,13 @@ export const IMAISD_SINGLE_QUERY = `
 *[_type == "imaisd"] | order(year desc) {
   _id,
   title,
-  description,
+  titleEN,
   gallery[]{
     image{
       ${SIMPLE_IMAGE_FIELDS}
     },
-    title
+    title,
+    titleEN
   }
 }
 `;

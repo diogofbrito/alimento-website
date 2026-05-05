@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import sanityClient from '../SanityClient';
 import { WORKS_QUERY } from '../lib/sanity.queries';
 import { SanityImage } from '../components/SanityImage';
+import { useLanguage } from '../contexts/LanguageContext';
 
 function useIsDesktop() {
 	const [isDesktop, setIsDesktop] = useState(false);
@@ -61,6 +62,7 @@ export function Works() {
 	const isDesktop = useIsDesktop();
 	const location = useLocation();
 	const hasRestoredScroll = useRef(false);
+	const { lang } = useLanguage();
 
 	useEffect(() => {
 		const fetchProjetos = async () => {
@@ -98,6 +100,7 @@ export function Works() {
 			<div className='grid lg:grid-cols-4 gap-x-[100px] lg:gap-y-[80px] gap-y-[70px]'>
 				{projetos.map(item => {
 					const hasImg2 = isDesktop && item.img2?.asset;
+					const title = lang === 'en' ? item.titleEN || item.title : item.title;
 
 					return (
 						<Link key={item._id} to={`/projetos/${item.slug}`} state={{ scrollY: window.scrollY }} className='contents'>
@@ -111,7 +114,7 @@ export function Works() {
 											<SanityImage
 												image={item.img1}
 												preset='workCard'
-												alt={item.title || ''}
+												alt={title || ''}
 												className='w-full h-full'
 												imgClassName='w-full h-full object-cover'
 												loading='eager'
@@ -121,7 +124,7 @@ export function Works() {
 
 										{hasImg2 && (
 											<motion.div className='absolute inset-0' variants={img2Variants} transition={{ duration: 0.5, ease: 'easeOut' }}>
-												<SanityImage image={item.img2} preset='workHover' alt={item.title || ''} className='w-full h-full' imgClassName='w-full h-full object-cover' loading='lazy' sizes='25vw' />
+												<SanityImage image={item.img2} preset='workHover' alt={title || ''} className='w-full h-full' imgClassName='w-full h-full object-cover' loading='lazy' sizes='25vw' />
 											</motion.div>
 										)}
 									</motion.div>
@@ -129,7 +132,7 @@ export function Works() {
 
 								<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] uppercase'>
 									<div className='lg:max-w-[70%] font-[500]'>
-										<AnimatedH1>{item.title}</AnimatedH1>
+										<AnimatedH1>{title}</AnimatedH1>
 									</div>
 									{item.year && <AnimatedH1>{item.year}</AnimatedH1>}
 								</div>

@@ -3,19 +3,24 @@ import sanityClient from '../SanityClient.js';
 import { AnimatedPAfterH1, AnimatedH1 } from '../components/AnimatedText';
 import { PortableText } from '@portabletext/react';
 import { portableTextComponents } from '../components/Paragraph';
+import { useLanguage } from '../contexts/LanguageContext';
 import bg from '../assets/patricia1.jpg';
 import spin from '../assets/logo_bw.png';
 
 export function About2() {
 	const [about, setAbout] = useState([]);
 	const [mobileOverlayOpacity, setMobileOverlayOpacity] = useState(0);
+	const { lang } = useLanguage();
+
+	const cont = lang === 'en' ? about.contentEn : about.content;
 
 	useEffect(() => {
 		const fetchAbout = async () => {
 			try {
 				const data = await sanityClient.fetch(
 					`*[_type == "about"][0]{
-						content
+						content,
+						contentEN
 					}`,
 				);
 				setAbout(data);
@@ -65,7 +70,7 @@ export function About2() {
 					<div className='col-span-2 pr-3 2xl:pr-[150px] lg:pr-3 '>
 						<div>
 							<AnimatedPAfterH1 className='tracking-wide leading-[1.3] text-white lg:pt-[1rem]'>
-								<PortableText value={about.content} components={portableTextComponents} />
+								<PortableText value={cont} components={portableTextComponents} />
 							</AnimatedPAfterH1>
 						</div>
 

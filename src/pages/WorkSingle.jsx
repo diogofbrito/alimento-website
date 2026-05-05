@@ -11,6 +11,7 @@ import { imageUrl } from '../utils/sanity.image';
 import { SanityImage } from '../components/SanityImage';
 import { ErrorPage } from './ErrorPage';
 import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export function WorkSingle() {
 	const { slug } = useParams();
@@ -19,6 +20,7 @@ export function WorkSingle() {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
+	const { lang } = useLanguage();
 
 	useEffect(() => {
 		const fetchProjeto = async () => {
@@ -76,6 +78,15 @@ export function WorkSingle() {
 
 	if (!projeto) return <ErrorPage />;
 
+	const title = lang === 'en' ? projeto.titleEN || projeto.title : projeto.title;
+	const description = lang === 'en' ? projeto.descriptionEN || projeto.description : projeto.description;
+	const data = lang === 'en' ? projeto.dataEN || projeto.data : projeto.data;
+	const tipo = lang === 'en' ? projeto.tipoEN || projeto.tipo : projeto.tipo;
+	const local = lang === 'en' ? projeto.localEN || projeto.local : projeto.local;
+	const cliente = lang === 'en' ? projeto.clienteEN || projeto.cliente : projeto.cliente;
+	const creditos = lang === 'en' ? projeto.creditosEN || projeto.creditos : projeto.creditos;
+	const agradecimentos = lang === 'en' ? projeto.agradecimentosEN || projeto.agradecimentos : projeto.agradecimentos;
+
 	let prevIndex = null;
 	let nextIndex = null;
 
@@ -89,7 +100,7 @@ export function WorkSingle() {
 	return (
 		<div>
 			<HeaderSingleWork
-				title={projeto.title}
+				title={title}
 				currentIndex={currentImageIndex}
 				totalImages={projeto.gallery.length}
 				description={projeto.description}
@@ -137,41 +148,41 @@ export function WorkSingle() {
 				<div className='z-40 px-3 pb-3 lg:px-5 lg:pb-5 pt-[20px] lg:pt-[100px] lg:grid lg:grid-cols-4 gap-x-[100px] tracking-wide leading-[1.3]'>
 					<div className='col-span-2'>
 						<AnimatedPAfterH1>
-							<PortableText value={projeto.description} components={portableTextComponents} />
+							<PortableText value={description} components={portableTextComponents} />
 						</AnimatedPAfterH1>
 					</div>
 
 					<div className='col-span-2 pt-12 lg:pt-0'>
 						<div className='grid grid-cols-2  gap-x-[30px] lg:gap-x-[100px] gap-y-[30px]'>
 							<div className='col-span-1 flex flex-col'>
-								<AnimatedH1 className='text-[0.85rem] font-[500]'>Tipo</AnimatedH1>
-								<AnimatedPAfterH1>{projeto.tipo}</AnimatedPAfterH1>
+								<AnimatedH1 className='text-[0.85rem] font-[500]'>{lang === 'en' ? 'Type' : 'Tipo'}</AnimatedH1>
+								<AnimatedPAfterH1>{tipo}</AnimatedPAfterH1>
 							</div>
 
 							<div className='col-span-1 flex flex-col'>
-								<AnimatedH1 className='text-[0.85rem] font-[500]'>Data</AnimatedH1>
+								<AnimatedH1 className='text-[0.85rem] font-[500]'>{lang === 'en' ? 'Date' : 'Data'}</AnimatedH1>
 
-								<AnimatedPAfterH1>{projeto.data ? `${projeto.data} ${projeto.year}` : projeto.year}</AnimatedPAfterH1>
+								<AnimatedPAfterH1>{data ? `${data} ${projeto.year}` : projeto.year}</AnimatedPAfterH1>
 							</div>
 
-							{projeto.local && (
+							{local && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Local</AnimatedH1>
-									<AnimatedPAfterH1>{projeto.local}</AnimatedPAfterH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>{lang === 'en' ? 'Location' : 'Local'}</AnimatedH1>
+									<AnimatedPAfterH1>{local}</AnimatedPAfterH1>
 								</div>
 							)}
 
-							{projeto.cliente && (
+							{cliente && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Cliente</AnimatedH1>
-									<AnimatedPAfterH1>{projeto.cliente}</AnimatedPAfterH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'> {lang === 'en' ? 'Client' : 'Cliente'}</AnimatedH1>
+									<AnimatedPAfterH1>{cliente}</AnimatedPAfterH1>
 								</div>
 							)}
 
-							{projeto.creditos && (
+							{creditos && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='text-[0.85rem] font-[500]'>Fotografias</AnimatedH1>
-									<AnimatedPAfterH1>{projeto.creditos}</AnimatedPAfterH1>
+									<AnimatedH1 className='text-[0.85rem] font-[500]'>{lang === 'en' ? 'Photography' : 'Fotografias'}</AnimatedH1>
+									<AnimatedPAfterH1>{creditos}</AnimatedPAfterH1>
 								</div>
 							)}
 						</div>
@@ -179,13 +190,13 @@ export function WorkSingle() {
 						<div className='grid lg:grid-cols-2 lg:gap-x-[100px] gap-y-[30px] pt-[30px] lg:pt-[80px]'>
 							{projeto.fichaTecnica?.length > 0 && (
 								<div className='col-span-1 flex flex-col'>
-									<AnimatedH1 className='font-[500] text-[0.85rem]'>Ficha técnica</AnimatedH1>
+									<AnimatedH1 className='font-[500] text-[0.85rem]'> {lang === 'en' ? 'Credits' : 'Ficha técnica'}</AnimatedH1>
 
 									<div className='flex flex-col gap-4 pt-2'>
 										{projeto.fichaTecnica.map((item, index) => (
 											<div key={index} className='flex flex-col'>
-												<AnimatedPAfterH1 className='font-[500] text-[0.85rem]'>{item.titulo}</AnimatedPAfterH1>
-												<AnimatedPAfterH1>{item.conteudo}</AnimatedPAfterH1>
+												<AnimatedPAfterH1 className='font-[500] text-[0.85rem]'> {lang === 'en' ? item.tituloEN || item.titulo : item.titulo}</AnimatedPAfterH1>
+												<AnimatedPAfterH1>{lang === 'en' ? item.conteudoEN || item.conteudo : item.conteudo}</AnimatedPAfterH1>
 											</div>
 										))}
 									</div>
@@ -193,10 +204,10 @@ export function WorkSingle() {
 							)}
 
 							<div className='col-span-1 flex flex-col'>
-								{projeto.agradecimentos && (
+								{agradecimentos && (
 									<div className='flex flex-col'>
-										<AnimatedH1 className='text-[0.85rem] font-[500]'>Agradecimentos</AnimatedH1>
-										<AnimatedPAfterH1>{projeto.agradecimentos}</AnimatedPAfterH1>
+										<AnimatedH1 className='text-[0.85rem] font-[500]'> {lang === 'en' ? 'Acknowledgements' : 'Agradecimentos'}</AnimatedH1>
+										<AnimatedPAfterH1>{agradecimentos}</AnimatedPAfterH1>
 									</div>
 								)}
 								{((projeto.links?.pdfs?.length ?? 0) > 0 || (projeto.links?.urls?.length ?? 0) > 0) && (
@@ -207,7 +218,8 @@ export function WorkSingle() {
 											{projeto.links?.pdfs?.map((pdf, index) => (
 												<a key={index} href={pdf.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
 													<AnimatedPAfterH1>
-														{pdf.title?.trim() ? pdf.title : 'Abrir PDF'} <ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
+														{lang === 'en' ? pdf.titleEN?.trim() || pdf.title?.trim() || 'Open PDF' : pdf.title?.trim() || 'Abrir PDF'}
+														<ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
 													</AnimatedPAfterH1>
 												</a>
 											))}
@@ -215,7 +227,7 @@ export function WorkSingle() {
 											{projeto.links?.urls?.map((link, index) => (
 												<a key={index} href={link.url} target='_blank' rel='noopener noreferrer' className='underline transition hover:opacity-60'>
 													<AnimatedPAfterH1>
-														{link.title} <ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
+														{lang === 'en' ? link.titleEN || link.title : link.title} <ArrowUpRight size={16} strokeWidth={1.5} className='inline-block align-[-2px]' />
 													</AnimatedPAfterH1>
 												</a>
 											))}
@@ -252,7 +264,7 @@ export function WorkSingle() {
 								key={projeto.gallery[currentImageIndex]?.asset?._id || currentImageIndex}
 								image={projeto.gallery[currentImageIndex]}
 								preset='singleMain'
-								alt={projeto.title || ''}
+								alt={title || ''}
 								className='w-full max-h-[80vh]'
 								imgClassName='w-full h-auto object-contain pointer-events-none'
 								loading='eager'
@@ -283,7 +295,7 @@ export function WorkSingle() {
 								key={projeto.gallery[currentImageIndex]?.asset?._id || currentImageIndex}
 								image={projeto.gallery[currentImageIndex]}
 								preset='singleMain'
-								alt={projeto.title || ''}
+								alt={title || ''}
 								className='h-full'
 								imgClassName='w-full h-full object-cover'
 								loading='eager'

@@ -31,7 +31,7 @@ function App() {
 		<>
 			{!isHome && !isWorkSingle && !isIPlusDSingle && !isIPlusD && <Menu />}
 
-			{/* Outlet SEMPRE renderizado (para preload), mas na Home controlamos opacidade */}
+		
 			<div style={isHome && showLoader ? { opacity: revealHome ? 1 : 0 } : undefined}>
 				<Outlet context={{ startHomeCarousel }} />
 			</div>
@@ -40,14 +40,13 @@ function App() {
 				{showLoader && (
 					<IntroLoader
 						onFadeStart={() => {
-							// começa o fade do loader → mostra a Home já com a imagem 0
+							
 							setRevealHome(true);
 							setStartHomeCarousel(true);
 						}}
 						onFinish={() => {
 							setShowLoader(false);
 							setIsFirstLoad(false);
-							// loader já saiu → agora sim pode arrancar a galeria
 						}}
 					/>
 				)}

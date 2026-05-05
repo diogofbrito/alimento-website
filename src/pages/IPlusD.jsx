@@ -7,6 +7,7 @@ import { portableTextComponents } from '../components/Paragraph';
 import { motion } from 'framer-motion';
 import { IMAISD_INFO_QUERY, IMAISD_SINGLE_QUERY, IMAISD_PAGE_SETTINGS_QUERY } from '../lib/sanity.queries';
 import { imageUrl } from '../utils/sanity.image';
+import { useLanguage } from '../contexts/LanguageContext';
 import { SanityImage } from '../components/SanityImage';
 import { AnimatedSanityImage } from '../components/AnimatedSanityImage';
 
@@ -68,9 +69,9 @@ export function IPlusD() {
 	const [isListOpen, setIsListOpen] = useState(false);
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
 	const [introText, setIntroText] = useState(null);
-	const [description, setDescription] = useState(null);
 
 	const isDesktop = useIsDesktop();
+	const { lang } = useLanguage();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -83,18 +84,16 @@ export function IPlusD() {
 
 				const docs = projectsData || [];
 				setProjects(docs);
-				setDescription(null);
-				setIntroText(pageSettings?.introText || null);
+				setIntroText(lang === 'en' ? pageSettings?.introTextEN || pageSettings?.introText : pageSettings?.introText);
 
 				const flattened = (singleData || [])
 					.flatMap((doc, docIndex) =>
 						(doc.gallery || []).map((g, imageIndex) => ({
 							_key: g.image?.asset?._id || `iad-${docIndex}-${imageIndex}`,
 							image: g.image,
-							imageTitle: g.title,
-							projectTitle: doc.title,
+							imageTitle: lang === 'en' ? g.titleEN || g.title : g.title,
+							projectTitle: lang === 'en' ? doc.titleEN || doc.title : doc.title,
 							projectYear: doc.year,
-							projectDescription: doc.description,
 						})),
 					)
 					.filter(it => it.image?.asset?._id);
@@ -107,7 +106,7 @@ export function IPlusD() {
 		};
 
 		fetchData();
-	}, []);
+	}, [lang]);
 
 	useEffect(() => {
 		const handleKeyDown = e => {
@@ -203,19 +202,11 @@ export function IPlusD() {
 				<div className='z-40 px-3 pt-[20px] pb-3 lg:px-5 lg:pt-[100px] lg:pb-5 tracking-wide leading-[1.3]'>
 					<div className='lg:grid lg:grid-cols-4 lg:gap-x-[100px]'>
 						<div className='col-span-2'>
-							<AnimatedH1 className='text-[0.85rem] font-[500]'>INVESTIGAÇÃO + DESENVOLVIMENTO</AnimatedH1>
+							<AnimatedH1 className='text-[0.85rem] font-[500]'> {lang === 'en' ? 'RESEARCH + DEVELOPMENT' : 'INVESTIGAÇÃO + DESENVOLVIMENTO'}</AnimatedH1>
 							{introText ? (
 								<AnimatedPAfterH1 className='tracking-wide leading-[1.3]'>
 									<PortableText components={portableTextComponents} value={keepSpacedWordTogether(introText)} />
 								</AnimatedPAfterH1>
-							) : null}
-
-							{description ? (
-								<div className='pt-6'>
-									<AnimatedP>
-										<PortableText value={description} components={portableTextComponents} />
-									</AnimatedP>
-								</div>
 							) : null}
 						</div>
 					</div>
@@ -225,6 +216,8 @@ export function IPlusD() {
 							{projects.map((p, index) => {
 								const href = p.pdfUrl || null;
 								const hasImg2 = isDesktop && p.coverImage2?.asset;
+								const title = lang === 'en' ? p.titleEN || p.title : p.title;
+								const tag = lang === 'en' ? p.tagEN || p.tag : p.tag;
 
 								return (
 									<a
@@ -254,7 +247,7 @@ export function IPlusD() {
 														<SanityImage
 															image={p.coverImage}
 															preset='iadInfoCard'
-															alt={p.title || ''}
+															alt={title || ''}
 															className='w-full h-full'
 															imgClassName='w-full h-full object-cover'
 															loading='lazy'
@@ -267,7 +260,7 @@ export function IPlusD() {
 															<SanityImage
 																image={p.coverImage2}
 																preset='iadInfoCard'
-																alt={p.title || ''}
+																alt={title || ''}
 																className='w-full h-full'
 																imgClassName='w-full h-full object-cover'
 																loading='lazy'
@@ -280,10 +273,10 @@ export function IPlusD() {
 
 											<div className='lg:mt-2 mt-4 flex justify-between text-[0.85rem] tracking-[0.03em] '>
 												<div className=' font-[500] uppercase'>
-													<AnimatedH1>{p.title}</AnimatedH1>
+													<AnimatedH1>{title}</AnimatedH1>
 												</div>
 												<div className='flex gap-6'>
-													<AnimatedH1>{p.tag || ''}</AnimatedH1>
+													<AnimatedH1>{tag || ''}</AnimatedH1>
 													<AnimatedH1 className=' text-right'>{p.year || '/...'}</AnimatedH1>
 												</div>
 											</div>

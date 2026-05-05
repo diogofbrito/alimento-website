@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { AnimatedH1, AnimatedButton } from '../components/AnimatedText';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../lang/translations.js';
 
 export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, totalImages, onToggleList, onToggleInfo }) {
 	const navigate = useNavigate();
+	const { lang } = useLanguage();
+	const t = translations[lang];
 
 	const handleClose = () => {
 		if (window.history.length > 1) {
@@ -20,20 +24,18 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 				</div>
 				<div className='col-span-1 '>
 					<AnimatedH1>
-						imagem: {currentIndex + 1}/{totalImages}
+						{t.header.image}: {currentIndex + 1}/{totalImages}
 					</AnimatedH1>
 				</div>
 
 				<div className='col-span-1 '>
-					<AnimatedButton onClick={onToggleList} >
-						{isListOpen ? ' SLIDER ' : ' LISTA '}
-					</AnimatedButton>
+					<AnimatedButton onClick={onToggleList}> {isListOpen ? t.header.slider : t.header.list}</AnimatedButton>
 				</div>
 				<div className='col-span-1 flex justify-between '>
-					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
+					<AnimatedButton onClick={onToggleInfo}> {isInfoOpen ? t.header.infoClose : t.header.infoOpen}</AnimatedButton>
 
 					<AnimatedButton onClick={handleClose} className='text-right'>
-						FECHAR{' '}
+						{t.header.close}
 					</AnimatedButton>
 				</div>
 			</div>
@@ -44,17 +46,17 @@ export function HeaderSingleWork({ title, currentIndex, isListOpen, isInfoOpen, 
 						<AnimatedH1>{title}</AnimatedH1>
 					</div>
 					<div className='col-span-1 text-right'>
-						<AnimatedButton onClick={handleClose}> FECHAR </AnimatedButton>
+						<AnimatedButton onClick={handleClose}> {t.header.close} </AnimatedButton>
 					</div>
 				</div>
 				<div className='flex justify-between pt-3'>
-					<AnimatedButton onClick={onToggleList}>{isListOpen ? ' SLIDER ' : ' LISTA '}</AnimatedButton>
+					<AnimatedButton onClick={onToggleList}>{isListOpen ? t.header.slider : t.header.list}</AnimatedButton>
 
 					<AnimatedH1>
-						imagem: {currentIndex + 1}/{totalImages}
+						{t.header.image}: {currentIndex + 1}/{totalImages}
 					</AnimatedH1>
 
-					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? '  - INFO ' : ' + INFO '}</AnimatedButton>
+					<AnimatedButton onClick={onToggleInfo}>{isInfoOpen ? t.header.infoClose : t.header.infoOpen}</AnimatedButton>
 				</div>
 			</div>
 		</>
