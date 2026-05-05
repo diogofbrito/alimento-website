@@ -12,8 +12,7 @@ export function About2() {
 	const [mobileOverlayOpacity, setMobileOverlayOpacity] = useState(0);
 	const { lang } = useLanguage();
 
-	const cont = lang === 'en' ? about.contentEn : about.content;
-
+	const cont = lang === 'en' ? about?.contentEN || about?.content : about?.content;
 	useEffect(() => {
 		const fetchAbout = async () => {
 			try {
@@ -75,7 +74,7 @@ export function About2() {
 						</div>
 
 						<div className='mt-[40px] flex flex-col text-white'>
-							<AnimatedH1 className='font-[500] text-[0.85rem]'>Contactos</AnimatedH1>
+							<AnimatedH1 className='font-[500] text-[0.85rem]'> {lang === 'en' ? 'Contacts' : 'Contactos'}</AnimatedH1>
 							<AnimatedPAfterH1>
 								<a href='mailto:hello@alimento.studio' className='underline transition hover:opacity-60'>
 									E-mail
