@@ -12,7 +12,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 		<>
 			<div className='hidden z-90 fixed w-full left-0 right-0 top-4 px-5 lg:grid grid-cols-4 gap-x-[100px] tracking-[0.02em] font-[500] text-[0.9rem] uppercase mix-blend-difference text-white'>
 				<div className='col-span-1 '>
-					<AnimatedH1>{title}</AnimatedH1>
+					<AnimatedH1>{t.nav.research}</AnimatedH1>
 				</div>
 
 				<div className='col-span-1'>
@@ -29,7 +29,7 @@ export function HeaderSingleIPlusD({ title, currentIndex, totalImages, isListOpe
 					<AnimatedButton onClick={onToggleInfo}> {isInfoOpen ? t.header.infoClose : t.header.infoOpen}</AnimatedButton>
 
 					<AnimatedButton onClick={() => navigate(-1)} className='text-right'>
-						FECHAR
+						{t.header.close}
 					</AnimatedButton>
 				</div>
 			</div>
